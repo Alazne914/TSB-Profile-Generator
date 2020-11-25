@@ -1,25 +1,27 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Main {
-
     public final int amtOfJiggs = 5;
     public int numOfProfiles = 1;
 
     public static void main(String[] args)
     {
-        new Main().start();
+        new Main().run();
     }
 
     /**
      * Method that reads profile details from profiles.txt file, and puts them in a JSONArray
      */
-    private void start()
+    private void run()
     {
         ArrayList<String[]> cards = new ArrayList<>();
 
@@ -51,6 +53,18 @@ public class Main {
         }
 
         System.out.println("Number of profiles created: " + numOfProfiles + "\n" + jsonArray.toString(1));
+
+        String outputFilename = "output/generated_profiles.json";
+        try {
+            File file = new File(outputFilename);
+            FileWriter filew = new FileWriter(outputFilename);
+
+            //jsonArray.writeJSONString(jsonArray,filew);
+            filew.close();
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
