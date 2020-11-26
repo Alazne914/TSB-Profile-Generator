@@ -13,8 +13,9 @@ public class Main {
     private String inputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles.txt";
     private String outputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
 
-    private final int amtOfJiggs = 3;
-    private int numOfProfiles = 1;
+    private int amtOfJiggs;
+    private int jiggNum;
+    private int numOfProfiles = 0;
 
     public static void main(String[] args)
     {
@@ -54,6 +55,13 @@ public class Main {
      */
     private void run()
     {
+        //First take user input about jigging
+        Scanner input = new Scanner(System.in);
+        System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
+        amtOfJiggs = input.nextInt();
+        System.out.print("At what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
+        jiggNum = input.nextInt();
+
         ArrayList<String[]> cards = new ArrayList<>();
 
         //Read cards and details from .txt file
@@ -81,10 +89,11 @@ public class Main {
             {
                 JSONObject c = getProfileObject(details, j);
                 jsonArray.put(c);
+                numOfProfiles++;
             }
         }
 
-        System.out.println("Number of profiles created: " + (numOfProfiles - 1) + "\n" + jsonArray.toString(2));
+        System.out.println("Number of profiles created: " + numOfProfiles + "\n" + jsonArray.toString(2));
 
         //Write profiles to .json file. This file will be located in C/TSB Profile Generator/output
         try {
@@ -93,7 +102,7 @@ public class Main {
             f.getParentFile().mkdirs();
             f.createNewFile();
 
-            String json = jsonArray.toString(2);
+            String json = jsonArray.toString(1);
             Files.write(Paths.get(f.getPath()), json.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,10 +122,10 @@ public class Main {
         JSONObject shipping = new JSONObject();
         JSONObject billing = new JSONObject();
 
-        String jiggNumber = " #" + String.format("%03d", numOfProfiles++);
+        String jiggerTxt = " #" + String.format("%03d", jiggNum++);
 
         //Put card details
-        card.put("name", details[0] + " (J" + (jigg + 1) + ")");
+        card.put("profileName", details[0] + " (J" + (jigg + 1) + ")");
         card.put("phone", details[1]);
         card.put("ccNumber", details[2]);
         card.put("ccExpiry", details[3]);
@@ -125,8 +134,8 @@ public class Main {
         //Put shipping details
         shipping.put("firstName", details[5]);
         shipping.put("lastName", details[6]);
-        shipping.put("adress", details[7] + jiggNumber);
-        shipping.put("adress2", (details[8] + jiggNumber).trim());
+        shipping.put("address", details[7] + jiggerTxt);
+        shipping.put("address2", (details[8] + jiggerTxt).trim());
         shipping.put("country", details[9]);
         shipping.put("city", details[10]);
         shipping.put("zip", details[11]);
