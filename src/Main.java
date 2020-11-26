@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Main {
-    public final int amtOfJiggs = 5;
+    public final int amtOfJiggs = 3;
     public int numOfProfiles = 1;
 
     public static void main(String[] args)
@@ -48,23 +48,12 @@ public class Main {
             for(int j=0; j<amtOfJiggs; j++)
             {
                 JSONObject c = getProfileObject(details, j);
-                jsonArray.put(c);
+                jsonArray.add(c);
             }
         }
 
-        System.out.println("Number of profiles created: " + numOfProfiles + "\n" + jsonArray.toString(1));
+        System.out.println("Number of profiles created: " + numOfProfiles + "\n" + jsonArray.toString());
 
-        String outputFilename = "output/generated_profiles.json";
-        try {
-            File file = new File(outputFilename);
-            FileWriter filew = new FileWriter(outputFilename);
-
-            //jsonArray.writeJSONString(jsonArray,filew);
-            filew.close();
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -75,24 +64,44 @@ public class Main {
      */
     private JSONObject getProfileObject(String [] details, int jigg)
     {
-        JSONObject c = new JSONObject();
+        JSONObject profile = new JSONObject();
+        JSONObject card = new JSONObject();
+        JSONObject shipping = new JSONObject();
+        JSONObject billing = new JSONObject();
 
         String jiggNumber = " #" + String.format("%03d", numOfProfiles++);
 
-        c.put("name", details[0] + " (J" + (jigg + 1) + ")");
-        c.put("phone", details[1]);
-        c.put("number", details[2]);
-        c.put("expire", details[3]);
-        c.put("cvv", details[4]);
-        c.put("firstname", details[5]);
-        c.put("lastname", details[6]);
-        c.put("adress1", details[7] + jiggNumber);
-        c.put("adress2", details[8] + jiggNumber);
-        c.put("country", details[9]);
-        c.put("city", details[10]);
-        c.put("zip", details[11]);
-        c.put("billingSame", details[12]);
+        //Put card details
+        card.put("name", details[0] + " (J" + (jigg + 1) + ")");
+        card.put("phone", details[1]);
+        card.put("ccNumber", details[2]);
+        card.put("ccExpiry", details[3]);
+        card.put("ccCvc", details[4]);
 
-        return c;
+        //Put shipping details
+        shipping.put("firstName", details[5]);
+        shipping.put("lastName", details[6]);
+        shipping.put("adress", details[7] + jiggNumber);
+        shipping.put("adress2", (details[8] + jiggNumber).trim());
+        shipping.put("country", details[9]);
+        shipping.put("city", details[10]);
+        shipping.put("zip", details[11]);
+        shipping.put("state", null);
+
+        //Put billing details
+        billing.put("billingSameAsShipping", true);
+
+        //Put extra details
+        profile.put("cc", card);
+        profile.put("shipping", shipping);
+        profile.put("billing", billing);
+        profile.put("isJapaneseAddress", null);
+        profile.put("isRussianAddress", null);
+        profile.put("isMexicanAddress", null);
+        profile.put("isPhilippinesAddress", null);
+        profile.put("date", System.currentTimeMillis());
+
+        return profile;
     }
+
 }
