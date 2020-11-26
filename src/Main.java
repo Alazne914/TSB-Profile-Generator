@@ -59,7 +59,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
         amtOfJiggs = input.nextInt();
-        System.out.print("At what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
+        System.out.print("\nAt what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
         jiggNum = input.nextInt();
 
         ArrayList<String[]> cards = new ArrayList<>();
@@ -93,7 +93,8 @@ public class Main {
             }
         }
 
-        System.out.println("Number of profiles created: " + numOfProfiles + "\n" + jsonArray.toString(2));
+        System.out.println("\nNumber of profiles created: " + numOfProfiles +
+                         "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
 
         //Write profiles to .json file. This file will be located in C/TSB Profile Generator/output
         try {

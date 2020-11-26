@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created.">
+    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -85,7 +85,7 @@
       <updated>1606332937450</updated>
       <workItem from="1606332940450" duration="3826000" />
       <workItem from="1606337006935" duration="906000" />
-      <workItem from="1606398023831" duration="6452000" />
+      <workItem from="1606398023831" duration="9759000" />
     </task>
     <task id="LOCAL-00001" summary="Profiles now are the same as TSB profile exports">
       <created>1606400416595</created>
@@ -101,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606403947969</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)">
+      <created>1606405527388</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606405527388</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,32 +128,33 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Profiles now are the same as TSB profile exports" />
     <MESSAGE value="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created." />
-    <option name="LAST_COMMIT_MESSAGE" value="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created." />
+    <MESSAGE value="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606398901727">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606398901727" />
-    <state width="1877" height="512" key="GridCell.Tab.0.bottom" timestamp="1606405171026">
+    <state width="1877" height="512" key="GridCell.Tab.0.bottom" timestamp="1606406765950">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="512" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606405171026" />
+    <state width="1877" height="512" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606406765950" />
     <state width="1877" height="512" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="512" key="GridCell.Tab.0.center" timestamp="1606405171026">
+    <state width="1877" height="512" key="GridCell.Tab.0.center" timestamp="1606406765949">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="512" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606405171026" />
+    <state width="1877" height="512" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606406765949" />
     <state width="1877" height="512" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="512" key="GridCell.Tab.0.left" timestamp="1606405171026">
+    <state width="1877" height="512" key="GridCell.Tab.0.left" timestamp="1606406765949">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="512" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606405171026" />
+    <state width="1877" height="512" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606406765949" />
     <state width="1877" height="512" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="512" key="GridCell.Tab.0.right" timestamp="1606405171026">
+    <state width="1877" height="512" key="GridCell.Tab.0.right" timestamp="1606406765950">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="512" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606405171026" />
+    <state width="1877" height="512" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606406765950" />
     <state width="1877" height="512" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1606398905063">
       <screen x="0" y="0" width="1920" height="1040" />
