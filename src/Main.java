@@ -165,8 +165,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        //TODO: Details wegschrijven naar een .txt bestand
-
         /* Ideeën:
            - geëxporteerde profiles wegschrijven naar .txt file als vers genereerbare profiles
            - zodat je vaker of minder vaak kan laten jiggen
@@ -188,9 +186,28 @@ public class Main {
             BufferedWriter info = new BufferedWriter(fstream);
 
             for (JSONObject obj : creditCards.values()) {
-                info.write(String.format(obj.getJSONObject("cc").getString("ccNumber") +
-                        ";" + obj.getJSONObject("cc").getString("ccExpiry") +
-                        ";" + obj.getJSONObject("cc").getString("ccCvc") + "%n"));
+                JSONObject cc = obj.getJSONObject("cc");
+                JSONObject shipping = obj.getJSONObject("shipping");
+                JSONObject billing = obj.getJSONObject("billing");
+
+                String[] profileNameSplit = cc.getString("profileName").split(" ");
+                profileNameSplit[ profileNameSplit.length - 1 ] = "";
+                String profileName = String.join(" ", profileNameSplit);
+
+                String line = String.format(profileName +
+                        ";" + cc.getString("phone") +
+                        ";" + cc.getString("ccNumber") +
+                        ";" + cc.getString("ccExpiry") +
+                        ";" + cc.getString("ccCvc") +
+                        ";" + shipping.getString("firstName") +
+                        ";" + shipping.getString("lastName") +
+                        ";" + shipping.getString("address") +
+                        ";" + shipping.getString("address2") +
+                        ";" + shipping.getString("country") +
+                        ";" + shipping.getString("city") +
+                        ";" + shipping.getString("zip") + "%n");
+
+                info.write(line);
             }
 
             info.close();

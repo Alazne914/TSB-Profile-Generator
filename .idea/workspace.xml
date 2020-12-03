@@ -19,9 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Deleted unnecessary output directory">
+    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="CC details now get written to .txt file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +89,8 @@
       <workItem from="1606415508776" duration="1612000" />
       <workItem from="1606733255339" duration="760000" />
       <workItem from="1606984334158" duration="596000" />
-      <workItem from="1606987393001" duration="3893000" />
+      <workItem from="1606987393001" duration="3916000" />
+      <workItem from="1607020397811" duration="1846000" />
     </task>
     <task id="LOCAL-00001" summary="Profiles now are the same as TSB profile exports">
       <created>1606400416595</created>
@@ -148,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606990387497</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="CC details now get written to .txt file">
+      <created>1606991324788</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1606991324788</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,41 +182,42 @@
     <MESSAGE value="Added option to retrieve CC details from TSB profiles export. Improved the profiles generation process" />
     <MESSAGE value="Finished function that retrieves CC details from TSB profiles export for now" />
     <MESSAGE value="Deleted unnecessary output directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted unnecessary output directory" />
+    <MESSAGE value="CC details now get written to .txt file" />
+    <option name="LAST_COMMIT_MESSAGE" value="CC details now get written to .txt file" />
   </component>
   <component name="WindowStateProjectService">
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606415534379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606415534379" />
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom" timestamp="1606990928048">
+    <state width="1877" height="300" key="GridCell.Tab.0.bottom" timestamp="1606991334952">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606990928048" />
+    <state width="1877" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
     <state width="1877" height="512" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.center" timestamp="1606990928048">
+    <state width="1877" height="300" key="GridCell.Tab.0.center" timestamp="1606991334952">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606990928048" />
+    <state width="1877" height="300" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
     <state width="1877" height="512" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.left" timestamp="1606990928048">
+    <state width="1877" height="300" key="GridCell.Tab.0.left" timestamp="1606991334952">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606990928048" />
+    <state width="1877" height="300" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
     <state width="1877" height="512" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.right" timestamp="1606990928048">
+    <state width="1877" height="300" key="GridCell.Tab.0.right" timestamp="1606991334952">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606990928048" />
+    <state width="1877" height="300" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
     <state width="1877" height="512" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1606398905063">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606398905063" />
-    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1606990282971">
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1606991325607">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606990282971" />
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991325607" />
     <state x="342" y="140" key="new project wizard" timestamp="1606415541357">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
