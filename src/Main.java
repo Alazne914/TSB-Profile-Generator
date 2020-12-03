@@ -2,8 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -16,16 +18,36 @@ public class Main {
     private int amtOfJiggs;
     private int jiggNum;
     private int numOfProfiles = 0;
+    private int choice;
 
     public static void main(String[] args)
     {
-        new Main().setup();
+        new Main().run();
+    }
+
+    public void run()
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Do you want to generate profiles, or retrieve CC details from profiles export?" +
+                       "\n 1) Generatie profiles" +
+                       "\n 2) Retrieve CC details" +
+                       "\n Input: ");
+        choice = input.nextInt();
+
+        while (choice < 1 || choice > 2) {
+            System.out.print("\nUnkown input, please try again!" +
+                             "\n Input: ");
+            choice = input.nextInt();
+        }
+
+        setup();
     }
 
     /**
-     * This method ensures that the input directory exists. If it does not, the user will be notified
+     * This method ensures that the input directory exists, and runs the desired function.
+     * If the input directory does not exist, the user will be notified
      */
-    private void setup()
+    public void setup()
     {
         File f = new File(inputPath);
 
@@ -34,18 +56,27 @@ public class Main {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
 
-                System.out.println("The profiles.txt file has been created." +
-                        "\nPlease paste the profile details in that file, and run the generator again." +
-                        "\nThe folder is located at: C/TSB Profile Generator/" +
-                        "\nProfiles must be formatted as following:" +
-                        "\n\nProfile name;phone number;cc number;cc expiry date;cc cvc;first name;last name;adress 1;adress 2;country;city;zip" +
-                        "\n\nExample:" +
-                        "\nREVOLUT 1;+3167762212;0000 0000 0000 0000;11 / 25;993;Mals;Kippetje;Zeedijk 61;;Netherlands;Amsterdam;1012AS");
+                if(choice == 1) {
+                    System.out.println("The input folder containing the profiles.txt has been created." +
+                            "\nPlease paste the profile details in that file, and run the generator again." +
+                            "\nThe folder is located at: C:/TSB Profile Generator/input" +
+                            "\nCheck the guide for how to format the input file.");
+                } else if(choice == 2) {
+                    System.out.println("The input folder has been created." +
+                            "\nPlease place your profiles export in that folder, and run the generator again." +
+                            "\nThe folder is located at: C:/TSB Profile Generator/input" +
+                            "\nMake sure the file is called profiles.json!" +
+                            "\nCheck the guide for further information.");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            run();
+            if(choice == 1) {
+                generateProfiles();
+            } else if(choice == 2) {
+                retrieveCcDetails();
+            }
         }
 
     }
@@ -53,15 +84,8 @@ public class Main {
     /**
      * Method that reads profile details from profiles.txt file, and puts them in a JSONArray
      */
-    private void run()
+    public void generateProfiles()
     {
-        //First take user input about jigging
-        Scanner input = new Scanner(System.in);
-        System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
-        amtOfJiggs = input.nextInt();
-        System.out.print("\nAt what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
-        jiggNum = input.nextInt();
-
         ArrayList<String[]> cards = new ArrayList<>();
 
         //Read cards and details from .txt file
@@ -80,43 +104,87 @@ public class Main {
             e.printStackTrace();
         }
 
-        JSONArray jsonArray = new JSONArray();
-        for (int i=0; i<cards.size(); i++)
-        {
-            String[] details = cards.get(i);
+        if(cards.size() > 0) {
+            //First take user input about jigging
+            Scanner input = new Scanner(System.in);
+            System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
+            amtOfJiggs = input.nextInt();
+            System.out.print("\nAt what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
+            jiggNum = input.nextInt();
 
-            for(int j=0; j<amtOfJiggs; j++)
+            JSONArray jsonArray = new JSONArray();
+            for (int i=0; i<cards.size(); i++)
             {
-                JSONObject c = getProfileObject(details, j);
-                jsonArray.put(c);
-                numOfProfiles++;
+                String[] details = cards.get(i);
+
+                for(int j=0; j<amtOfJiggs; j++)
+                {
+                    JSONObject c = getProfileObject(details, j);
+                    jsonArray.put(c);
+                    numOfProfiles++;
+                }
             }
+
+            //Write profiles to .json file. This file will be located in C/TSB Profile Generator/output
+            try {
+                File f = new File(outputPath);
+
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+
+                String json = jsonArray.toString(1);
+                Files.write(Paths.get(f.getPath()), json.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("\nNumber of profiles created: " + numOfProfiles +
+                    "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
+        } else {
+            System.out.println("Your profiles.txt file is empty! Paste your details in the file and rerun the program");
         }
 
-        System.out.println("\nNumber of profiles created: " + numOfProfiles +
-                         "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
+    }
 
-        //Write profiles to .json file. This file will be located in C/TSB Profile Generator/output
+    /**
+     * Retrieves creditcard numbers from
+     */
+    public void retrieveCcDetails()
+    {
+        HashMap<String, JSONObject> creditCards = new HashMap<>();
+
         try {
-            File f = new File(outputPath);
+            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles.json";
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)));
+            JSONArray array = new JSONArray(jsonString);
 
-            f.getParentFile().mkdirs();
-            f.createNewFile();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                creditCards.put(obj.getJSONObject("cc").getString("ccNumber"), obj);
+            }
 
-            String json = jsonArray.toString(1);
-            Files.write(Paths.get(f.getPath()), json.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        for (String s : creditCards.keySet()) {
+            System.out.println(s);
+        }
+
+        for (JSONObject obj : creditCards.values()) {
+            System.out.println("----------------------------" + obj.getJSONObject("cc").getString("ccNumber") +
+                    "\n" + obj.getJSONObject("cc").getString("ccExpiry") +
+                    "\n" + obj.getJSONObject("cc").getString("ccCvc"));
         }
     }
 
     /**
-     * Creates and returns a JSONObject containig card details and jigged adress
+     * Creates and returns a JSONObject containig card details and jigged address
      * @param details Card and adress details
      * @param jigg Jigg number
      * @return JSONObject containing profile details
      */
-    private JSONObject getProfileObject(String [] details, int jigg)
+    public JSONObject getProfileObject(String [] details, int jigg)
     {
         JSONObject profile = new JSONObject();
         JSONObject card = new JSONObject();

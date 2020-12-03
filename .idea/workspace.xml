@@ -19,9 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Finished for now.">
+    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Added option to set billing address">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles/profiles.txt" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/profiles.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles/profiles.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +58,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
@@ -89,7 +91,7 @@
       <workItem from="1606415508776" duration="1612000" />
       <workItem from="1606733255339" duration="760000" />
       <workItem from="1606984334158" duration="596000" />
-      <workItem from="1606987393001" duration="489000" />
+      <workItem from="1606987393001" duration="2055000" />
     </task>
     <task id="LOCAL-00001" summary="Profiles now are the same as TSB profile exports">
       <created>1606400416595</created>
@@ -119,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606409113581</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added option to set billing address">
+      <created>1606987900391</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606987900391</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +151,8 @@
     <MESSAGE value="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created." />
     <MESSAGE value="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)" />
     <MESSAGE value="Finished for now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished for now." />
+    <MESSAGE value="Added option to set billing address" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added option to set billing address" />
   </component>
   <component name="WindowStateProjectService">
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606415534379">
