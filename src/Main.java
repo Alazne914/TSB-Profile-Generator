@@ -147,7 +147,7 @@ public class Main {
     }
 
     /**
-     * Retrieves creditcard numbers from
+     * Retrieves creditcard number, expiry date and cvc from TSB profiles export
      */
     public void retrieveCcDetails()
     {
@@ -167,14 +167,17 @@ public class Main {
             e.printStackTrace();
         }
 
-        for (String s : creditCards.keySet()) {
-            System.out.println(s);
-        }
+        //TODO: Details wegschrijven naar een .txt bestand
+
+        /* Ideeën:
+           - geëxporteerde profiles wegschrijven naar .txt file als vers genereerbare profiles
+           - zodat je vaker of minder vaak kan laten jiggen
+         */
 
         for (JSONObject obj : creditCards.values()) {
-            System.out.println("----------------------------" + obj.getJSONObject("cc").getString("ccNumber") +
-                    "\n" + obj.getJSONObject("cc").getString("ccExpiry") +
-                    "\n" + obj.getJSONObject("cc").getString("ccCvc"));
+            System.out.println(obj.getJSONObject("cc").getString("ccNumber") +
+                    ";" + obj.getJSONObject("cc").getString("ccExpiry") +
+                    ";" + obj.getJSONObject("cc").getString("ccCvc"));
         }
     }
 
