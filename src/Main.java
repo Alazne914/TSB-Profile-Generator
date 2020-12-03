@@ -143,7 +143,19 @@ public class Main {
         shipping.put("state", JSONObject.NULL);
 
         //Put billing details
-        billing.put("billingSameAsShipping", true);
+        if(details[12].equals("true")) {
+            billing.put("billingSameAsShipping", true);
+        } else {
+            billing.put("billingSameAsShipping", "");
+            billing.put("firstName", details[5]);
+            billing.put("lastName", details[6]);
+            billing.put("address", details[7]);
+            billing.put("address2", details[8]);
+            billing.put("country", details[9]);
+            billing.put("city", details[10]);
+            billing.put("zip", details[11]);
+            billing.put("state", JSONObject.NULL);
+        }
 
         //Put extra details
         profile.put("cc", card);
