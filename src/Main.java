@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -178,6 +176,26 @@ public class Main {
             System.out.println(obj.getJSONObject("cc").getString("ccNumber") +
                     ";" + obj.getJSONObject("cc").getString("ccExpiry") +
                     ";" + obj.getJSONObject("cc").getString("ccCvc"));
+        }
+
+        try {
+            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.txt";
+            File output = new File(txtOutputPath);
+            output.getParentFile().mkdirs();
+            output.createNewFile();
+
+            FileWriter fstream = new FileWriter(output);
+            BufferedWriter info = new BufferedWriter(fstream);
+
+            for (JSONObject obj : creditCards.values()) {
+                info.write(String.format(obj.getJSONObject("cc").getString("ccNumber") +
+                        ";" + obj.getJSONObject("cc").getString("ccExpiry") +
+                        ";" + obj.getJSONObject("cc").getString("ccCvc") + "%n"));
+            }
+
+            info.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
