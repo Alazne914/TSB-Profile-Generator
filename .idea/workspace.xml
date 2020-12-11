@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="CC details now get written to .txt file">
+    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Printing to file WIP">
+      <change afterPath="$PROJECT_DIR$/src/NamesProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +92,8 @@
       <workItem from="1606733255339" duration="760000" />
       <workItem from="1606984334158" duration="596000" />
       <workItem from="1606987393001" duration="3916000" />
-      <workItem from="1607020397811" duration="1846000" />
+      <workItem from="1607020397811" duration="1866000" />
+      <workItem from="1607722606103" duration="1555000" />
     </task>
     <task id="LOCAL-00001" summary="Profiles now are the same as TSB profile exports">
       <created>1606400416595</created>
@@ -155,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606991324788</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Printing to file WIP">
+      <created>1607022266993</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1607022266994</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,41 +193,50 @@
     <MESSAGE value="Finished function that retrieves CC details from TSB profiles export for now" />
     <MESSAGE value="Deleted unnecessary output directory" />
     <MESSAGE value="CC details now get written to .txt file" />
-    <option name="LAST_COMMIT_MESSAGE" value="CC details now get written to .txt file" />
+    <MESSAGE value="Printing to file WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Printing to file WIP" />
   </component>
   <component name="WindowStateProjectService">
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1606415534379">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606415534379" />
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom" timestamp="1606991334952">
+    <state width="1877" height="300" key="GridCell.Tab.0.bottom" timestamp="1607724166452">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
+    <state width="1877" height="300" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724166452" />
     <state width="1877" height="512" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.center" timestamp="1606991334952">
+    <state width="1877" height="300" key="GridCell.Tab.0.center" timestamp="1607724166452">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
+    <state width="1877" height="300" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724166452" />
     <state width="1877" height="512" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.left" timestamp="1606991334952">
+    <state width="1877" height="300" key="GridCell.Tab.0.left" timestamp="1607724166451">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
+    <state width="1877" height="300" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724166451" />
     <state width="1877" height="512" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
-    <state width="1877" height="300" key="GridCell.Tab.0.right" timestamp="1606991334952">
+    <state width="1877" height="300" key="GridCell.Tab.0.right" timestamp="1607724166452">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991334952" />
+    <state width="1877" height="300" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724166452" />
     <state width="1877" height="512" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606404889637" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1606398905063">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606398905063" />
-    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1606991325607">
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1607022269530">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606991325607" />
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607022269530" />
+    <state x="570" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607724144837">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="570" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724144837" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607722609825">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607722609825" />
     <state x="342" y="140" key="new project wizard" timestamp="1606415541357">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

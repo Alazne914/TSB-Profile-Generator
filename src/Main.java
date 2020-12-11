@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Main {
+
     private String inputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles.txt";
     private String outputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
 
@@ -165,17 +166,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        /* Ideeën:
-           - geëxporteerde profiles wegschrijven naar .txt file als vers genereerbare profiles
-           - zodat je vaker of minder vaak kan laten jiggen
-         */
-
-        for (JSONObject obj : creditCards.values()) {
-            System.out.println(obj.getJSONObject("cc").getString("ccNumber") +
-                    ";" + obj.getJSONObject("cc").getString("ccExpiry") +
-                    ";" + obj.getJSONObject("cc").getString("ccCvc"));
-        }
-
         try {
             String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.txt";
             File output = new File(txtOutputPath);
@@ -185,6 +175,7 @@ public class Main {
             FileWriter fstream = new FileWriter(output);
             BufferedWriter info = new BufferedWriter(fstream);
 
+            int counter = 0;
             for (JSONObject obj : creditCards.values()) {
                 JSONObject cc = obj.getJSONObject("cc");
                 JSONObject shipping = obj.getJSONObject("shipping");
@@ -194,23 +185,26 @@ public class Main {
                 profileNameSplit[ profileNameSplit.length - 1 ] = "";
                 String profileName = String.join(" ", profileNameSplit);
 
-                String line = String.format(profileName +
+                String line = String.format(profileName.trim() +
                         ";" + cc.getString("phone") +
                         ";" + cc.getString("ccNumber") +
                         ";" + cc.getString("ccExpiry") +
                         ";" + cc.getString("ccCvc") +
-                        ";" + shipping.getString("firstName") +
-                        ";" + shipping.getString("lastName") +
-                        ";" + shipping.getString("address") +
-                        ";" + shipping.getString("address2") +
+                        ";" + NamesProvider.getFirstName() +
+                        ";" + NamesProvider.getLastName() +
+                        ";" + shipping.getString("address").split("#")[0].trim() +
+                        ";" + shipping.getString("address2").split("#")[0] +
                         ";" + shipping.getString("country") +
                         ";" + shipping.getString("city") +
                         ";" + shipping.getString("zip") + "%n");
 
                 info.write(line);
+                counter++;
             }
 
             info.close();
+
+            System.out.println("\n" + counter + " profiles written to profiles.txt file successfully. File is located at C:/TSB Profile Generator/output");
         } catch (IOException e) {
             e.printStackTrace();
         }
