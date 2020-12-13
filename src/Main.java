@@ -2,10 +2,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,6 +25,9 @@ public class Main {
         new Main().run();
     }
 
+    /**
+     * Starts the program by asking the user for input
+     */
     public void run()
     {
         Scanner input = new Scanner(System.in);
@@ -87,21 +89,27 @@ public class Main {
     public void generateProfiles()
     {
         ArrayList<String[]> cards = new ArrayList<>();
+        ArrayList<File> txtFiles = getFiles(".txt",new File(inputFolder));
 
-        //Read cards and details from .txt file
-        try {
-            File cardsFile = getFiles(".txt",new File(inputFolder)).get(0);
+        if(txtFiles.size() == 0) {
+            System.out.println("Input .txt file has not been found!\n");
+            setup();
+        } else {
+            //Read cards and details from .txt file
+            try {
+                File cardsFile = txtFiles.get(0);
 
-            Scanner reader = new Scanner(cardsFile);
-            while (reader.hasNextLine()) {
-                String data = reader.nextLine();
+                Scanner reader = new Scanner(cardsFile);
+                while (reader.hasNextLine()) {
+                    String data = reader.nextLine();
 
-                cards.add(data.split(";"));
+                    cards.add(data.split(";"));
+                }
+                reader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
             }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
 
         if(cards.size() > 0) {
@@ -155,7 +163,6 @@ public class Main {
 
         //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
         try {
-            //String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_json.json";
             File f = getFiles(".json", new File(inputFolder)).get(0);
             String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
             JSONArray array = new JSONArray(jsonString);
@@ -323,5 +330,19 @@ public class Main {
         }
 
         return files;
+    }
+
+    private static Map<String, JSONObject> sortByValue(Map<String, JSONObject> unsortMap, final boolean order)
+    {
+        List<Map.Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
+
+        // Sorting the list based on values
+        list.sort((o1, o2) -> order ? o1.getValue().getJSONObject("cc").getString("profileName").compareTo(o2.getValue().getJSONObject("cc").getString("profileName")) == 0
+                ? o1.getKey().compareTo(o2.getKey())
+                : o1.getValue().getJSONObject("cc").getString("profileName").compareTo(o2.getValue().getJSONObject("cc").getString("profileName")) : o2.getValue().getJSONObject("cc").getString("profileName").compareTo(o1.getValue().getJSONObject("cc").getString("profileName")) == 0
+                ? o2.getKey().compareTo(o1.getKey())
+                : o2.getValue().getJSONObject("cc").getString("profileName").compareTo(o1.getValue().getJSONObject("cc").getString("profileName")));
+        return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
+
     }
 }
