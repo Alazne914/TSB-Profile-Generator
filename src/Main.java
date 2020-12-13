@@ -98,7 +98,7 @@ public class Main {
             System.out.println("Input .txt file has not been found!\n");
             setup();
         } else {
-            //Read cards and details from .txt file
+            //Read cards and details from .txt file. Source of sorting: https://stackoverflow.com/a/16751550
             Collections.sort(cards, new Comparator<String[]>() {
                 @Override
                 public int compare(String[] a1, String[] a2) {
