@@ -11,11 +11,10 @@ import org.json.JSONObject;
 
 public class Main {
 
-    private String inputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles.txt";
-    private String outputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
+    private String inputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_text.txt";
+    private String outputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_json.json";
 
     private int amtOfJiggs;
-    private int jiggNum;
     private int numOfProfiles = 0;
     private int choice;
 
@@ -28,7 +27,7 @@ public class Main {
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Do you want to generate profiles, or retrieve CC details from profiles export?" +
-                       "\n 1) Generatie profiles" +
+                       "\n 1) Generate profiles" +
                        "\n 2) Retrieve CC details" +
                        "\n Input: ");
         choice = input.nextInt();
@@ -56,7 +55,7 @@ public class Main {
                 f.createNewFile();
 
                 if(choice == 1) {
-                    System.out.println("The input folder containing the profiles.txt has been created." +
+                    System.out.println("The input folder containing the profiles_input_text.txt has been created." +
                             "\nPlease paste the profile details in that file, and run the generator again." +
                             "\nThe folder is located at: C:/TSB Profile Generator/input" +
                             "\nCheck the guide for how to format the input file.");
@@ -108,8 +107,6 @@ public class Main {
             Scanner input = new Scanner(System.in);
             System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
             amtOfJiggs = input.nextInt();
-            System.out.print("\nAt what number would you like to start jigging? (eg. 1 will start at #001, but 133 will start at #133)\nInput: ");
-            jiggNum = input.nextInt();
 
             JSONArray jsonArray = new JSONArray();
             for (int i=0; i<cards.size(); i++)
@@ -124,14 +121,14 @@ public class Main {
                 }
             }
 
-            //Write profiles to .json file. This file will be located in C/TSB Profile Generator/output
+            //Write profiles to .json file. This file will be located in C:/TSB Profile Generator/output
             try {
                 File f = new File(outputPath);
 
                 f.getParentFile().mkdirs();
                 f.createNewFile();
 
-                String json = jsonArray.toString(1);
+                String json = jsonArray.toString(4);
                 Files.write(Paths.get(f.getPath()), json.getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -140,7 +137,7 @@ public class Main {
             System.out.println("\nNumber of profiles created: " + numOfProfiles +
                     "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
         } else {
-            System.out.println("Your profiles.txt file is empty! Paste your details in the file and rerun the program");
+            System.out.println("Your profiles_input_text.txt file is empty! Paste your details in the file and rerun the program");
         }
 
     }
@@ -153,7 +150,7 @@ public class Main {
         HashMap<String, JSONObject> creditCards = new HashMap<>();
 
         try {
-            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles.json";
+            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_output_json.json";
             String jsonString = new String(Files.readAllBytes(Paths.get(path)));
             JSONArray array = new JSONArray(jsonString);
 
@@ -167,7 +164,7 @@ public class Main {
         }
 
         try {
-            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.txt";
+            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_text.txt";
             File output = new File(txtOutputPath);
             output.getParentFile().mkdirs();
             output.createNewFile();
@@ -196,7 +193,8 @@ public class Main {
                         ";" + shipping.getString("address2").split("#")[0] +
                         ";" + shipping.getString("country") +
                         ";" + shipping.getString("city") +
-                        ";" + shipping.getString("zip") + "%n");
+                        ";" + shipping.getString("zip") +
+                        ";" + billing.getBoolean("billingSameAsShipping") + "%n");
 
                 info.write(line);
                 counter++;
@@ -204,7 +202,7 @@ public class Main {
 
             info.close();
 
-            System.out.println("\n" + counter + " profiles written to profiles.txt file successfully. File is located at C:/TSB Profile Generator/output");
+            System.out.println("\n" + counter + " profiles written to profiles_output_text.txt file successfully. File is located at C:/TSB Profile Generator/output");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -223,7 +221,11 @@ public class Main {
         JSONObject shipping = new JSONObject();
         JSONObject billing = new JSONObject();
 
-        String jiggerTxt = " #" + String.format("%03d", jiggNum++);
+        //Generating random info used for jigging
+        int length = (int) (Math.random()*4) + 2;
+        int position = (int) (Math.random()*2);
+        String address1Jig = getRandomString(length);
+        String address2Jig = getRandomString(length);
 
         //Put card details
         card.put("profileName", details[0] + " (J" + (jigg + 1) + ")");
@@ -235,8 +237,12 @@ public class Main {
         //Put shipping details
         shipping.put("firstName", details[5]);
         shipping.put("lastName", details[6]);
-        shipping.put("address", details[7] + jiggerTxt);
-        shipping.put("address2", (details[8] + jiggerTxt).trim());
+        if(position == 0) {
+            shipping.put("address",  address1Jig + " " + details[7]);
+        } else {
+            shipping.put("address", details[7] + " " + address1Jig);
+        }
+        shipping.put("address2", (details[8] + " " + address2Jig).trim());
         shipping.put("country", details[9]);
         shipping.put("city", details[10]);
         shipping.put("zip", details[11]);
@@ -268,5 +274,23 @@ public class Main {
         profile.put("date", System.currentTimeMillis());
 
         return profile;
+    }
+
+    /**
+     * Generates a String with specified length containing random characters
+     * @param length Desired length of String
+     * @return String with random characters
+     */
+    private String getRandomString(int length)
+    {
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        String result = "";
+
+        for (int i = 0; i < length; i++) {
+            int random = (int) (Math.random()*alphabet.length);
+            result += alphabet[random];
+        }
+
+        return result;
     }
 }
