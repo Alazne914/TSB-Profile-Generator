@@ -64,9 +64,8 @@ public class Main {
                             "\nCheck the guide for how to format the input file.");
                 } else if(choice == 2) {
                     System.out.println("The input folder has been created." +
-                            "\nPlease place your profiles export in that folder, and run the generator again." +
+                            "\nPlease paste your profiles export file in that folder, and run the generator again." +
                             "\nThe folder is located at: C:/TSB Profile Generator/input" +
-                            "\nMake sure the file is called profiles.json!" +
                             "\nCheck the guide for further information.");
                 }
             } catch (IOException e) {
@@ -83,7 +82,7 @@ public class Main {
     }
 
     /**
-     * Method that reads profile details from profiles_input_text.txt file, and puts them in a JSONArray
+     * Method that reads profile details from the .txt file, and puts them in a JSONArray
      */
     public void generateProfiles()
     {
@@ -91,7 +90,7 @@ public class Main {
 
         //Read cards and details from .txt file
         try {
-            File cardsFile = new File(inputFilePath);
+            File cardsFile = getFiles(".txt",new File(inputFolder)).get(0);
 
             Scanner reader = new Scanner(cardsFile);
             while (reader.hasNextLine()) {
@@ -156,8 +155,9 @@ public class Main {
 
         //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
         try {
-            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_json.json";
-            String jsonString = new String(Files.readAllBytes(Paths.get(path)));
+            //String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_json.json";
+            File f = getFiles(".json", new File(inputFolder)).get(0);
+            String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
             JSONArray array = new JSONArray(jsonString);
 
             for (int i = 0; i < array.length(); i++) {
