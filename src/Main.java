@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 public class Main {
 
+    private static boolean ASC = true;
+    private static boolean DESC = false;
+
     private String inputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input";
     private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
     private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_text.txt";
@@ -96,6 +99,17 @@ public class Main {
             setup();
         } else {
             //Read cards and details from .txt file
+            Collections.sort(cards, new Comparator<String[]>() {
+                @Override
+                public int compare(String[] a1, String[] a2) {
+                    if (Integer.valueOf( a1[0].split(" ")[1] ) > Integer.valueOf( a2[0].split(" ")[1] ))
+                        return 1;
+                    if (Integer.valueOf( a1[0].split(" ")[1] ) < Integer.valueOf( a2[0].split(" ")[1] ))
+                        return -1;
+                    return 0;
+                }
+            });
+
             try {
                 File cardsFile = txtFiles.get(0);
 
@@ -186,8 +200,9 @@ public class Main {
             FileWriter fstream = new FileWriter(output);
             BufferedWriter info = new BufferedWriter(fstream);
 
+            Map<String, JSONObject> sortedProfiles = sortByValue(creditCards, ASC);
             int counter = 0;
-            for (JSONObject obj : creditCards.values()) {
+            for (JSONObject obj : sortedProfiles.values()) {
                 JSONObject cc = obj.getJSONObject("cc");
                 JSONObject shipping = obj.getJSONObject("shipping");
                 JSONObject billing = obj.getJSONObject("billing");
@@ -196,19 +211,43 @@ public class Main {
                 profileNameSplit[ profileNameSplit.length - 1 ] = "";
                 String profileName = String.join(" ", profileNameSplit);
 
-                String line = String.format(profileName.trim() +
-                        ";" + cc.getString("phone") +
-                        ";" + cc.getString("ccNumber") +
-                        ";" + cc.getString("ccExpiry") +
-                        ";" + cc.getString("ccCvc") +
-                        ";" + NamesProvider.getFirstName() +
-                        ";" + NamesProvider.getLastName() +
-                        ";" + shipping.getString("address").split("#")[0].trim() +
-                        ";" + shipping.getString("address2").split("#")[0] +
-                        ";" + shipping.getString("country") +
-                        ";" + shipping.getString("city") +
-                        ";" + shipping.getString("zip") +
-                        ";" + billing.getBoolean("billingSameAsShipping") + "%n");
+                String line;
+                if(billing.getBoolean("billingSameAsShipping")) {
+                    line = String.format(profileName.trim() +
+                            ";" + cc.getString("phone") +
+                            ";" + cc.getString("ccNumber") +
+                            ";" + cc.getString("ccExpiry") +
+                            ";" + cc.getString("ccCvc") +
+                            ";" + shipping.getString("firstName") +
+                            ";" + shipping.getString("lastName") +
+                            ";" + shipping.getString("address") +
+                            ";" + shipping.getString("address2") +
+                            ";" + shipping.getString("country") +
+                            ";" + shipping.getString("city") +
+                            ";" + shipping.getString("zip") +
+                            ";" + billing.getBoolean("billingSameAsShipping") + "%n");
+                } else {
+                    line = String.format(profileName.trim() +
+                            ";" + cc.getString("phone") +
+                            ";" + cc.getString("ccNumber") +
+                            ";" + cc.getString("ccExpiry") +
+                            ";" + cc.getString("ccCvc") +
+                            ";" + shipping.getString("firstName") +
+                            ";" + shipping.getString("lastName") +
+                            ";" + shipping.getString("address") +
+                            ";" + shipping.getString("address2") +
+                            ";" + shipping.getString("country") +
+                            ";" + shipping.getString("city") +
+                            ";" + shipping.getString("zip") +
+                            ";" + billing.getBoolean("billingSameAsShipping") +
+                            ";" + billing.getString("firstName") +
+                            ";" + billing.getString("lastName") +
+                            ";" + billing.getString("address") +
+                            ";" + billing.getString("address2") +
+                            ";" + billing.getString("country") +
+                            ";" + billing.getString("city") +
+                            ";" + billing.getString("zip") + "%n");
+                }
 
                 info.write(line);
                 counter++;
@@ -249,8 +288,8 @@ public class Main {
         card.put("ccCvc", details[4]);
 
         //Put shipping details
-        shipping.put("firstName", details[5]);
-        shipping.put("lastName", details[6]);
+        shipping.put("firstName", NamesProvider.getFirstName());
+        shipping.put("lastName", NamesProvider.getLastName());
         if(position == 0) {
             shipping.put("address",  address1Jig + " " + details[7]);
         } else {
@@ -267,13 +306,13 @@ public class Main {
             billing.put("billingSameAsShipping", true);
         } else {
             billing.put("billingSameAsShipping", "");
-            billing.put("firstName", details[5]);
-            billing.put("lastName", details[6]);
-            billing.put("address", details[7]);
-            billing.put("address2", details[8]);
-            billing.put("country", details[9]);
-            billing.put("city", details[10]);
-            billing.put("zip", details[11]);
+            billing.put("firstName", details[13]);
+            billing.put("lastName", details[14]);
+            billing.put("address", details[15]);
+            billing.put("address2", details[16]);
+            billing.put("country", details[17]);
+            billing.put("city", details[18]);
+            billing.put("zip", details[19]);
             billing.put("state", JSONObject.NULL);
         }
 
@@ -332,16 +371,22 @@ public class Main {
         return files;
     }
 
+    /**
+     * Sorts Map by certain value. Will sort by keys if values are same. Source: https://stackoverflow.com/a/13913206
+     * @param unsortMap Unsorted Map
+     * @param order true for ASC, false for DESC
+     * @return Ordered map
+     */
     private static Map<String, JSONObject> sortByValue(Map<String, JSONObject> unsortMap, final boolean order)
     {
         List<Map.Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
-        list.sort((o1, o2) -> order ? o1.getValue().getJSONObject("cc").getString("profileName").compareTo(o2.getValue().getJSONObject("cc").getString("profileName")) == 0
+        list.sort((o1, o2) -> order ? Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
                 ? o1.getKey().compareTo(o2.getKey())
-                : o1.getValue().getJSONObject("cc").getString("profileName").compareTo(o2.getValue().getJSONObject("cc").getString("profileName")) : o2.getValue().getJSONObject("cc").getString("profileName").compareTo(o1.getValue().getJSONObject("cc").getString("profileName")) == 0
+                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
                 ? o2.getKey().compareTo(o1.getKey())
-                : o2.getValue().getJSONObject("cc").getString("profileName").compareTo(o1.getValue().getJSONObject("cc").getString("profileName")));
+                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )));
         return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
 
     }
