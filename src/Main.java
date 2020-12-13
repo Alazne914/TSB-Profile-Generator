@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import org.json.JSONArray;
@@ -11,8 +12,10 @@ import org.json.JSONObject;
 
 public class Main {
 
-    private String inputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_text.txt";
-    private String outputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_json.json";
+    private String inputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input";
+    private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
+    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_text.txt";
+    private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_json.json";
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
@@ -47,7 +50,7 @@ public class Main {
      */
     public void setup()
     {
-        File f = new File(inputPath);
+        File f = new File(inputFilePath);
 
         if(!f.getParentFile().exists()) {
             try {
@@ -80,7 +83,7 @@ public class Main {
     }
 
     /**
-     * Method that reads profile details from profiles.txt file, and puts them in a JSONArray
+     * Method that reads profile details from profiles_input_text.txt file, and puts them in a JSONArray
      */
     public void generateProfiles()
     {
@@ -88,7 +91,7 @@ public class Main {
 
         //Read cards and details from .txt file
         try {
-            File cardsFile = new File(inputPath);
+            File cardsFile = new File(inputFilePath);
 
             Scanner reader = new Scanner(cardsFile);
             while (reader.hasNextLine()) {
@@ -103,11 +106,12 @@ public class Main {
         }
 
         if(cards.size() > 0) {
-            //First take user input about jigging
+            //First ask user for input about jigging
             Scanner input = new Scanner(System.in);
-            System.out.print("How many times would you like to jigg your adress for each card?\nInput: ");
+            System.out.print("How many times would you like to jigg your adress for each credit card?\nInput: ");
             amtOfJiggs = input.nextInt();
 
+            //Create desired amount of profiles for each provided credit card
             JSONArray jsonArray = new JSONArray();
             for (int i=0; i<cards.size(); i++)
             {
@@ -123,7 +127,7 @@ public class Main {
 
             //Write profiles to .json file. This file will be located in C:/TSB Profile Generator/output
             try {
-                File f = new File(outputPath);
+                File f = new File(outputFilePath);
 
                 f.getParentFile().mkdirs();
                 f.createNewFile();
@@ -143,14 +147,16 @@ public class Main {
     }
 
     /**
-     * Retrieves creditcard number, expiry date and cvc from TSB profiles export
+     * Retrieves all profiles with unique credit cards from .json file (TSB export).
+     * Writes them off to a .txt file that's ready to be used to generate new profiles
      */
     public void retrieveCcDetails()
     {
         HashMap<String, JSONObject> creditCards = new HashMap<>();
 
+        //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
         try {
-            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_output_json.json";
+            String path = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_json.json";
             String jsonString = new String(Files.readAllBytes(Paths.get(path)));
             JSONArray array = new JSONArray(jsonString);
 
@@ -163,6 +169,7 @@ public class Main {
             e.printStackTrace();
         }
 
+        //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
         try {
             String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_text.txt";
             File output = new File(txtOutputPath);
@@ -292,5 +299,29 @@ public class Main {
         }
 
         return result;
+    }
+
+    /**
+     * Gets list of files in a folder that are a certain extension. Source: https://stackoverflow.com/a/26614854
+     * @param extension String extension
+     * @param folder Folder containing file
+     * @return ArrayList of Files with provided extension
+     */
+    public static ArrayList<File> getFiles(String extension, final File folder)
+    {
+        extension = extension.toUpperCase();
+
+        final ArrayList<File> files = new ArrayList<File>();
+        for (final File file : folder.listFiles())
+        {
+
+            if (file.isDirectory())
+                files.addAll(getFiles(extension, file));
+            else if (file.getName().toUpperCase().endsWith(extension))
+                files.add(file);
+
+        }
+
+        return files;
     }
 }
