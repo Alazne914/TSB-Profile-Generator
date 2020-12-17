@@ -276,7 +276,6 @@ public class Main {
 
         //Generating random info used for jigging
         int length = (int) (Math.random()*4) + 2;
-        int position = (int) (Math.random()*2);
         String address1Jig = getRandomString(length);
         String address2Jig = getRandomString(length);
 
@@ -290,11 +289,7 @@ public class Main {
         //Put shipping details
         shipping.put("firstName", NamesProvider.getFirstName());
         shipping.put("lastName", NamesProvider.getLastName());
-        if(position == 0) {
-            shipping.put("address",  address1Jig + " " + details[7]);
-        } else {
-            shipping.put("address", details[7] + " " + address1Jig);
-        }
+        shipping.put("address", details[7] + " " + address1Jig);
         shipping.put("address2", (details[8] + " " + address2Jig).trim());
         shipping.put("country", details[9]);
         shipping.put("city", details[10]);
