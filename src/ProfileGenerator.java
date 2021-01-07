@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Main {
+public class ProfileGenerator {
 
     private static boolean ASC = true;
     private static boolean DESC = false;
@@ -24,7 +24,7 @@ public class Main {
 
     public static void main(String[] args)
     {
-        new Main().run();
+        new ProfileGenerator().run();
     }
 
     /**
@@ -180,17 +180,16 @@ public class Main {
             String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
             JSONArray array = new JSONArray(jsonString);
 
+            if(array.length() < 1) {
+                System.out.println("No profiles found in ");
+            }
+
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
                 creditCards.put(obj.getJSONObject("cc").getString("ccNumber"), obj);
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
-        try {
+            //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
             String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_text.txt";
             File output = new File(txtOutputPath);
             output.getParentFile().mkdirs();
@@ -255,9 +254,16 @@ public class Main {
             info.close();
 
             System.out.println("\n" + counter + " profiles written to profiles_output_text.txt file successfully. File is located at C:/TSB Profile Generator/output");
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (IndexOutOfBoundsException | IOException e) {
+            if(e instanceof IndexOutOfBoundsException) {
+                System.out.println("Oops! You didn't place a .json file in the input folder..." +
+                        "\nPlease place your TSB profiles export in that folder and run the program again");
+            } else {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
