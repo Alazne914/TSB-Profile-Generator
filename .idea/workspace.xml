@@ -125,6 +125,26 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="ProfileGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="nl.sneakersven.tsbprofilegenerator.ProfileGenerator" />
+      <module name="TSB_Profile_Generator.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nl.sneakersven.tsbprofilegenerator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ProfileGenerator" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
