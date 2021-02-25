@@ -131,26 +131,12 @@ public class ProfileGenerator {
             Scanner input = new Scanner(System.in);
             String[] shippingdetails = new String[16];
 
-            //First ask user for input about address
-            System.out.print("First we need your address details. If you want a field to be empty, just type nothing and hit enter." +
-                           "\nDo you want us to put in random first and last names for the shipping (and billing) address? (y/n): ");
-            String randomNames = input.nextLine();
-
-            while ( !randomNames.toLowerCase().trim().equals("y") && !randomNames.toLowerCase().trim().equals("n") ) {
-                System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
-                randomNames = input.nextLine();
-            }
-
-            if(randomNames.toLowerCase().trim().equals("y")) {
-                shippingdetails[0] = NamesProvider.getFirstName();
-                shippingdetails[1] = NamesProvider.getLastName();
-            } else {
-                System.out.print("First name: ");
-                shippingdetails[0] = input.nextLine();
-                System.out.print("Last name: ");
-                shippingdetails[1] = input.nextLine();
-            }
-
+            //First we ask user for input about address
+            System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.");
+            System.out.print("First name: ");
+            shippingdetails[0] = input.nextLine();
+            System.out.print("Last name: ");
+            shippingdetails[1] = input.nextLine();
             System.out.print("Address 1: ");
             shippingdetails[2] = input.nextLine();
             System.out.print("Address 2: ");
@@ -168,11 +154,15 @@ public class ProfileGenerator {
             String shippingSameAsBilling = input.nextLine();
 
             while ( !shippingSameAsBilling.toLowerCase().trim().equals("y") && !shippingSameAsBilling.toLowerCase().trim().equals("n") ) {
-                System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
+                System.out.print("Unknown input, please type 'y' for yes or 'n' for no: ");
                 shippingSameAsBilling = input.nextLine();
             }
 
             if(shippingSameAsBilling.toLowerCase().trim().equals("n")) {
+                System.out.print("First name: ");
+                shippingdetails[8] = input.nextLine();
+                System.out.print("Last name: ");
+                shippingdetails[9] = input.nextLine();
                 System.out.print("Address 1: ");
                 shippingdetails[10] = input.nextLine();
                 System.out.print("Address 2: ");
@@ -199,14 +189,7 @@ public class ProfileGenerator {
             {
                 String[] ccdetails = cards.get(i);
 
-                if(randomNames.toLowerCase().trim().equals("y")) {
-                    shippingdetails[0] = NamesProvider.getFirstName();
-                    shippingdetails[1] = NamesProvider.getLastName();
-                }
-                if(!shippingdetails[8].equals("true")) {
-                    shippingdetails[8] = shippingdetails[0];
-                    shippingdetails[9] = shippingdetails[1];
-                }
+                shippingdetails[0] = shippingdetails[0] + getRandomString(2);
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
@@ -319,10 +302,11 @@ public class ProfileGenerator {
 
         //Generating random info used for jigging
         int length = (int) (Math.random()*4) + 2;
-        String address1Jig = getRandomString(length);
-        String address2Jig = getRandomString(length);
+        String address1Jig1 = getRandomString((int) (Math.random()*5) + 2);
+        String address1Jig2 = getRandomString((int) (Math.random()*5) + 2);
+        String cityJig = getRandomString((int) (Math.random()*3) + 2);
 
-        //Put card details
+        //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
         card.put("phone", ccDetails[1]);
         card.put("ccNumber", ccDetails[2]);
@@ -332,10 +316,10 @@ public class ProfileGenerator {
         //Put shipping details
         shipping.put("firstName", shippingDetails[0]);
         shipping.put("lastName", shippingDetails[1]);
-        shipping.put("address", shippingDetails[2] + " " + address1Jig.trim());
-        shipping.put("address2", (shippingDetails[3] + " " + address2Jig).trim());
+        shipping.put("address", address1Jig2 + " " + shippingDetails[2] + " " + address1Jig1.trim());
+        shipping.put("address2", shippingDetails[3]);
         shipping.put("country", shippingDetails[6]);
-        shipping.put("city", shippingDetails[5]);
+        shipping.put("city", shippingDetails[5] + " " + cityJig);
         shipping.put("zip", shippingDetails[4]);
         shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
 
@@ -351,7 +335,7 @@ public class ProfileGenerator {
             billing.put("country", shippingDetails[14]);
             billing.put("city", shippingDetails[13]);
             billing.put("zip", shippingDetails[12]);
-            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[14]));
+            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[15]));
         }
 
         //Put extra details
