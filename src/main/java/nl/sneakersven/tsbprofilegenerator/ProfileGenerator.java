@@ -1,3 +1,5 @@
+package nl.sneakersven.tsbprofilegenerator;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,6 +9,13 @@ import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+/*
+    TODO:
+     - zelf alle verzendgegevens in kunnen voeren
+     - state
+     - cc details zonder adres
+ */
 
 public class ProfileGenerator {
 

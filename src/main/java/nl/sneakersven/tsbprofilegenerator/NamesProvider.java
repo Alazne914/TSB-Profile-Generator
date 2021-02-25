@@ -1,3 +1,5 @@
+package nl.sneakersven.tsbprofilegenerator;
+
 public class NamesProvider {
 
     private static String[] firstNames = {"Pieter","Jan","Henk","Lucas","Sem","Cas","Luc","Luuk","Sam","Jorg","Gijs","Siem","Senna","Thijmen","Tijmen","Roos","Amber","Leone","Loes","Lente","Jordy","Rick","Kees","Cees","Mark","Marc","Mike","Chloë","Carmen","Britt","Brittney","Tess","Tessa","Kylian","Rogier","Stijn","Lars","Jens","Gerard"};

@@ -1,3 +1,0 @@
-Main-Class: ProfileGenerator
-Class-Path: jars/json-20201115.jar
-

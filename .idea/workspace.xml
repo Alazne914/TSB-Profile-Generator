@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="Imports fix">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/json_20201115.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jars/json-20201115.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/meta-inf/manifest.mf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_20190722.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSB Profile Creation.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TSB Profile Creation.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TSB Profile Creation/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProfileGenerator.java" afterDir="false" />
-    </list>
+    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,303 +15,221 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="222" column="61" lean-forward="true" selection-start-line="222" selection-start-column="61" selection-end-line="222" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1055#1056#0" expanded="true" />
+                <element signature="e#1099#1100#0" expanded="true" />
+                <element signature="method#setup#0;class#ProfileGenerator#0" />
+                <element signature="method#generateProfiles#0;class#ProfileGenerator#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
       <list>
-        <option value="Class" />
+        <option value="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsb-profile-generator/ProfileGenerator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/NamesProvider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" />
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1050" />
   </component>
-  <component name="ProjectId" id="1kpWTXW0UZslapnITDkHHwBBnIV" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="TSB-Profile-Generator-Gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSB-Profile-Generator-Gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="TSB-Profile-Generator-Gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSB-Profile-Generator-Gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TSB-Profile-Generator-Gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSB-Profile-Generator-Gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="TSB-Profile-Generator-Gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSB-Profile-Generator-Gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TSB-Profile-Generator-Gradle" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSB-Profile-Generator-Gradle" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="tsbprofilegenerator" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TSBPG/manifest.mf" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="Z:\Documenten\ShitBot\TSB-Profile-Generator\meta-inf" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="ProfileGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ProfileGenerator" />
-      <module name="TSB Profile Creation" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
+  <component name="RunDashboard">
+    <option name="ruleStates">
       <list>
-        <item itemvalue="Application.ProfileGenerator" />
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
       </list>
-    </recent_temporary>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f4a31e43-c3b4-4111-a305-598c7748367b" name="Default Changelist" comment="" />
-      <created>1606332937450</created>
+      <changelist id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="" />
+      <created>1614260962747</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1606332937450</updated>
-      <workItem from="1606332940450" duration="3826000" />
-      <workItem from="1606337006935" duration="906000" />
-      <workItem from="1606398023831" duration="10585000" />
-      <workItem from="1606415508776" duration="1612000" />
-      <workItem from="1606733255339" duration="760000" />
-      <workItem from="1606984334158" duration="596000" />
-      <workItem from="1606987393001" duration="3916000" />
-      <workItem from="1607020397811" duration="1866000" />
-      <workItem from="1607722606103" duration="1689000" />
-      <workItem from="1607874679036" duration="11704000" />
-      <workItem from="1608233007892" duration="307000" />
-      <workItem from="1608236979338" duration="431000" />
-      <workItem from="1608243575563" duration="832000" />
-      <workItem from="1608361396628" duration="601000" />
-      <workItem from="1610032161671" duration="4694000" />
+      <updated>1614260962747</updated>
+      <workItem from="1614260966015" duration="683000" />
     </task>
-    <task id="LOCAL-00001" summary="Profiles now are the same as TSB profile exports">
-      <created>1606400416595</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1606400416595</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created.">
-      <created>1606403947969</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1606403947969</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)">
-      <created>1606405527388</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1606405527388</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Finished for now.">
-      <created>1606409113581</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1606409113581</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added option to set billing address">
-      <created>1606987900391</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1606987900391</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Added option to retrieve CC details from TSB profiles export. Improved the profiles generation process">
-      <created>1606989698920</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1606989698921</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Finished function that retrieves CC details from TSB profiles export for now">
-      <created>1606990281454</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1606990281454</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Deleted unnecessary output directory">
-      <created>1606990387497</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1606990387497</updated>
-    </task>
-    <task id="LOCAL-00009" summary="CC details now get written to .txt file">
-      <created>1606991324788</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1606991324788</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Printing to file WIP">
-      <created>1607022266993</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1607022266994</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Added random name generation and improved cc detail writing. Big WIP">
-      <created>1607724304177</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1607724304178</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Improved address jigging by adding a String containing random characters rather than 'numbering' each address">
-      <created>1607877254109</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1607877254109</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Backup before I work on different input and output files mechanics">
-      <created>1607878129356</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1607878129356</updated>
-    </task>
-    <task id="LOCAL-00014" summary="It no longer matters what the input files are called. As long as they are of the correct extension">
-      <created>1607880252638</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1607880252638</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Added hashmap value sorting method">
-      <created>1607886394904</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1607886394904</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Output to text file gets sorted on profile name. Improved cc detail retrieving">
-      <created>1607888417651</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1607888417651</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Added SO source">
-      <created>1607888480326</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1607888480326</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Jigging fix">
-      <created>1608237024249</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1608237024249</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Imports fix">
-      <created>1608246420176</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1608246420176</updated>
-    </task>
-    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="683000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Capture Tool" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16644295" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Build" weight="0.3286119" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Tool Output" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="ANTLR Preview" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Gradle" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/NamesProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="222" column="61" lean-forward="true" selection-start-line="222" selection-start-column="61" selection-end-line="222" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1055#1056#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="method#setup#0;class#ProfileGenerator#0" />
+            <element signature="method#generateProfiles#0;class#ProfileGenerator#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Profiles now are the same as TSB profile exports" />
-    <MESSAGE value="Profiles now get read and writed from and to correct files. If the directory does not exist yet, they will be created." />
-    <MESSAGE value="Added user input about amount of jiggs per cc, and at what number to start jigging (eg. #001 or #125)" />
-    <MESSAGE value="Finished for now." />
-    <MESSAGE value="Added option to set billing address" />
-    <MESSAGE value="Added option to retrieve CC details from TSB profiles export. Improved the profiles generation process" />
-    <MESSAGE value="Finished function that retrieves CC details from TSB profiles export for now" />
-    <MESSAGE value="Deleted unnecessary output directory" />
-    <MESSAGE value="CC details now get written to .txt file" />
-    <MESSAGE value="Printing to file WIP" />
-    <MESSAGE value="Added random name generation and improved cc detail writing. Big WIP" />
-    <MESSAGE value="Improved address jigging by adding a String containing random characters rather than 'numbering' each address" />
-    <MESSAGE value="Backup before I work on different input and output files mechanics" />
-    <MESSAGE value="It no longer matters what the input files are called. As long as they are of the correct extension" />
-    <MESSAGE value="Added hashmap value sorting method" />
-    <MESSAGE value="Output to text file gets sorted on profile name. Improved cc detail retrieving" />
-    <MESSAGE value="Added SO source" />
-    <MESSAGE value="Jigging fix" />
-    <MESSAGE value="Imports fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Imports fix" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1610045530826">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606415534379" />
-    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610045530826" />
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom" timestamp="1610046373740">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608243336810" />
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610046373740" />
-    <state width="1877" height="276" key="GridCell.Tab.0.center" timestamp="1610046373740">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608243336810" />
-    <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610046373740" />
-    <state width="1877" height="276" key="GridCell.Tab.0.left" timestamp="1610046373740">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608243336810" />
-    <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610046373740" />
-    <state width="1877" height="276" key="GridCell.Tab.0.right" timestamp="1610046373740">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608243336810" />
-    <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610046373740" />
-    <state x="2244" y="100" key="SettingsEditor" timestamp="1610043208312">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606398905063" />
-    <state x="2244" y="100" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610043208312" />
-    <state x="2472" y="240" key="Vcs.Push.Dialog.v2" timestamp="1608246421441">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608237025287" />
-    <state x="2472" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1608246421441" />
-    <state x="570" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607724144837">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="570" y="167" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607724144837" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607722609825">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607722609825" />
-    <state x="342" y="140" key="new project wizard" timestamp="1606415541357">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="342" y="140" key="new project wizard/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606415541357" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1607886698961">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607886698961" />
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
