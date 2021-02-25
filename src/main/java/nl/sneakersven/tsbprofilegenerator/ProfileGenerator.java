@@ -211,50 +211,16 @@ public class ProfileGenerator {
             int counter = 0;
             for (JSONObject obj : sortedProfiles.values()) {
                 JSONObject cc = obj.getJSONObject("cc");
-                JSONObject shipping = obj.getJSONObject("shipping");
-                JSONObject billing = obj.getJSONObject("billing");
 
                 String[] profileNameSplit = cc.getString("profileName").split(" ");
                 profileNameSplit[ profileNameSplit.length - 1 ] = "";
                 String profileName = String.join(" ", profileNameSplit);
 
-                String line;
-                if(billing.getBoolean("billingSameAsShipping")) {
-                    line = String.format(profileName.trim() +
+                String line = String.format(profileName.trim() +
                             ";" + cc.getString("phone") +
                             ";" + cc.getString("ccNumber") +
                             ";" + cc.getString("ccExpiry") +
-                            ";" + cc.getString("ccCvc") +
-                            ";" + shipping.getString("firstName") +
-                            ";" + shipping.getString("lastName") +
-                            ";" + shipping.getString("address") +
-                            ";" + shipping.getString("address2") +
-                            ";" + shipping.getString("country") +
-                            ";" + shipping.getString("city") +
-                            ";" + shipping.getString("zip") +
-                            ";" + billing.getBoolean("billingSameAsShipping") + "%n");
-                } else {
-                    line = String.format(profileName.trim() +
-                            ";" + cc.getString("phone") +
-                            ";" + cc.getString("ccNumber") +
-                            ";" + cc.getString("ccExpiry") +
-                            ";" + cc.getString("ccCvc") +
-                            ";" + shipping.getString("firstName") +
-                            ";" + shipping.getString("lastName") +
-                            ";" + shipping.getString("address") +
-                            ";" + shipping.getString("address2") +
-                            ";" + shipping.getString("country") +
-                            ";" + shipping.getString("city") +
-                            ";" + shipping.getString("zip") +
-                            ";" + billing.getBoolean("billingSameAsShipping") +
-                            ";" + billing.getString("firstName") +
-                            ";" + billing.getString("lastName") +
-                            ";" + billing.getString("address") +
-                            ";" + billing.getString("address2") +
-                            ";" + billing.getString("country") +
-                            ";" + billing.getString("city") +
-                            ";" + billing.getString("zip") + "%n");
-                }
+                            ";" + cc.getString("ccCvc")  + "%n");
 
                 info.write(line);
                 counter++;
