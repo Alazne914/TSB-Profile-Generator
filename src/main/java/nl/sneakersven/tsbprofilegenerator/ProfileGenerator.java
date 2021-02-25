@@ -10,12 +10,6 @@ import java.util.stream.Collectors;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/*
-    TODO:
-     - zelf alle verzendgegevens in kunnen voeren
-     - state4
- */
-
 public class ProfileGenerator {
 
     private static boolean ASC = true;
@@ -142,7 +136,7 @@ public class ProfileGenerator {
                            "\nDo you want us to put in random first and last names for the shipping (and billing) address? (y/n): ");
             String randomNames = input.nextLine();
 
-            while ( !randomNames.toLowerCase().trim().equals("y") || !randomNames.toLowerCase().trim().equals("n") ) {
+            while ( !randomNames.toLowerCase().trim().equals("y") && !randomNames.toLowerCase().trim().equals("n") ) {
                 System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
                 randomNames = input.nextLine();
             }
@@ -173,15 +167,12 @@ public class ProfileGenerator {
             System.out.print("Does the billing address have to be the same as the shipping address? (y/n): ");
             String shippingSameAsBilling = input.nextLine();
 
-            while ( !shippingSameAsBilling.toLowerCase().trim().equals("y") || !shippingSameAsBilling.toLowerCase().trim().equals("n") ) {
+            while ( !shippingSameAsBilling.toLowerCase().trim().equals("y") && !shippingSameAsBilling.toLowerCase().trim().equals("n") ) {
                 System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
                 shippingSameAsBilling = input.nextLine();
             }
 
-            if(shippingSameAsBilling.toLowerCase().trim().equals("y")) {
-                shippingdetails[8] = shippingdetails[0];
-                shippingdetails[9] = shippingdetails[1];
-
+            if(shippingSameAsBilling.toLowerCase().trim().equals("n")) {
                 System.out.print("Address 1: ");
                 shippingdetails[10] = input.nextLine();
                 System.out.print("Address 2: ");
@@ -207,6 +198,15 @@ public class ProfileGenerator {
             for (int i=0; i<cards.size(); i++)
             {
                 String[] ccdetails = cards.get(i);
+
+                if(randomNames.toLowerCase().trim().equals("y")) {
+                    shippingdetails[0] = NamesProvider.getFirstName();
+                    shippingdetails[1] = NamesProvider.getLastName();
+                }
+                if(!shippingdetails[8].equals("true")) {
+                    shippingdetails[8] = shippingdetails[0];
+                    shippingdetails[9] = shippingdetails[1];
+                }
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
