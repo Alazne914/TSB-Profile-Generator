@@ -28,12 +28,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="219" lean-forward="true" selection-start-line="219" selection-end-line="219" />
+            <state relative-caret-position="906">
+              <caret line="313" column="4" selection-start-line="313" selection-start-column="4" selection-end-line="313" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setup#0;class#ProfileGenerator#0" />
-                <element signature="method#generateProfiles#0;class#ProfileGenerator#0" />
+                <element signature="method#retrieveCcDetails#0;class#ProfileGenerator#0" />
+                <element signature="method#getProfileObject#0;class#ProfileGenerator#0" />
                 <element signature="e#14498#14504#0" expanded="true" />
               </folding>
             </state>
@@ -161,7 +162,7 @@
       <option name="presentableId" value="Default" />
       <updated>1614260962747</updated>
       <workItem from="1614260966015" duration="683000" />
-      <workItem from="1614261700178" duration="472000" />
+      <workItem from="1614261700178" duration="3505000" />
     </task>
     <task id="LOCAL-00001" summary="Initial gradle commit">
       <created>1614261814382</created>
@@ -177,18 +178,25 @@
       <option name="project" value="LOCAL" />
       <updated>1614261864041</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Left adress out of 'retrieve cc details' method">
+      <created>1614262241774</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614262241774</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1155000" />
+    <option name="totallyTimeSpent" value="4188000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16845638" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4979757" visible="true" weight="0.16845638" />
+      <window_info id="Structure" order="1" sideWeight="0.5020243" side_tool="true" visible="true" weight="0.16845638" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -197,7 +205,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.3286119" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30028328" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -228,7 +236,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial gradle commit" />
     <MESSAGE value="Fixed JDK version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed JDK version" />
+    <MESSAGE value="Left adress out of 'retrieve cc details' method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Left adress out of 'retrieve cc details' method" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -250,12 +259,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="219" lean-forward="true" selection-start-line="219" selection-end-line="219" />
+        <state relative-caret-position="906">
+          <caret line="313" column="4" selection-start-line="313" selection-start-column="4" selection-end-line="313" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setup#0;class#ProfileGenerator#0" />
-            <element signature="method#generateProfiles#0;class#ProfileGenerator#0" />
+            <element signature="method#retrieveCcDetails#0;class#ProfileGenerator#0" />
+            <element signature="method#getProfileObject#0;class#ProfileGenerator#0" />
             <element signature="e#14498#14504#0" expanded="true" />
           </folding>
         </state>

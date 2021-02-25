@@ -13,8 +13,7 @@ import org.json.JSONObject;
 /*
     TODO:
      - zelf alle verzendgegevens in kunnen voeren
-     - state
-     - cc details zonder adres
+     - state4
  */
 
 public class ProfileGenerator {
@@ -135,8 +134,71 @@ public class ProfileGenerator {
         }
 
         if(cards.size() > 0) {
-            //First ask user for input about jigging
             Scanner input = new Scanner(System.in);
+            String[] shippingdetails = new String[16];
+
+            //First ask user for input about address
+            System.out.print("First we need your address details. If you want a field to be empty, just type nothing and hit enter." +
+                           "\nDo you want us to put in random first and last names for the shipping (and billing) address? (y/n): ");
+            String randomNames = input.nextLine();
+
+            while ( !randomNames.toLowerCase().trim().equals("y") || !randomNames.toLowerCase().trim().equals("n") ) {
+                System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
+                randomNames = input.nextLine();
+            }
+
+            if(randomNames.toLowerCase().trim().equals("y")) {
+                shippingdetails[0] = NamesProvider.getFirstName();
+                shippingdetails[1] = NamesProvider.getLastName();
+            } else {
+                System.out.print("First name: ");
+                shippingdetails[0] = input.nextLine();
+                System.out.print("Last name: ");
+                shippingdetails[1] = input.nextLine();
+            }
+
+            System.out.print("Address 1: ");
+            shippingdetails[2] = input.nextLine();
+            System.out.print("Address 2: ");
+            shippingdetails[3] = input.nextLine();
+            System.out.print("Zip: ");
+            shippingdetails[4] = input.nextLine();
+            System.out.print("City: ");
+            shippingdetails[5] = input.nextLine();
+            System.out.print("Country: ");
+            shippingdetails[6] = input.nextLine();
+            System.out.print("State: ");
+            shippingdetails[7] = input.nextLine();
+
+            System.out.print("Does the billing address have to be the same as the shipping address? (y/n): ");
+            String shippingSameAsBilling = input.nextLine();
+
+            while ( !shippingSameAsBilling.toLowerCase().trim().equals("y") || !shippingSameAsBilling.toLowerCase().trim().equals("n") ) {
+                System.out.print("Unkown input, please type 'y' for yes or 'n' for no: ");
+                shippingSameAsBilling = input.nextLine();
+            }
+
+            if(shippingSameAsBilling.toLowerCase().trim().equals("y")) {
+                shippingdetails[8] = shippingdetails[0];
+                shippingdetails[9] = shippingdetails[1];
+
+                System.out.print("Address 1: ");
+                shippingdetails[10] = input.nextLine();
+                System.out.print("Address 2: ");
+                shippingdetails[11] = input.nextLine();
+                System.out.print("Zip: ");
+                shippingdetails[12] = input.nextLine();
+                System.out.print("City: ");
+                shippingdetails[13] = input.nextLine();
+                System.out.print("Country: ");
+                shippingdetails[14] = input.nextLine();
+                System.out.print("State: ");
+                shippingdetails[15] = input.nextLine();
+            } else {
+                shippingdetails[8] = "true";
+            }
+
+            //At last, the amount of times each card needs to be jigged
             System.out.print("How many times would you like to jigg your adress for each credit card?\nInput: ");
             amtOfJiggs = input.nextInt();
 
@@ -144,11 +206,11 @@ public class ProfileGenerator {
             JSONArray jsonArray = new JSONArray();
             for (int i=0; i<cards.size(); i++)
             {
-                String[] details = cards.get(i);
+                String[] ccdetails = cards.get(i);
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
-                    JSONObject c = getProfileObject(details, j);
+                    JSONObject c = getProfileObject(ccdetails, shippingdetails, j);
                     jsonArray.put(c);
                     numOfProfiles++;
                 }
@@ -228,7 +290,7 @@ public class ProfileGenerator {
 
             info.close();
 
-            System.out.println("\n" + counter + " profiles written to profiles_output_text.txt file successfully. File is located at C:/TSB Profile Generator/output");
+            System.out.println("\n" + counter + " profiles written to output file successfully. File is located at C:/TSB Profile Generator/output");
 
         } catch (IndexOutOfBoundsException | IOException e) {
             if(e instanceof IndexOutOfBoundsException) {
@@ -243,11 +305,12 @@ public class ProfileGenerator {
 
     /**
      * Creates and returns a JSONObject containig card details and jigged address
-     * @param details Card and adress details
+     * @param ccDetails Card details
+     * @param shippingDetails Shipping details
      * @param jigg Jigg number
      * @return JSONObject containing profile details
      */
-    public JSONObject getProfileObject(String [] details, int jigg)
+    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg)
     {
         JSONObject profile = new JSONObject();
         JSONObject card = new JSONObject();
@@ -260,35 +323,35 @@ public class ProfileGenerator {
         String address2Jig = getRandomString(length);
 
         //Put card details
-        card.put("profileName", details[0] + " (J" + (jigg + 1) + ")");
-        card.put("phone", details[1]);
-        card.put("ccNumber", details[2]);
-        card.put("ccExpiry", details[3]);
-        card.put("ccCvc", details[4]);
+        card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
+        card.put("phone", ccDetails[1]);
+        card.put("ccNumber", ccDetails[2]);
+        card.put("ccExpiry", ccDetails[3]);
+        card.put("ccCvc", ccDetails[4]);
 
         //Put shipping details
-        shipping.put("firstName", NamesProvider.getFirstName());
-        shipping.put("lastName", NamesProvider.getLastName());
-        shipping.put("address", details[7] + " " + address1Jig);
-        shipping.put("address2", (details[8] + " " + address2Jig).trim());
-        shipping.put("country", details[9]);
-        shipping.put("city", details[10]);
-        shipping.put("zip", details[11]);
-        shipping.put("state", JSONObject.NULL);
+        shipping.put("firstName", shippingDetails[0]);
+        shipping.put("lastName", shippingDetails[1]);
+        shipping.put("address", shippingDetails[2] + " " + address1Jig.trim());
+        shipping.put("address2", (shippingDetails[3] + " " + address2Jig).trim());
+        shipping.put("country", shippingDetails[6]);
+        shipping.put("city", shippingDetails[5]);
+        shipping.put("zip", shippingDetails[4]);
+        shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
 
         //Put billing details
-        if(details[12].equals("true")) {
+        if(shippingDetails[8].equals("true")) {
             billing.put("billingSameAsShipping", true);
         } else {
             billing.put("billingSameAsShipping", "");
-            billing.put("firstName", details[13]);
-            billing.put("lastName", details[14]);
-            billing.put("address", details[15]);
-            billing.put("address2", details[16]);
-            billing.put("country", details[17]);
-            billing.put("city", details[18]);
-            billing.put("zip", details[19]);
-            billing.put("state", JSONObject.NULL);
+            billing.put("firstName", shippingDetails[8]);
+            billing.put("lastName", shippingDetails[9]);
+            billing.put("address", shippingDetails[10]);
+            billing.put("address2", shippingDetails[11]);
+            billing.put("country", shippingDetails[14]);
+            billing.put("city", shippingDetails[13]);
+            billing.put("zip", shippingDetails[12]);
+            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[14]));
         }
 
         //Put extra details
