@@ -17,8 +17,8 @@ public class ProfileGenerator {
 
     private String inputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input";
     private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
-    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input_text.txt";
-    private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_json.json";
+    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
+    private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
@@ -259,7 +259,7 @@ public class ProfileGenerator {
             }
 
             //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
-            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "creditcard_details_output_text.txt";
+            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "creditcard_details_output.txt";
             File output = new File(txtOutputPath);
             output.getParentFile().mkdirs();
             output.createNewFile();
