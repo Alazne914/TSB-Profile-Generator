@@ -17,7 +17,7 @@ public class ProfileGenerator {
 
     private String inputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input";
     private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
-    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "profiles_input_text.txt";
+    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input_text.txt";
     private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_json.json";
 
     private int amtOfJiggs;
@@ -34,11 +34,15 @@ public class ProfileGenerator {
      */
     public void run()
     {
+        System.out.println("- Welcome to the TSB Profile Generator! -\n\n" +
+                           "Refer to the guide on how to use the program.\n" +
+                           "Good luck pooping!\n");
+
         Scanner input = new Scanner(System.in);
-        System.out.print("Do you want to generate profiles, or retrieve CC details from profiles export?" +
+        System.out.print("Do you want to generate profiles, or retrieve CC details from your profiles export?" +
                        "\n 1) Generate profiles" +
                        "\n 2) Retrieve CC details" +
-                       "\n Input: ");
+                       "\nInput: ");
         choice = input.nextInt();
 
         while (choice < 1 || choice > 2) {
@@ -96,8 +100,19 @@ public class ProfileGenerator {
         ArrayList<File> txtFiles = getFiles(".txt",new File(inputFolder));
 
         if(txtFiles.size() == 0) {
-            System.out.println("Input .txt file has not been found!\n");
-            setup();
+            System.out.println("Input .txt file has not been found! Creating a file now. Type/paste your credit card details in that file and rerun the program\n");
+
+            //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
+            String txtInputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
+            try {
+                File f = new File(txtInputPath);
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+                System.exit(1);
+            } catch (IOException e) {
+                System.out.println("Oops! Something went wrong while creating the credit cards input file...\n");
+                e.printStackTrace();
+            }
         } else {
             //Read cards and details from .txt file. Source of sorting: https://stackoverflow.com/a/16751550
             Collections.sort(cards, new Comparator<String[]>() {
@@ -131,23 +146,25 @@ public class ProfileGenerator {
             Scanner input = new Scanner(System.in);
             String[] shippingdetails = new String[16];
 
+            final int LINE_LENGTH = 12;
+
             //First we ask user for input about address
             System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.");
-            System.out.print("First name: ");
+            print("First name: ", LINE_LENGTH);
             shippingdetails[0] = input.nextLine();
-            System.out.print("Last name: ");
+            print("Last name: ", LINE_LENGTH);
             shippingdetails[1] = input.nextLine();
-            System.out.print("Address 1: ");
+            print("Address 1: ", LINE_LENGTH);
             shippingdetails[2] = input.nextLine();
-            System.out.print("Address 2: ");
+            print("Address 2: ", LINE_LENGTH);
             shippingdetails[3] = input.nextLine();
-            System.out.print("Zip: ");
+            print("Zip: ", LINE_LENGTH);
             shippingdetails[4] = input.nextLine();
-            System.out.print("City: ");
+            print("City: ", LINE_LENGTH);
             shippingdetails[5] = input.nextLine();
-            System.out.print("Country: ");
+            print("Country: ", LINE_LENGTH);
             shippingdetails[6] = input.nextLine();
-            System.out.print("State: ");
+            print("State: ", LINE_LENGTH);
             shippingdetails[7] = input.nextLine();
 
             System.out.print("Does the billing address have to be the same as the shipping address? (y/n): ");
@@ -159,21 +176,21 @@ public class ProfileGenerator {
             }
 
             if(shippingSameAsBilling.toLowerCase().trim().equals("n")) {
-                System.out.print("First name: ");
+                print("First name: ", LINE_LENGTH);
                 shippingdetails[8] = input.nextLine();
-                System.out.print("Last name: ");
+                print("Last name: ", LINE_LENGTH);
                 shippingdetails[9] = input.nextLine();
-                System.out.print("Address 1: ");
+                print("Address 1: ", LINE_LENGTH);
                 shippingdetails[10] = input.nextLine();
-                System.out.print("Address 2: ");
+                print("Address 2: ", LINE_LENGTH);
                 shippingdetails[11] = input.nextLine();
-                System.out.print("Zip: ");
+                print("Zip: ", LINE_LENGTH);
                 shippingdetails[12] = input.nextLine();
-                System.out.print("City: ");
+                print("City: ", LINE_LENGTH);
                 shippingdetails[13] = input.nextLine();
-                System.out.print("Country: ");
+                print("Country: ", LINE_LENGTH);
                 shippingdetails[14] = input.nextLine();
-                System.out.print("State: ");
+                print("State: ", LINE_LENGTH);
                 shippingdetails[15] = input.nextLine();
             } else {
                 shippingdetails[8] = "true";
@@ -188,8 +205,6 @@ public class ProfileGenerator {
             for (int i=0; i<cards.size(); i++)
             {
                 String[] ccdetails = cards.get(i);
-
-                shippingdetails[0] = shippingdetails[0] + getRandomString(2);
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
@@ -244,7 +259,7 @@ public class ProfileGenerator {
             }
 
             //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
-            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output_text.txt";
+            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "creditcard_details_output_text.txt";
             File output = new File(txtOutputPath);
             output.getParentFile().mkdirs();
             output.createNewFile();
@@ -314,7 +329,7 @@ public class ProfileGenerator {
         card.put("ccCvc", ccDetails[4]);
 
         //Put shipping details
-        shipping.put("firstName", shippingDetails[0]);
+        shipping.put("firstName", shippingDetails[0] + " " + getRandomString(2));
         shipping.put("lastName", shippingDetails[1]);
         shipping.put("address", address1Jig2 + " " + shippingDetails[2] + " " + address1Jig1.trim());
         shipping.put("address2", shippingDetails[3]);
@@ -391,6 +406,16 @@ public class ProfileGenerator {
         }
 
         return files;
+    }
+
+    /**
+     * Prints a String of at least the given width, right justified
+     * @param line String to print
+     * @param width Minimum length of printed String
+     */
+    private void print(String line, int width) {
+        String format = "%" + width + "s";
+        System.out.printf(format, line);
     }
 
     /**
