@@ -12,6 +12,10 @@ import org.json.JSONObject;
 
 public class ProfileGenerator {
 
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ALPHABET_WITH_NUMBERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321";
+    private static final String ADDRESS_2_SUFFIX_CHAR = "ABCDE";
+
     private static boolean ASC = true;
     private static boolean DESC = false;
 
@@ -304,7 +308,7 @@ public class ProfileGenerator {
     }
 
     /**
-     * Creates and returns a JSONObject containig card details and jigged address
+     * Creates and returns a JSONObject containing card details and jigged address
      * @param ccDetails Card details
      * @param shippingDetails Shipping details
      * @param jigg Jigg number
@@ -318,12 +322,12 @@ public class ProfileGenerator {
         JSONObject billing = new JSONObject();
 
         //Generating random info used for jigging
-        int length = (int) (Math.random()*4) + 2;
-        String address1Jig1 = getRandomString((int) (Math.random()*5) + 2);
-        String address1Jig2 = getRandomString((int) (Math.random()*5) + 2);
+        String firstNameSuffix = getRandomString(ALPHABET, (int) (Math.random()*2) + 1);
+        String address1prefix = getRandomString(ALPHABET,(int) (Math.random()*3) + 2);
+        String address1suffix = getRandomString(ALPHABET_WITH_NUMBERS,(int) (Math.random()*5) + 2);
         String address2prefix = prefixs[ (int) (Math.random()*prefixs.length) ];
-        int address2Jig = (int) (Math.random()*50) + 1;
-        String cityJig = getRandomString((int) (Math.random()*3) + 2);
+        String address2suffix = ((int) (Math.random()*5) + 1) + getRandomString(ADDRESS_2_SUFFIX_CHAR, 1);
+        String cityJig = getRandomString(ALPHABET, (int) (Math.random()*3) + 2);
 
         //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
@@ -333,11 +337,11 @@ public class ProfileGenerator {
         card.put("ccCvc", ccDetails[4]);
 
         //Put shipping details
-        shipping.put("firstName", shippingDetails[0] + " " + getRandomString(2));
+        shipping.put("firstName", shippingDetails[0] + " " + firstNameSuffix);
         shipping.put("lastName", shippingDetails[1]);
-        shipping.put("address", address1Jig2 + " " + shippingDetails[2] + " " + address1Jig1.trim());
+        shipping.put("address", address1prefix + " " + shippingDetails[2] + " " + address1suffix);
         if(shippingDetails[3].equals("")) {
-            shipping.put("address2", address2prefix + " " + address2Jig);
+            shipping.put("address2", address2prefix + " " + address2suffix);
         } else {
             shipping.put("address2", shippingDetails[3]);
         }
@@ -379,14 +383,14 @@ public class ProfileGenerator {
      * @param length Desired length of String
      * @return String with random characters
      */
-    private String getRandomString(int length)
+    private String getRandomString(String chars, int length)
     {
-        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        char[] charArray = chars.toCharArray();
         String result = "";
 
         for (int i = 0; i < length; i++) {
-            int random = (int) (Math.random()*alphabet.length);
-            result += alphabet[random];
+            int random = (int) (Math.random()*charArray.length);
+            result += charArray[random];
         }
 
         return result;
