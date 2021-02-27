@@ -24,6 +24,8 @@ public class ProfileGenerator {
     private int numOfProfiles = 0;
     private int choice;
 
+    private final String[] prefixs = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
+
     public static void main(String[] args)
     {
         new ProfileGenerator().run();
@@ -319,6 +321,8 @@ public class ProfileGenerator {
         int length = (int) (Math.random()*4) + 2;
         String address1Jig1 = getRandomString((int) (Math.random()*5) + 2);
         String address1Jig2 = getRandomString((int) (Math.random()*5) + 2);
+        String address2prefix = prefixs[ (int) (Math.random()*prefixs.length) ];
+        int address2Jig = (int) (Math.random()*50) + 1;
         String cityJig = getRandomString((int) (Math.random()*3) + 2);
 
         //Putting card details
@@ -332,7 +336,11 @@ public class ProfileGenerator {
         shipping.put("firstName", shippingDetails[0] + " " + getRandomString(2));
         shipping.put("lastName", shippingDetails[1]);
         shipping.put("address", address1Jig2 + " " + shippingDetails[2] + " " + address1Jig1.trim());
-        shipping.put("address2", shippingDetails[3]);
+        if(shippingDetails[3].equals("")) {
+            shipping.put("address2", address2prefix + " " + address2Jig);
+        } else {
+            shipping.put("address2", shippingDetails[3]);
+        }
         shipping.put("country", shippingDetails[6]);
         shipping.put("city", shippingDetails[5] + " " + cityJig);
         shipping.put("zip", shippingDetails[4]);
