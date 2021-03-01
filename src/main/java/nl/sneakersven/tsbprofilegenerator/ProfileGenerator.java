@@ -30,11 +30,13 @@ public class ProfileGenerator {
     private int numOfProfiles = 0;
     private int choice;
     private boolean randomPhone;
+    private boolean jiggCity;
+    private boolean billingSameAsShipping;
     private String phoneNumberStart;
     private int phoneNumberLength;
     private int jiggingPattern;
 
-    private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
+    private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Suite", "Room", "Kamer" };
 
     public static void main(String[] args)
     {
@@ -48,14 +50,14 @@ public class ProfileGenerator {
     {
         random = new Random();
 
-        System.out.println("- Welcome to the TSB Profile Generator! -\n\n" +
-                           "Refer to the guide on how to use the program.\n" +
+        System.out.println("WELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
+                           "Refer to the guide for further information.\n" +
                            "Good luck pooping!\n");
 
         Scanner input = new Scanner(System.in);
-        System.out.print("Do you want to generate profiles, or retrieve CC details from your profiles export?" +
-                       "\n 1) Generate profiles" +
-                       "\n 2) Retrieve CC details" +
+        System.out.print("What would you like to do?" +
+                       "\n 1) Generate jigged profiles" +
+                       "\n 2) Retrieve CC details from TSB export" +
                        "\nInput: ");
         choice = input.nextInt();
 
@@ -125,18 +127,6 @@ public class ProfileGenerator {
                 e.printStackTrace();
             }
         } else {
-            //Read cards and details from .txt file. Source of sorting: https://stackoverflow.com/a/16751550
-            Collections.sort(cards, new Comparator<String[]>() {
-                @Override
-                public int compare(String[] a1, String[] a2) {
-                    if (Integer.valueOf( a1[0].split(" ")[1] ) > Integer.valueOf( a2[0].split(" ")[1] ))
-                        return 1;
-                    if (Integer.valueOf( a1[0].split(" ")[1] ) < Integer.valueOf( a2[0].split(" ")[1] ))
-                        return -1;
-                    return 0;
-                }
-            });
-
             try {
                 File cardsFile = txtFiles.get(0);
 
@@ -159,9 +149,9 @@ public class ProfileGenerator {
 
             final int LINE_LENGTH = 12;
 
-            System.out.println("First, please choose your jigging settings.");
+            System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
-                    "\n(Note that the 'TSBPG' will be randomized characters)" +
+                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)" +
                     "\n 1) TSBPG Streetname 1" +
                     "\n 2) TSBPG Streetname 1 534" +
                     "\n 3) TSBPG Streetname 1 534 TSBPG" +
@@ -170,10 +160,10 @@ public class ProfileGenerator {
                     "\n 6) Streetname 1 TSBPG" +
                     "\n 7) Randomized mix of all of the patterns above" +
                     "\nInput: ");
-            jiggingPattern = input.nextInt();
+            jiggingPattern = Integer.parseInt(input.nextLine());
             while (jiggingPattern < 1 || jiggingPattern > 7) {
                 System.out.print("Input out of bounds, please try again: ");
-                jiggingPattern = input.nextInt();
+                jiggingPattern = Integer.parseInt(input.nextLine());
             }
 
             randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
@@ -181,14 +171,19 @@ public class ProfileGenerator {
                 System.out.print("What should the beginning of each phone number be? (e.g. +316 for NL): ");
                 phoneNumberStart = input.nextLine();
                 System.out.print("How much numbers should be added to the previously provided beginning of the phone number? (e.g. 8 for NL): ");
-                phoneNumberLength = input.nextInt();
+                phoneNumberLength = Integer.parseInt(input.nextLine());
             }
 
             boolean randomNames = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
+            jiggCity = userSaysYes(input, "Do you want to jigg random characters to the end of the City field? (y/n): ");
+            billingSameAsShipping = userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ");
+            System.out.print("How many times would you like to jigg your adress for each credit card: ");
+            amtOfJiggs = Integer.parseInt(input.nextLine());
 
             //First we ask user for input about address
-            System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.\n" +
-                    "If you enter something for address 2, it will not get jigged.");
+            System.out.println("\nSHIPPING DETAILS" +
+                    "\nIf you want a field to be empty, just type nothing and hit enter." +
+                    "\n(If you enter something for address 2, it will not get jigged)");
             if(!randomNames) {
                 print("First name: ", LINE_LENGTH);
                 shippingDetails[0] = input.nextLine();
@@ -208,9 +203,10 @@ public class ProfileGenerator {
             print("State: ", LINE_LENGTH);
             shippingDetails[7] = input.nextLine();
 
-            if(userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ")) {
+            if(billingSameAsShipping) {
                 shippingDetails[8] = "true";
             } else {
+                System.out.println("\nBILLING DETAILS");
                 print("First name: ", LINE_LENGTH);
                 shippingDetails[8] = input.nextLine();
                 print("Last name: ", LINE_LENGTH);
@@ -229,9 +225,7 @@ public class ProfileGenerator {
                 shippingDetails[15] = input.nextLine();
             }
 
-            //At last, the amount of times each card needs to be jigged
-            System.out.print("How many times would you like to jigg your adress for each credit card?\nInput: ");
-            amtOfJiggs = input.nextInt();
+
 
             //Create desired amount of profiles for each provided credit card
             JSONArray jsonArray = new JSONArray();
@@ -432,12 +426,20 @@ public class ProfileGenerator {
         shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(ALPHABET,randomInt(0,2))).trim());
         shipping.put("lastName", NameGenerator.getLastName());
         if(shippingDetails[3].equals("")) {
-            shipping.put("address2", prefixes[ randomInt(0,prefixes.length-1) ] + " " + randomInt(1,5) + getRandomString(ADDRESS_2_SUFFIX_CHAR,1));
+            if (randomInt(0,100) < 75) {
+                shipping.put("address2", prefixes[randomInt(0, prefixes.length - 1)] + " " + randomInt(1, 5) + getRandomString(ADDRESS_2_SUFFIX_CHAR, 1));
+            } else {
+                shipping.put("address2", shippingDetails[3]);
+            }
         } else {
             shipping.put("address2", shippingDetails[3]);
         }
         shipping.put("country", shippingDetails[6]);
-        shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0,2))).trim());
+        if(jiggCity) {
+            shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0, 2))).trim());
+        } else {
+            shipping.put("city", (shippingDetails[5]));
+        }
         shipping.put("zip", shippingDetails[4]);
         shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
 
