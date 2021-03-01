@@ -30,6 +30,7 @@ public class ProfileGenerator {
     private int choice;
     private boolean randomPhone;
     private String countryCode;
+    private int phoneNumberLength;
 
     private final String[] prefixs = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
 
@@ -160,14 +161,16 @@ public class ProfileGenerator {
             System.out.println("First, please choose your jigging settings.");
             randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
             if(randomPhone) {
-                System.out.print("What is your country's country code? (e.g. +31 for NL): ");
+                System.out.print("What should the beginning of each phone number be? (e.g. +316 for NL): ");
                 countryCode = input.nextLine();
+                System.out.print("How much numbers should be added to the previously provided beginning of the phone number? (e.g. 8 for NL): ");
+                phoneNumberLength = input.nextInt();
             }
-            boolean userFALN = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
+            boolean randomNames = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
 
             //First we ask user for input about address
             System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.");
-            if(!userFALN) {
+            if(!randomNames) {
                 print("First name: ", LINE_LENGTH);
                 shippingDetails[0] = input.nextLine();
                 print("Last name: ", LINE_LENGTH);
@@ -338,7 +341,9 @@ public class ProfileGenerator {
         //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
         if(randomPhone) {
-            card.put("phone", countryCode + "6" + (int) ((Math.random()*(99999999-10000000+1))+10000000 ));
+            double min = Math.pow(10.0, (phoneNumberLength - 1));
+            double max = Math.pow(10, phoneNumberLength) - 1;
+            card.put("phone", countryCode + (int) ((Math.random()*(max - min) - min)));
         } else {
             card.put("phone", ccDetails[1]);
         }
