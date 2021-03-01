@@ -24,15 +24,17 @@ public class ProfileGenerator {
     private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
     private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
     private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
+    private static Random random;
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
     private int choice;
     private boolean randomPhone;
-    private String countryCode;
+    private String phoneNumberStart;
     private int phoneNumberLength;
+    private int jiggingPattern;
 
-    private final String[] prefixs = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
+    private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
 
     public static void main(String[] args)
     {
@@ -44,6 +46,8 @@ public class ProfileGenerator {
      */
     public void run()
     {
+        random = new Random();
+
         System.out.println("- Welcome to the TSB Profile Generator! -\n\n" +
                            "Refer to the guide on how to use the program.\n" +
                            "Good luck pooping!\n");
@@ -56,8 +60,7 @@ public class ProfileGenerator {
         choice = input.nextInt();
 
         while (choice < 1 || choice > 2) {
-            System.out.print("\nUnkown input, please try again!" +
-                             "\n Input: ");
+            System.out.print("\nInput out of bounds, please try again: ");
             choice = input.nextInt();
         }
 
@@ -110,9 +113,7 @@ public class ProfileGenerator {
         ArrayList<File> txtFiles = getFiles(".txt",new File(inputFolder));
 
         if(txtFiles.size() == 0) {
-            System.out.println("Input .txt file has not been found! Creating a file now. Type/paste your credit card details in that file and rerun the program\n");
-
-            //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
+            System.out.println("Input .txt file has not been found! Creating a file now. Type/paste your credit card details in that file and rerun the program.");
             String txtInputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
             try {
                 File f = new File(txtInputPath);
@@ -159,17 +160,35 @@ public class ProfileGenerator {
             final int LINE_LENGTH = 12;
 
             System.out.println("First, please choose your jigging settings.");
+            System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
+                    "\n(Note that the 'TSBPG' will be randomized characters)" +
+                    "\n 1) TSBPG Streetname 1" +
+                    "\n 2) TSBPG Streetname 1 534" +
+                    "\n 3) TSBPG Streetname 1 534 TSBPG" +
+                    "\n 4) TSBPG Streetname 1 TSBPG" +
+                    "\n 5) Streetname 1 534 TSBPG" +
+                    "\n 6) Streetname 1 TSBPG" +
+                    "\n 7) Randomized mix of all of the patterns above" +
+                    "\nInput: ");
+            jiggingPattern = input.nextInt();
+            while (jiggingPattern < 1 || jiggingPattern > 7) {
+                System.out.print("Input out of bounds, please try again: ");
+                jiggingPattern = input.nextInt();
+            }
+
             randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
             if(randomPhone) {
                 System.out.print("What should the beginning of each phone number be? (e.g. +316 for NL): ");
-                countryCode = input.nextLine();
+                phoneNumberStart = input.nextLine();
                 System.out.print("How much numbers should be added to the previously provided beginning of the phone number? (e.g. 8 for NL): ");
                 phoneNumberLength = input.nextInt();
             }
+
             boolean randomNames = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
 
             //First we ask user for input about address
-            System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.");
+            System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.\n" +
+                    "If you enter something for address 2, it will not get jigged.");
             if(!randomNames) {
                 print("First name: ", LINE_LENGTH);
                 shippingDetails[0] = input.nextLine();
@@ -329,21 +348,12 @@ public class ProfileGenerator {
         JSONObject shipping = new JSONObject();
         JSONObject billing = new JSONObject();
 
-        //Generating random info used for jigging
-        String firstNameSuffix = getRandomString(FIRST_NAME_SUFFIX, (int) (Math.random()*2));
-        String address1prefix = getRandomString(ALPHABET,(int) (Math.random()*3) + 2);
-        int address1suffix1 = (int) (Math.random()*750) + 50;
-        String address1suffix2 = getRandomString(ALPHABET,(int) (Math.random()*5) + 2);
-        String address2prefix = prefixs[ (int) (Math.random()*prefixs.length) ];
-        String address2suffix = ((int) (Math.random()*5) + 1) + getRandomString(ADDRESS_2_SUFFIX_CHAR, 1);
-        String cityJig = getRandomString(ALPHABET, (int) (Math.random()*3));
-
         //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
         if(randomPhone) {
-            double min = Math.pow(10.0, (phoneNumberLength - 1));
+            double min = Math.pow(10, (phoneNumberLength - 1));
             double max = Math.pow(10, phoneNumberLength) - 1;
-            card.put("phone", countryCode + (int) ((Math.random()*(max - min) - min)));
+            card.put("phone", phoneNumberStart + randomInt((int) min,(int) max));
         } else {
             card.put("phone", ccDetails[1]);
         }
@@ -351,18 +361,83 @@ public class ProfileGenerator {
         card.put("ccExpiry", ccDetails[3]);
         card.put("ccCvc", ccDetails[4]);
 
-        //Put shipping details
-        shipping.put("firstName", (NameGenerator.getFirstName() + " " + firstNameSuffix).trim());
+        //Address 1 jigging:
+        switch (jiggingPattern) {
+            //Pattern 1: TSBPG Streetname 1
+            case 1:
+                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
+                break;
+
+            //Pattern 2: TSBPG Streetname 1 534
+            case 2:
+                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
+                break;
+
+            //Pattern 3: TSBPG Streetname 1 534 TSBPG
+            case 3:
+                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                break;
+
+            //Pattern 4: TSBPG Streetname 1 TSBPG
+            case 4:
+                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                break;
+
+            //Pattern 5: Streetname 1 534 TSBPG
+            case 5:
+                shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                break;
+
+            //Pattern 6: Streetname 1 TSBPG
+            case 6:
+                shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                break;
+
+            //Random mix
+            case 7:
+                switch (randomInt(1,6)) {
+                    case 1:
+                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
+                        break;
+
+                    //Pattern 2: TSBPG Streetname 1 534
+                    case 2:
+                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
+                        break;
+
+                    //Pattern 3: TSBPG Streetname 1 534 TSBPG
+                    case 3:
+                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                        break;
+
+                    //Pattern 4: TSBPG Streetname 1 TSBPG
+                    case 4:
+                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                        break;
+
+                    //Pattern 5: Streetname 1 534 TSBPG
+                    case 5:
+                        shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                        break;
+
+                    //Pattern 6: Streetname 1 TSBPG
+                    case 6:
+                        shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+                        break;
+                }
+                break;
+        }
+
+        //Address fields jigging:
+        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(ALPHABET,randomInt(0,2))).trim());
         shipping.put("lastName", NameGenerator.getLastName());
-        //shipping.put("address", address1prefix + " " + shippingDetails[2] + " " + address1suffix2);
-        shipping.put("address", shippingDetails[2] + " " + address1suffix1 + " " + address1suffix2);
         if(shippingDetails[3].equals("")) {
-            shipping.put("address2", address2prefix + " " + address2suffix);
+            shipping.put("address2", prefixes[ randomInt(0,prefixes.length-1) ] + " " + randomInt(1,5) + getRandomString(ADDRESS_2_SUFFIX_CHAR,1));
         } else {
             shipping.put("address2", shippingDetails[3]);
         }
         shipping.put("country", shippingDetails[6]);
-        shipping.put("city", (shippingDetails[5] + " " + cityJig).trim());
+        shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0,2))).trim());
         shipping.put("zip", shippingDetails[4]);
         shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
 
@@ -447,12 +522,10 @@ public class ProfileGenerator {
         final ArrayList<File> files = new ArrayList<File>();
         for (final File file : folder.listFiles())
         {
-
             if (file.isDirectory())
                 files.addAll(getFiles(extension, file));
             else if (file.getName().toUpperCase().endsWith(extension))
                 files.add(file);
-
         }
 
         return files;
@@ -486,5 +559,18 @@ public class ProfileGenerator {
                 : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )));
         return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
 
+    }
+
+
+    /**
+     * Generates random integer between min and max, including min and max.
+     * Source: https://www.techiedelight.com/generate-random-integers-specified-range-java/
+     * @param min Minimum
+     * @param max Maximum
+     * @return Random int
+     */
+    public static int randomInt(int min, int max)
+    {
+        return random.nextInt(max - min + 1) + min;
     }
 }
