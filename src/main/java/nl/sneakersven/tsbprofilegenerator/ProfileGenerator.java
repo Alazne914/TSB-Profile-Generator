@@ -28,6 +28,8 @@ public class ProfileGenerator {
     private int amtOfJiggs;
     private int numOfProfiles = 0;
     private int choice;
+    private boolean randomPhone;
+    private String countryCode;
 
     private final String[] prefixs = { "Appt.", "Appartement", "Floor", "Verdieping", "Deur", "Suite", "Room", "Kamer" };
 
@@ -151,56 +153,58 @@ public class ProfileGenerator {
 
         if(cards.size() > 0) {
             Scanner input = new Scanner(System.in);
-            String[] shippingdetails = new String[16];
+            String[] shippingDetails = new String[16];
 
             final int LINE_LENGTH = 12;
 
+            System.out.println("First, please choose your jigging settings.");
+            randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
+            if(randomPhone) {
+                System.out.print("What is your country's country code? (e.g. +31 for NL): ");
+                countryCode = input.nextLine();
+            }
+            boolean userFALN = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
+
             //First we ask user for input about address
             System.out.println("First we need your address details. If you want a field to be empty, just type nothing and hit enter.");
-//            print("First name: ", LINE_LENGTH);
-//            shippingdetails[0] = input.nextLine();
-//            print("Last name: ", LINE_LENGTH);
-//            shippingdetails[1] = input.nextLine();
-            print("Address 1: ", LINE_LENGTH);
-            shippingdetails[2] = input.nextLine();
-            print("Address 2: ", LINE_LENGTH);
-            shippingdetails[3] = input.nextLine();
-            print("Zip: ", LINE_LENGTH);
-            shippingdetails[4] = input.nextLine();
-            print("City: ", LINE_LENGTH);
-            shippingdetails[5] = input.nextLine();
-            print("Country: ", LINE_LENGTH);
-            shippingdetails[6] = input.nextLine();
-            print("State: ", LINE_LENGTH);
-            shippingdetails[7] = input.nextLine();
-
-            System.out.print("Does the billing address have to be the same as the shipping address? (y/n): ");
-            String shippingSameAsBilling = input.nextLine();
-
-            while ( !shippingSameAsBilling.toLowerCase().trim().equals("y") && !shippingSameAsBilling.toLowerCase().trim().equals("n") ) {
-                System.out.print("Unknown input, please type 'y' for yes or 'n' for no: ");
-                shippingSameAsBilling = input.nextLine();
-            }
-
-            if(shippingSameAsBilling.toLowerCase().trim().equals("n")) {
+            if(!userFALN) {
                 print("First name: ", LINE_LENGTH);
-                shippingdetails[8] = input.nextLine();
+                shippingDetails[0] = input.nextLine();
                 print("Last name: ", LINE_LENGTH);
-                shippingdetails[9] = input.nextLine();
-                print("Address 1: ", LINE_LENGTH);
-                shippingdetails[10] = input.nextLine();
-                print("Address 2: ", LINE_LENGTH);
-                shippingdetails[11] = input.nextLine();
-                print("Zip: ", LINE_LENGTH);
-                shippingdetails[12] = input.nextLine();
-                print("City: ", LINE_LENGTH);
-                shippingdetails[13] = input.nextLine();
-                print("Country: ", LINE_LENGTH);
-                shippingdetails[14] = input.nextLine();
-                print("State: ", LINE_LENGTH);
-                shippingdetails[15] = input.nextLine();
+                shippingDetails[1] = input.nextLine();
+            }
+            print("Address 1: ", LINE_LENGTH);
+            shippingDetails[2] = input.nextLine();
+            print("Address 2: ", LINE_LENGTH);
+            shippingDetails[3] = input.nextLine();
+            print("Zip: ", LINE_LENGTH);
+            shippingDetails[4] = input.nextLine();
+            print("City: ", LINE_LENGTH);
+            shippingDetails[5] = input.nextLine();
+            print("Country: ", LINE_LENGTH);
+            shippingDetails[6] = input.nextLine();
+            print("State: ", LINE_LENGTH);
+            shippingDetails[7] = input.nextLine();
+
+            if(userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ")) {
+                shippingDetails[8] = "true";
             } else {
-                shippingdetails[8] = "true";
+                print("First name: ", LINE_LENGTH);
+                shippingDetails[8] = input.nextLine();
+                print("Last name: ", LINE_LENGTH);
+                shippingDetails[9] = input.nextLine();
+                print("Address 1: ", LINE_LENGTH);
+                shippingDetails[10] = input.nextLine();
+                print("Address 2: ", LINE_LENGTH);
+                shippingDetails[11] = input.nextLine();
+                print("Zip: ", LINE_LENGTH);
+                shippingDetails[12] = input.nextLine();
+                print("City: ", LINE_LENGTH);
+                shippingDetails[13] = input.nextLine();
+                print("Country: ", LINE_LENGTH);
+                shippingDetails[14] = input.nextLine();
+                print("State: ", LINE_LENGTH);
+                shippingDetails[15] = input.nextLine();
             }
 
             //At last, the amount of times each card needs to be jigged
@@ -211,11 +215,11 @@ public class ProfileGenerator {
             JSONArray jsonArray = new JSONArray();
             for (int i=0; i<cards.size(); i++)
             {
-                String[] ccdetails = cards.get(i);
+                String[] ccDetails = cards.get(i);
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
-                    JSONObject c = getProfileObject(ccdetails, shippingdetails, j);
+                    JSONObject c = getProfileObject(ccDetails, shippingDetails, j);
                     jsonArray.put(c);
                     numOfProfiles++;
                 }
@@ -333,7 +337,11 @@ public class ProfileGenerator {
 
         //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
-        card.put("phone", ccDetails[1]);
+        if(randomPhone) {
+            card.put("phone", countryCode + "6" + (int) ((Math.random()*(99999999-10000000+1))+10000000 ));
+        } else {
+            card.put("phone", ccDetails[1]);
+        }
         card.put("ccNumber", ccDetails[2]);
         card.put("ccExpiry", ccDetails[3]);
         card.put("ccCvc", ccDetails[4]);
@@ -379,6 +387,28 @@ public class ProfileGenerator {
         profile.put("date", System.currentTimeMillis());
 
         return profile;
+    }
+
+    /**
+     * Method for asking user for a 'y' or 'n' input
+     * @param input Scanner for input
+     * @param message String to print
+     * @return true if 'y', false if 'n'
+     */
+    private boolean userSaysYes(Scanner input, String message) {
+        System.out.print(message);
+        String yesOrNo = input.nextLine();
+
+        while ( !yesOrNo.equalsIgnoreCase("y") && !yesOrNo.equalsIgnoreCase("n") ) {
+            System.out.print("Unknown input, please type 'y' for yes or 'n' for no: ");
+            yesOrNo = input.nextLine();
+        }
+
+        if(yesOrNo.equalsIgnoreCase("y")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
