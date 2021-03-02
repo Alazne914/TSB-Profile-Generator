@@ -5,4 +5,5 @@
 build
 
 #Files
-.idea
+.idea/workspace.xml
+.idea/*
