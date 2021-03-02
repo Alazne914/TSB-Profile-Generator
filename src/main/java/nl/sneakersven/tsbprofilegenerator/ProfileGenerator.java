@@ -579,52 +579,6 @@ public class ProfileGenerator {
     }
 
     /**
-     * Sorts Map of profiles alphabetically by profilename certain value. Source: https://stackoverflow.com/a/2784576
-     * @param unsortedMap Unsorted Map
-     * @return Ordered map
-     */
-    private ArrayList<JSONObject> sortAlphabetically(Map<String, JSONObject> unsortedMap)
-    {
-        ArrayList<JSONObject> arraylist = new ArrayList<>(unsortedMap.values());
-
-        arraylist.sort(Comparator.comparing(o -> o.getJSONObject("cc").getString("profileName")));
-
-        return arraylist;
-
-//        List<Map.Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
-//
-//        // Sorting the list based on values
-//        list.sort((o1, o2) -> order ? Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
-//                ? o1.getKey().compareTo(o2.getKey())
-//                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
-//                ? o2.getKey().compareTo(o1.getKey())
-//                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )));
-//        return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
-
-    }
-
-    /**
-     * Sorts Map of profile JSONObjects based on number in profile name. Will sort by key if value is the same. Source: https://stackoverflow.com/a/13913206
-     * @param unsortMap Unsorted map of profiles
-     * @param order Order of result
-     * @return Sorted map
-     */
-    private static Map<String, JSONObject> sortNumerically(Map<String, JSONObject> unsortMap, final boolean order)
-    {
-        List<Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
-
-        // Sorting the list based on values
-        list.sort((o1, o2) -> order ? Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
-                ? o1.getKey().compareTo(o2.getKey())
-                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )) == 0
-                ? o2.getKey().compareTo(o1.getKey())
-                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )));
-        return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
-
-    }
-
-
-    /**
      * Generates random integer between min and max, including min and max.
      * Source: https://www.techiedelight.com/generate-random-integers-specified-range-java/
      * @param min Minimum
