@@ -423,7 +423,7 @@ public class ProfileGenerator {
         }
 
         //Address fields jigging:
-        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(ALPHABET,randomInt(0,2))).trim());
+        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
         shipping.put("lastName", NameGenerator.getLastName());
         if(shippingDetails[3].equals("")) {
             if (randomInt(0,100) < 75) {
@@ -562,7 +562,6 @@ public class ProfileGenerator {
         return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
 
     }
-
 
     /**
      * Generates random integer between min and max, including min and max.
