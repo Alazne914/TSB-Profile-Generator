@@ -20,18 +20,20 @@ public class ProfileGenerator {
     private static boolean ASC = true;
     private static boolean DESC = false;
 
-    private String inputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input";
-    private String outputFolder = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output";
-    private String inputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
-    private String outputFilePath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "profiles_output.json";
+    private final String INPUT_FOLDER = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator;
+    private final String INPUT_TXT_NAME = "creditcard_details_input.txt";
+    private final String OUTPUT_FOLDER = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator;
+    private final String OUTPUT_TXT_NAME = "creditcard_details_output.txt";
+    private final String OUTPUT_JSON_NAME = "profiles_output.json";
+
     private static Random random;
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
-    private int choice;
     private boolean randomPhone;
     private boolean jiggCity;
     private boolean billingSameAsShipping;
+    private boolean alreadyJigged;
     private String phoneNumberStart;
     private int phoneNumberLength;
     private int jiggingPattern;
@@ -48,34 +50,37 @@ public class ProfileGenerator {
      */
     public void run()
     {
+        //Initializing global objects
         random = new Random();
 
-        System.out.println("WELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
+        //Welcome user
+        System.out.println("\nWELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
                            "Refer to the guide for further information.\n" +
                            "Good luck pooping!\n");
 
+        //Ask for what functionality the user would like to use
         Scanner input = new Scanner(System.in);
         System.out.print("What would you like to do?" +
                        "\n 1) Generate jigged profiles" +
                        "\n 2) Retrieve CC details from TSB export" +
                        "\nInput: ");
-        choice = input.nextInt();
+        int choice = input.nextInt();
 
         while (choice < 1 || choice > 2) {
-            System.out.print("\nInput out of bounds, please try again: ");
+            System.out.print("Input out of bounds, please try again: ");
             choice = input.nextInt();
         }
 
-        setup();
+        setup(choice);
     }
 
     /**
      * This method ensures that the input directory exists, and runs the desired function.
      * If the input directory does not exist, the user will be notified
      */
-    public void setup()
+    public void setup(int choice)
     {
-        File f = new File(inputFilePath);
+        File f = new File(INPUT_FOLDER + INPUT_TXT_NAME);
 
         if(!f.getParentFile().exists()) {
             try {
@@ -83,15 +88,17 @@ public class ProfileGenerator {
                 f.createNewFile();
 
                 if(choice == 1) {
-                    System.out.println("The input folder containing the profiles_input_text.txt has been created." +
-                            "\nPlease paste the profile details in that file, and run the generator again." +
-                            "\nThe folder is located at: C:/TSB Profile Generator/input" +
-                            "\nCheck the guide for how to format the input file.");
+                    System.out.println("\nThe input folder containing the creditcard_details_input.txt file has been created." +
+                            "\nPlease type or paste your credit card details in that file, and rerun the generator." +
+                            "\n\nThe folder is located at: C:/TSB Profile Generator/input" +
+                            "\nCheck the guide on how to format the input file!");
                 } else if(choice == 2) {
-                    System.out.println("The input folder has been created." +
-                            "\nPlease paste your profiles export file in that folder, and run the generator again." +
-                            "\nThe folder is located at: C:/TSB Profile Generator/input" +
-                            "\nCheck the guide for further information.");
+                    System.out.println("\nThe input folder has been created." +
+                            "\nPlease place your TSB profiles export file in that folder, and rerun the generator." +
+                            "\nIn that folder, the creditcard_details_input.txt file also has been created." +
+                            "\nYou can use that file for generating jigged profiles." +
+                            "\n\nThe folder is located at: C:/TSB Profile Generator/input" +
+                            "\nCheck the guide for further information!");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -112,13 +119,12 @@ public class ProfileGenerator {
     public void generateProfiles()
     {
         ArrayList<String[]> cards = new ArrayList<>();
-        ArrayList<File> txtFiles = getFiles(".txt",new File(inputFolder));
+        ArrayList<File> txtFiles = getFiles(".txt",new File(INPUT_FOLDER));
 
         if(txtFiles.size() == 0) {
-            System.out.println("Input .txt file has not been found! Creating a file now. Type/paste your credit card details in that file and rerun the program.");
-            String txtInputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator + "creditcard_details_input.txt";
+            System.out.println("\nInput .txt file has not been found! Creating a file now.\nType/paste your credit card details in that file and rerun the program.");
             try {
-                File f = new File(txtInputPath);
+                File f = new File(INPUT_FOLDER + INPUT_TXT_NAME);
                 f.getParentFile().mkdirs();
                 f.createNewFile();
                 System.exit(1);
@@ -138,11 +144,14 @@ public class ProfileGenerator {
                 }
                 reader.close();
             } catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
+                System.out.println("\nOops! An error occurred." +
+                        "\nNotifying the dev of this error will be appreciated!" +
+                        "\nInfo about error:");
                 e.printStackTrace();
             }
         }
 
+        //If there are cards available, ask about user input
         if(cards.size() > 0) {
             Scanner input = new Scanner(System.in);
             String[] shippingDetails = new String[16];
@@ -243,7 +252,7 @@ public class ProfileGenerator {
 
             //Write profiles to .json file. This file will be located in C:/TSB Profile Generator/output
             try {
-                File f = new File(outputFilePath);
+                File f = new File(OUTPUT_FOLDER + OUTPUT_JSON_NAME);
 
                 f.getParentFile().mkdirs();
                 f.createNewFile();
@@ -257,7 +266,9 @@ public class ProfileGenerator {
             System.out.println("\nNumber of profiles created: " + numOfProfiles +
                     "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
         } else {
-            System.out.println("Your profiles_input_text.txt file is empty! Paste your details in the file and rerun the program");
+            System.out.println("\nOops! Your creditcard_details_input.txt file is empty!" +
+                    "\nType/paste your details in the file and rerun the program!" +
+                    "\nThe file can be found at: C:/TSB Profile Generator/input");
         }
 
     }
@@ -270,23 +281,20 @@ public class ProfileGenerator {
     {
         HashMap<String, JSONObject> creditCards = new HashMap<>();
 
-        //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
+
         try {
-            File f = getFiles(".json", new File(inputFolder)).get(0);
+            File f = getFiles(".json", new File(INPUT_FOLDER)).get(0);
             String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
             JSONArray array = new JSONArray(jsonString);
 
-            if(array.length() < 1) {
-                System.out.println("No profiles found in ");
-            }
-
+            //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
                 creditCards.put(obj.getJSONObject("cc").getString("ccNumber"), obj);
             }
 
             //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
-            String txtOutputPath = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator + "creditcard_details_output.txt";
+            String txtOutputPath = OUTPUT_FOLDER + OUTPUT_TXT_NAME;
             File output = new File(txtOutputPath);
             output.getParentFile().mkdirs();
             output.createNewFile();
@@ -294,16 +302,43 @@ public class ProfileGenerator {
             FileWriter fstream = new FileWriter(output);
             BufferedWriter info = new BufferedWriter(fstream);
 
-            Map<String, JSONObject> sortedProfiles = sortByValue(creditCards, ASC);
+            ArrayList<JSONObject> unorderedCCList = new ArrayList<>(creditCards.values());
+            ArrayList<JSONObject> orderedCCList;
+            ArrayList<JSONObject> numericProfileNames = new ArrayList<>();
+            ArrayList<JSONObject> alphabeticalProfileNames = new ArrayList<>();
+
+            //Before sorting, remove the "( J1 )" if present
+            for (JSONObject obj : unorderedCCList) {
+                String newName = obj.getJSONObject("cc").getString("profileName").split("\\(")[0].trim();
+                obj.getJSONObject("cc").put("profileName", newName);
+            }
+
+            //Computing to sort the profiles based on the profileName field
+            for (JSONObject obj : unorderedCCList) {
+                String pnEnd = obj.getJSONObject("cc").getString("profileName").split(" ")[ obj.getJSONObject("cc").getString("profileName").split(" ").length-1 ];
+                System.out.println(pnEnd);
+
+                if( pnEnd.chars().allMatch( Character::isDigit ) ) {
+                    numericProfileNames.add(obj);
+                } else {
+                    alphabeticalProfileNames.add(obj);
+                }
+            }
+
+            //Sorting both arraylists
+            numericProfileNames.sort(Comparator.comparing(o -> Integer.parseInt(o.getJSONObject("cc").getString("profileName").split(" ")[o.getJSONObject("cc").getString("profileName").split(" ").length - 1])));
+            alphabeticalProfileNames.sort(Comparator.comparing(o -> o.getJSONObject("cc").getString("profileName")));
+
+            //Adding arraylists together
+            numericProfileNames.addAll(alphabeticalProfileNames);
+            orderedCCList = numericProfileNames;
+
+            //Writing credit cards to .txt file
             int counter = 0;
-            for (JSONObject obj : sortedProfiles.values()) {
+            for (JSONObject obj : orderedCCList) {
                 JSONObject cc = obj.getJSONObject("cc");
 
-                String[] profileNameSplit = cc.getString("profileName").split(" ");
-                profileNameSplit[ profileNameSplit.length - 1 ] = "";
-                String profileName = String.join(" ", profileNameSplit);
-
-                String line = String.format(profileName.trim() +
+                String line = String.format(cc.getString("profileName") +
                             ";" + cc.getString("phone") +
                             ";" + cc.getString("ccNumber") +
                             ";" + cc.getString("ccExpiry") +
@@ -319,8 +354,8 @@ public class ProfileGenerator {
 
         } catch (IndexOutOfBoundsException | IOException e) {
             if(e instanceof IndexOutOfBoundsException) {
-                System.out.println("Oops! You didn't place a .json file in the input folder..." +
-                        "\nPlease place your TSB profiles export in that folder and run the program again");
+                System.out.println("\nOops! You didn't place a .json file in the input folder..." +
+                        "\nPlease place your TSB profiles export in that folder and rerun the generator");
             } else {
                 e.printStackTrace();
             }
@@ -544,24 +579,50 @@ public class ProfileGenerator {
     }
 
     /**
-     * Sorts Map by certain value. Will sort by keys if values are same. Source: https://stackoverflow.com/a/13913206
-     * @param unsortMap Unsorted Map
-     * @param order true for ASC, false for DESC
+     * Sorts Map of profiles alphabetically by profilename certain value. Source: https://stackoverflow.com/a/2784576
+     * @param unsortedMap Unsorted Map
      * @return Ordered map
      */
-    private static Map<String, JSONObject> sortByValue(Map<String, JSONObject> unsortMap, final boolean order)
+    private ArrayList<JSONObject> sortAlphabetically(Map<String, JSONObject> unsortedMap)
     {
-        List<Map.Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
+        ArrayList<JSONObject> arraylist = new ArrayList<>(unsortedMap.values());
+
+        arraylist.sort(Comparator.comparing(o -> o.getJSONObject("cc").getString("profileName")));
+
+        return arraylist;
+
+//        List<Map.Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
+//
+//        // Sorting the list based on values
+//        list.sort((o1, o2) -> order ? Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
+//                ? o1.getKey().compareTo(o2.getKey())
+//                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
+//                ? o2.getKey().compareTo(o1.getKey())
+//                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )));
+//        return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
+
+    }
+
+    /**
+     * Sorts Map of profile JSONObjects based on number in profile name. Will sort by key if value is the same. Source: https://stackoverflow.com/a/13913206
+     * @param unsortMap Unsorted map of profiles
+     * @param order Order of result
+     * @return Sorted map
+     */
+    private static Map<String, JSONObject> sortNumerically(Map<String, JSONObject> unsortMap, final boolean order)
+    {
+        List<Entry<String, JSONObject>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
         list.sort((o1, o2) -> order ? Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
                 ? o1.getKey().compareTo(o2.getKey())
-                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )) == 0
+                : Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )) : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )) == 0
                 ? o2.getKey().compareTo(o1.getKey())
-                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[1] )));
+                : Integer.valueOf( o2.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] ).compareTo(Integer.valueOf( o1.getValue().getJSONObject("cc").getString("profileName").split(" ")[ o1.getValue().getJSONObject("cc").getString("profileName").split(" ").length-1 ] )));
         return list.stream().collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> b, LinkedHashMap::new));
 
     }
+
 
     /**
      * Generates random integer between min and max, including min and max.
