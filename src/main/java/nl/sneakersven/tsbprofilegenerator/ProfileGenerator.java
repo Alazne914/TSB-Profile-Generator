@@ -17,9 +17,6 @@ public class ProfileGenerator {
     private static final String ADDRESS_2_SUFFIX_CHAR = "ABCDE";
     private static final String FIRST_NAME_SUFFIX = "ABCDEFGHKL";
 
-    private static boolean ASC = true;
-    private static boolean DESC = false;
-
     private final String INPUT_FOLDER = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator;
     private final String INPUT_TXT_NAME = "creditcard_details_input.txt";
     private final String OUTPUT_FOLDER = "C:" + File.separator + "TSB Profile Generator" + File.separator + "output" + File.separator;
