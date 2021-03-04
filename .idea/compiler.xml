@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="13">
-      <module name="TSB_Profile_Generator.main" target="13" />
-      <module name="TSB_Profile_Generator.test" target="13" />
+    <bytecodeTargetLevel target="8">
+      <module name="TSB_Profile_Generator.main" target="8" />
+      <module name="TSB_Profile_Generator.test" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
