@@ -1,6 +1,6 @@
 package nl.sneakersven.tsbprofilegenerator;
 
-public class Jigg {
+public class JiggSection {
 
     public static final String ADDRESS1_1 = "address1;";
     public static final String ADDRESS1_2 = "address2;";

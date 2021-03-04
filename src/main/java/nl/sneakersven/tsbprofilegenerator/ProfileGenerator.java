@@ -4,8 +4,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +22,7 @@ public class ProfileGenerator {
     private final String OUTPUT_JSON_NAME = "profiles_output.json";
 
     private static Random random;
+    private JiggingPattern jigger;
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
@@ -72,22 +71,22 @@ public class ProfileGenerator {
          */
 
         //Initializing jigging patterns
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.ADDRESS1_2); //1
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2); //2
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.ADDRESS1_2 + Jigg.RANDOM_NUMBER); //3
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS + Jigg.RANDOM_NUMBER); //4
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.RANDOM_NUMBER + Jigg.RANDOM_CHARS); //5
-        jiggingPatterns.add(Jigg.RANDOM_CHARS + Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS); //6
-        jiggingPatterns.add(Jigg.RANDOM_NUMBER + Jigg.ADDRESS1_2 + Jigg.ADDRESS1_2); //7
-        jiggingPatterns.add(Jigg.RANDOM_NUMBER + Jigg.ADDRESS1_2 + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS); //8
-        jiggingPatterns.add(Jigg.RANDOM_NUMBER + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2); //9
-        jiggingPatterns.add(Jigg.RANDOM_NUMBER + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS); //10
-        jiggingPatterns.add(Jigg.RANDOM_NUMBER + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2 + Jigg.RANDOM_NUMBER); //11
-        jiggingPatterns.add(Jigg.ADDRESS1_1 + Jigg.ADDRESS1_2 + Jigg.RANDOM_NUMBER + Jigg.RANDOM_CHARS); //12
-        jiggingPatterns.add(Jigg.ADDRESS1_1+ Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS); //13
-        jiggingPatterns.add(Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2); //14
-        jiggingPatterns.add(Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2 + Jigg.RANDOM_NUMBER); //15
-        jiggingPatterns.add(Jigg.ADDRESS1_1 + Jigg.RANDOM_CHARS + Jigg.ADDRESS1_2 + Jigg.RANDOM_CHARS); //16
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2); //1
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //2
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //3
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER); //4
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //5
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS); //6
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2); //7
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //8
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //9
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //10
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //11
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //12
+        jiggingPatterns.add(JiggSection.ADDRESS1_1+ JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //13
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //14
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //15
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //16
 
         //Welcome user
         System.out.println("\nWELCOME TO THE TSB PROFILE GENERATOR!\n\n" +

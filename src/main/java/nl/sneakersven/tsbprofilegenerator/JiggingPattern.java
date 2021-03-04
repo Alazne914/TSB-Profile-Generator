@@ -7,13 +7,11 @@ public class JiggingPattern {
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final Random random;
 
-    private String jiggedAddress;
-    private String address1;
-
-    public JiggingPattern(String address1, String pattern) {
-        this.address1 = address1;
+    public JiggingPattern() {
         this.random = new Random();
+    }
 
+    public String jiggAddress1(String address1, String pattern) {
         //Cutting up the address 1
         String[] addressParts = address1.split(" ");
         String streetname = addressParts[0];
@@ -27,22 +25,22 @@ public class JiggingPattern {
         String[] patterns = pattern.split(";");
         for (int i = 0; i < patterns.length; i++) {
             switch (patterns[i]) {
-                case Jigg.ADDRESS1_1:
+                case JiggSection.ADDRESS1_1:
                     result += " " + streetname;
                     break;
-                case Jigg.ADDRESS1_2:
+                case JiggSection.ADDRESS1_2:
                     result += " " + streetnum;
                     break;
-                case Jigg.RANDOM_CHARS:
+                case JiggSection.RANDOM_CHARS:
                     result += " " + getRandomString(ALPHABET, randomInt(2,4));
                     break;
-                case Jigg.RANDOM_NUMBER:
+                case JiggSection.RANDOM_NUMBER:
                     result += " " + randomInt(100,999);
                     break;
             }
         }
 
-        this.jiggedAddress = result.trim();
+        return result.trim();
     }
 
     /**

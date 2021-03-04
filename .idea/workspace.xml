@@ -19,12 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="Got rid of some unused global variables. Shits looking good now. I'm proud!">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/Jigg.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggingPattern.java" afterDir="false" />
+    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="Added JiggingPattern and Jigg objects. Also added all new jiggingpatterns to ProfileGenerator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/Jigg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggingPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggingPattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +120,7 @@
       <workItem from="1614288304210" duration="2975000" />
       <workItem from="1614691706069" duration="3692000" />
       <workItem from="1614716515834" duration="6174000" />
-      <workItem from="1614849252756" duration="3096000" />
+      <workItem from="1614849252756" duration="3714000" />
     </task>
     <task id="LOCAL-00001" summary="Initial gradle commit">
       <created>1614261814382</created>
@@ -242,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614722000439</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added JiggingPattern and Jigg objects. Also added all new jiggingpatterns to ProfileGenerator">
+      <created>1614852655134</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1614852655134</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,7 +298,8 @@
     <MESSAGE value="Sorting profiles updated! Now waayyy more generic" />
     <MESSAGE value="Cleaned up the code a bit. Sweep that broom baby" />
     <MESSAGE value="Got rid of some unused global variables. Shits looking good now. I'm proud!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got rid of some unused global variables. Shits looking good now. I'm proud!" />
+    <MESSAGE value="Added JiggingPattern and Jigg objects. Also added all new jiggingpatterns to ProfileGenerator" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added JiggingPattern and Jigg objects. Also added all new jiggingpatterns to ProfileGenerator" />
   </component>
   <component name="WindowStateProjectService">
     <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1614849923669">
