@@ -2,12 +2,12 @@ package nl.sneakersven.tsbprofilegenerator;
 
 import java.util.Random;
 
-public class JiggingPattern {
+public class AddressJigger {
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final Random random;
 
-    public JiggingPattern() {
+    public AddressJigger() {
         this.random = new Random();
     }
 
@@ -15,28 +15,24 @@ public class JiggingPattern {
         //Cutting up the address 1
         String[] addressParts = address1.split(" ");
         String streetname = addressParts[0];
-        String streetnum = "";
+        String housenum = "";
         for (int i = 1; i < addressParts.length; i++) {
-            streetnum += " " + addressParts[1];
+            housenum += " " + addressParts[1];
         }
 
         //Pasting together the parts
         String result = "";
         String[] patterns = pattern.split(";");
         for (int i = 0; i < patterns.length; i++) {
-            switch (patterns[i]) {
-                case JiggSection.ADDRESS1_1:
-                    result += " " + streetname;
-                    break;
-                case JiggSection.ADDRESS1_2:
-                    result += " " + streetnum;
-                    break;
-                case JiggSection.RANDOM_CHARS:
-                    result += " " + getRandomString(ALPHABET, randomInt(2,4));
-                    break;
-                case JiggSection.RANDOM_NUMBER:
-                    result += " " + randomInt(100,999);
-                    break;
+            String currentPattern = patterns[i];
+            if(currentPattern.equals(JiggSection.ADDRESS1_1)) {
+                result += " " + streetname;
+            } else if(currentPattern.equals(JiggSection.ADDRESS1_2)) {
+                result += " " + housenum;
+            } else if(currentPattern.equals(JiggSection.RANDOM_CHARS)) {
+                result += " " + getRandomString(ALPHABET, randomInt(2,4));
+            } else if(currentPattern.equals(JiggSection.RANDOM_NUMBER)) {
+                result += " " + randomInt(100,999);
             }
         }
 

@@ -22,7 +22,7 @@ public class ProfileGenerator {
     private final String OUTPUT_JSON_NAME = "profiles_output.json";
 
     private static Random random;
-    private JiggingPattern jigger;
+    private AddressJigger jigger;
 
     private int amtOfJiggs;
     private int numOfProfiles = 0;
