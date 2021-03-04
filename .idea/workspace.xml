@@ -19,12 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="gitignore update">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-2-2021_23_13__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-2-2021_23_13__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="Got rid of some unused global variables. Shits looking good now. I'm proud!">
+      <change afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/Jigg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggingPattern.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +52,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -119,7 +120,8 @@
       <workItem from="1614261700178" duration="4982000" />
       <workItem from="1614288304210" duration="2975000" />
       <workItem from="1614691706069" duration="3692000" />
-      <workItem from="1614716515834" duration="5252000" />
+      <workItem from="1614716515834" duration="6174000" />
+      <workItem from="1614849252756" duration="3096000" />
     </task>
     <task id="LOCAL-00001" summary="Initial gradle commit">
       <created>1614261814382</created>
@@ -219,7 +221,28 @@
       <option name="project" value="LOCAL" />
       <updated>1614638131577</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Sorting profiles updated! Now waayyy more generic">
+      <created>1614721916078</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1614721916078</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Cleaned up the code a bit. Sweep that broom baby">
+      <created>1614721961308</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1614721961308</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Got rid of some unused global variables. Shits looking good now. I'm proud!">
+      <created>1614722000439</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1614722000439</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,27 +289,40 @@
     <MESSAGE value="Random phone number added" />
     <MESSAGE value="Multiple jigging patterns capabilities added" />
     <MESSAGE value="Multiple jigging patterns capabilities update. UI update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Multiple jigging patterns capabilities update. UI update" />
+    <MESSAGE value="Sorting profiles updated! Now waayyy more generic" />
+    <MESSAGE value="Cleaned up the code a bit. Sweep that broom baby" />
+    <MESSAGE value="Got rid of some unused global variables. Shits looking good now. I'm proud!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Got rid of some unused global variables. Shits looking good now. I'm proud!" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="283" key="GridCell.Tab.0.bottom" timestamp="1614721779709">
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1614849923669">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614721779709" />
-    <state width="1877" height="283" key="GridCell.Tab.0.center" timestamp="1614721779709">
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614849923669" />
+    <state width="1877" height="711" key="GridCell.Tab.0.bottom" timestamp="1614851372493">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="283" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614721779709" />
-    <state width="1877" height="283" key="GridCell.Tab.0.left" timestamp="1614721779709">
+    <state width="1877" height="711" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614851372493" />
+    <state width="1877" height="711" key="GridCell.Tab.0.center" timestamp="1614851372493">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="283" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614721779709" />
-    <state width="1877" height="283" key="GridCell.Tab.0.right" timestamp="1614721779709">
+    <state width="1877" height="711" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614851372493" />
+    <state width="1877" height="711" key="GridCell.Tab.0.left" timestamp="1614851372493">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="283" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614721779709" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614294386222" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614294386222" />
+    <state width="1877" height="711" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614851372493" />
+    <state width="1877" height="711" key="GridCell.Tab.0.right" timestamp="1614851372493">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="711" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614851372493" />
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1614722001275">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614722001275" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1614849259307">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1614849259307" />
   </component>
   <component name="masterDetails">
     <states>
