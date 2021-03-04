@@ -32,7 +32,7 @@ public class ProfileGenerator {
     private boolean alreadyJigged;
     private String phoneNumberStart;
     private int phoneNumberLength;
-    private int jiggingPattern;
+    private int jiggingPatternChoice;
 
     private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Suite", "Room", "Kamer" };
     private ArrayList<String> jiggingPatterns = new ArrayList<>();
@@ -49,8 +49,10 @@ public class ProfileGenerator {
     {
         //Initializing global objects
         random = new Random();
+        jigger = new AddressJigger();
 
         /*
+
            1) TSBPG Streetname 1
            2) TSBPG Streetname TSBPG 1
            3) TSBPG Streetname 1 534
@@ -68,6 +70,18 @@ public class ProfileGenerator {
            15) Streetname TSBPG 1 534
            16) Streetname TSBPG 1 TSBPG
            17) Randomized mix of all of the patterns above
+
+           OR MAYBE:
+
+           1) Streetname TSBPG 1
+           2) Streetname TSBPG 1 534
+           3) Streetname TSBPG 1 TSBPG
+           4) TSBPG Streetname TSBPG 1
+           5) 534 Streetname TSBPG 1
+           6) 534 Streetname TSBPG 1 534
+           7) 534 Streetname TSBPG 1 TSBPG
+           8) Randomized mix of all of the patterns above
+
          */
 
         //Initializing jigging patterns
@@ -164,7 +178,7 @@ public class ProfileGenerator {
                 f.createNewFile();
                 System.exit(1);
             } catch (IOException e) {
-                System.out.println("Oops! Something went wrong while creating the credit cards input file...\n");
+                System.out.println("\nOops! Something went wrong while creating the credit cards input file...\n");
                 e.printStackTrace();
             }
         } else {
@@ -195,16 +209,16 @@ public class ProfileGenerator {
 
             System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
-                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)" +
-                    "\n 1) TSBPG Streetname 1\n" +
-                    " 2) TSBPG Streetname TSBPG 1\n" +
-                    " 3) TSBPG Streetname 1 534\n" +
-                    " 4) TSBPG Streetname 1 TSBPG 534\n" +
-                    " 5) TSBPG Streetname 1 534 TSBPG\n" +
-                    " 6) TSBPG Streetname 1 TSBPG\n" +
-                    " 7) 534 Streetname 1\n" +
-                    " 8) 534 Streetname 1 TSBPG\n" +
-                    " 9) 534 Streetname TSBPG 1\n" +
+                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
+                    "  1) TSBPG Streetname 1\n" +
+                    "  2) TSBPG Streetname TSBPG 1\n" +
+                    "  3) TSBPG Streetname 1 534\n" +
+                    "  4) TSBPG Streetname 1 TSBPG 534\n" +
+                    "  5) TSBPG Streetname 1 534 TSBPG\n" +
+                    "  6) TSBPG Streetname 1 TSBPG\n" +
+                    "  7) 534 Streetname 1\n" +
+                    "  8) 534 Streetname 1 TSBPG\n" +
+                    "  9) 534 Streetname TSBPG 1\n" +
                     " 10) 534 Streetname TSBPG 1 TSBPG\n" +
                     " 11) 534 Streetname TSBPG 1 534\n" +
                     " 12) Streetname 1 534 TSBPG\n" +
@@ -214,10 +228,10 @@ public class ProfileGenerator {
                     " 16) Streetname TSBPG 1 TSBPG\n" +
                     " 17) Randomized mix of all of the patterns above" +
                     "\nInput: ");
-            jiggingPattern = Integer.parseInt(input.nextLine());
-            while (jiggingPattern < 1 || jiggingPattern > 11) {
+            jiggingPatternChoice = Integer.parseInt(input.nextLine());
+            while (jiggingPatternChoice < 1 || jiggingPatternChoice > jiggingPatterns.size()+1) {
                 System.out.print("Input out of bounds, please try again: ");
-                jiggingPattern = Integer.parseInt(input.nextLine());
+                jiggingPatternChoice = Integer.parseInt(input.nextLine());
             }
 
             randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
@@ -435,88 +449,80 @@ public class ProfileGenerator {
         card.put("ccExpiry", ccDetails[3]);
         card.put("ccCvc", ccDetails[4]);
 
-        /*
-           1) TSBPG Streetname 1
-           2) TSBPG Streetname TSBPG 1
-           3) TSBPG Streetname 1 534
-           4) TSBPG Streetname 1 TSBPG 534
-           5) TSBPG Streetname 1 534 TSBPG
-           6) TSBPG Streetname 1 TSBPG
-           7) Streetname 1 534 TSBPG
-           8) Streetname 1 TSBPG
-           9) Streetname TSBPG 1 534
-           10) Streetname TSBPG 1 TSBPG
-           11) Randomized mix of all of the patterns above" +
-         */
-
         //TODO: ArrayList maken met jiggingpatterns
 
-        //Address 1 jigging:
-        switch (jiggingPattern) {
-            //Pattern 1: TSBPG Streetname 1
-            case 1:
-                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
-                break;
-
-            //Pattern 2: TSBPG Streetname 1 534
-            case 3:
-                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
-                break;
-
-            //Pattern 3: TSBPG Streetname 1 534 TSBPG
-            case 5:
-                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                break;
-
-            //Pattern 4: TSBPG Streetname 1 TSBPG
-            case 6:
-                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                break;
-
-            //Pattern 5: Streetname 1 534 TSBPG
-            case 7:
-                shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                break;
-
-            //Pattern 6: Streetname 1 TSBPG
-            case 8:
-                shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                break;
-
-            //Random mix
-            case 11:
-                switch (randomInt(1,6)) {
-                    case 1:
-                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
-                        break;
-
-                    //Pattern 2: TSBPG Streetname 1 534
-                    case 2:
-                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
-                        break;
-
-                    //Pattern 3: TSBPG Streetname 1 534 TSBPG
-                    case 3:
-                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                        break;
-
-                    //Pattern 4: TSBPG Streetname 1 TSBPG
-                    case 4:
-                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                        break;
-
-                    //Pattern 5: Streetname 1 534 TSBPG
-                    case 5:
-                        shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                        break;
-
-                    //Pattern 6: Streetname 1 TSBPG
-                    case 6:
-                        shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-                        break;
-                }
-                break;
+        if(jiggingPatternChoice == 17) {
+            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,16) )));
+        } else {
+            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( jiggingPatternChoice-1 )));
         }
+
+//        //Address 1 jigging:
+//        switch (jiggingPatternChoice) {
+//            //Pattern 1: TSBPG Streetname 1
+//            case 1:
+//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
+//                break;
+//
+//            //Pattern 2: TSBPG Streetname 1 534
+//            case 3:
+//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
+//                break;
+//
+//            //Pattern 3: TSBPG Streetname 1 534 TSBPG
+//            case 5:
+//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                break;
+//
+//            //Pattern 4: TSBPG Streetname 1 TSBPG
+//            case 6:
+//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                break;
+//
+//            //Pattern 5: Streetname 1 534 TSBPG
+//            case 7:
+//                shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                break;
+//
+//            //Pattern 6: Streetname 1 TSBPG
+//            case 8:
+//                shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                break;
+//
+//            //Random mix
+//            case 11:
+//                switch (randomInt(1,6)) {
+//                    case 1:
+//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
+//                        break;
+//
+//                    //Pattern 2: TSBPG Streetname 1 534
+//                    case 2:
+//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
+//                        break;
+//
+//                    //Pattern 3: TSBPG Streetname 1 534 TSBPG
+//                    case 3:
+//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                        break;
+//
+//                    //Pattern 4: TSBPG Streetname 1 TSBPG
+//                    case 4:
+//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                        break;
+//
+//                    //Pattern 5: Streetname 1 534 TSBPG
+//                    case 5:
+//                        shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                        break;
+//
+//                    //Pattern 6: Streetname 1 TSBPG
+//                    case 6:
+//                        shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
+//                        break;
+//                }
+//                break;
+//        }
 
         //Address fields jigging:
         shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
