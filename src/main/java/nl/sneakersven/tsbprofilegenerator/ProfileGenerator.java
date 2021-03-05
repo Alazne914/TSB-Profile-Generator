@@ -129,6 +129,95 @@ public class ProfileGenerator {
     }
 
     /**
+     * Retrieves all profiles with unique credit cards from .json file (TSB export).
+     * Writes them off to a .txt file that's ready to be used to generate new profiles
+     */
+    public void retrieveCcDetails()
+    {
+        HashMap<String, JSONObject> creditCards = new HashMap<>();
+
+        try {
+            File f = getFiles(".json", new File(INPUT_FOLDER)).get(0);
+            String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
+            JSONArray array = new JSONArray(jsonString);
+
+            //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                creditCards.put(obj.getJSONObject("cc").getString("ccNumber"), obj);
+            }
+
+            //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
+            String txtOutputPath = OUTPUT_FOLDER + OUTPUT_TXT_NAME;
+            File output = new File(txtOutputPath);
+            output.getParentFile().mkdirs();
+            output.createNewFile();
+
+            FileWriter fstream = new FileWriter(output);
+            BufferedWriter info = new BufferedWriter(fstream);
+
+            ArrayList<JSONObject> unorderedCCList = new ArrayList<>(creditCards.values());
+            ArrayList<JSONObject> orderedCCList;
+            ArrayList<JSONObject> numericProfileNames = new ArrayList<>();
+            ArrayList<JSONObject> alphabeticalProfileNames = new ArrayList<>();
+
+            //Before sorting, remove the "( J1 )" if present
+            for (JSONObject obj : unorderedCCList) {
+                String newName = obj.getJSONObject("cc").getString("profileName").split("\\(")[0].trim();
+                obj.getJSONObject("cc").put("profileName", newName);
+            }
+
+            //Computing to sort the profiles based on the profileName field
+            for (JSONObject obj : unorderedCCList) {
+                String pnEnd = obj.getJSONObject("cc").getString("profileName").split(" ")[ obj.getJSONObject("cc").getString("profileName").split(" ").length-1 ];
+                System.out.println(pnEnd);
+
+                if( pnEnd.chars().allMatch( Character::isDigit ) ) {
+                    numericProfileNames.add(obj);
+                } else {
+                    alphabeticalProfileNames.add(obj);
+                }
+            }
+
+            //Sorting both arraylists
+            numericProfileNames.sort(Comparator.comparing(o -> Integer.parseInt(o.getJSONObject("cc").getString("profileName").split(" ")[o.getJSONObject("cc").getString("profileName").split(" ").length - 1])));
+            alphabeticalProfileNames.sort(Comparator.comparing(o -> o.getJSONObject("cc").getString("profileName")));
+
+            //Adding arraylists together
+            numericProfileNames.addAll(alphabeticalProfileNames);
+            orderedCCList = numericProfileNames;
+
+            //Writing credit cards to .txt file
+            int counter = 0;
+            for (JSONObject obj : orderedCCList) {
+                JSONObject cc = obj.getJSONObject("cc");
+
+                String line = String.format(cc.getString("profileName") +
+                        ";" + cc.getString("phone") +
+                        ";" + cc.getString("ccNumber") +
+                        ";" + cc.getString("ccExpiry") +
+                        ";" + cc.getString("ccCvc")  + "%n");
+
+                info.write(line);
+                counter++;
+            }
+
+            info.close();
+
+            System.out.println("\n" + counter + " profiles written to output file successfully. File is located at C:/TSB Profile Generator/output");
+
+        } catch (IndexOutOfBoundsException | IOException e) {
+            if(e instanceof IndexOutOfBoundsException) {
+                System.out.println("\nOops! You didn't place a .json file in the input folder..." +
+                        "\nPlease place your TSB profiles export in that folder and rerun the generator");
+            } else {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
      * Method that reads profile details from the .txt file, and creates TSB ready jigged profiles
      */
     public void generateProfiles()
@@ -171,6 +260,7 @@ public class ProfileGenerator {
             Scanner input = new Scanner(System.in);
             String[] shippingDetails = new String[16];
 
+            //Length of address details input text
             final int LINE_LENGTH = 12;
 
             //TODO: Dynamically print all Jigging patterns
@@ -197,6 +287,8 @@ public class ProfileGenerator {
                     "\nInput: ");
              */
 
+            //TODO: Accept multiple specific jigging patterns
+
             //Ask user for jigging settings
             System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
@@ -211,10 +303,13 @@ public class ProfileGenerator {
                     " 7) 534 Streetname TSBPG 1 TSBPG\n" +
                     " 8) Randomized mix of all of the patterns above" +
                     "\nInput: ");
-            int jiggingPatternChoice = Integer.parseInt(input.nextLine());
-            while (jiggingPatternChoice < 1 || jiggingPatternChoice > jigger.amountOfPatterns()+1) {
-                System.out.print("Input out of bounds, please try again: ");
-                jiggingPatternChoice = Integer.parseInt(input.nextLine());
+            String jiggingPatternChoice = input.nextLine();
+            if(!jiggingPatternChoice.contains(",")) {
+                int choiceInt = Integer.parseInt(jiggingPatternChoice);
+                while (choiceInt < 1 || choiceInt > jigger.amountOfPatterns() + 1) {
+                    System.out.print("Input out of bounds, please try again: ");
+                    choiceInt = Integer.parseInt(input.nextLine());
+                }
             }
 
             String phoneNumberStart = "";
@@ -307,6 +402,9 @@ public class ProfileGenerator {
                 String json = jsonArray.toString(4);
                 Files.write(Paths.get(f.getPath()), json.getBytes());
             } catch (IOException e) {
+                System.out.println("\nOops! Something went wrong while writing the profiles to the output .json file" +
+                        "\nNotifying the devs of this error will be appreciated :)" +
+                        "\nError:");
                 e.printStackTrace();
             }
 
@@ -320,95 +418,6 @@ public class ProfileGenerator {
             System.out.println("\nOops! Your creditcard_details_input.txt file is empty!" +
                     "\nType/paste your details in the file and rerun the program!" +
                     "\nThe file can be found at: C:/TSB Profile Generator/input");
-        }
-
-    }
-
-    /**
-     * Retrieves all profiles with unique credit cards from .json file (TSB export).
-     * Writes them off to a .txt file that's ready to be used to generate new profiles
-     */
-    public void retrieveCcDetails()
-    {
-        HashMap<String, JSONObject> creditCards = new HashMap<>();
-
-        try {
-            File f = getFiles(".json", new File(INPUT_FOLDER)).get(0);
-            String jsonString = new String(Files.readAllBytes(Paths.get(f.getPath())));
-            JSONArray array = new JSONArray(jsonString);
-
-            //Filters all the profiles for profiles with unique credit cards, those profiles get added to a HashMap
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject obj = array.getJSONObject(i);
-                creditCards.put(obj.getJSONObject("cc").getString("ccNumber"), obj);
-            }
-
-            //Write all unique credit cards to .txt file. Ready to be used to generate new profiles
-            String txtOutputPath = OUTPUT_FOLDER + OUTPUT_TXT_NAME;
-            File output = new File(txtOutputPath);
-            output.getParentFile().mkdirs();
-            output.createNewFile();
-
-            FileWriter fstream = new FileWriter(output);
-            BufferedWriter info = new BufferedWriter(fstream);
-
-            ArrayList<JSONObject> unorderedCCList = new ArrayList<>(creditCards.values());
-            ArrayList<JSONObject> orderedCCList;
-            ArrayList<JSONObject> numericProfileNames = new ArrayList<>();
-            ArrayList<JSONObject> alphabeticalProfileNames = new ArrayList<>();
-
-            //Before sorting, remove the "( J1 )" if present
-            for (JSONObject obj : unorderedCCList) {
-                String newName = obj.getJSONObject("cc").getString("profileName").split("\\(")[0].trim();
-                obj.getJSONObject("cc").put("profileName", newName);
-            }
-
-            //Computing to sort the profiles based on the profileName field
-            for (JSONObject obj : unorderedCCList) {
-                String pnEnd = obj.getJSONObject("cc").getString("profileName").split(" ")[ obj.getJSONObject("cc").getString("profileName").split(" ").length-1 ];
-                System.out.println(pnEnd);
-
-                if( pnEnd.chars().allMatch( Character::isDigit ) ) {
-                    numericProfileNames.add(obj);
-                } else {
-                    alphabeticalProfileNames.add(obj);
-                }
-            }
-
-            //Sorting both arraylists
-            numericProfileNames.sort(Comparator.comparing(o -> Integer.parseInt(o.getJSONObject("cc").getString("profileName").split(" ")[o.getJSONObject("cc").getString("profileName").split(" ").length - 1])));
-            alphabeticalProfileNames.sort(Comparator.comparing(o -> o.getJSONObject("cc").getString("profileName")));
-
-            //Adding arraylists together
-            numericProfileNames.addAll(alphabeticalProfileNames);
-            orderedCCList = numericProfileNames;
-
-            //Writing credit cards to .txt file
-            int counter = 0;
-            for (JSONObject obj : orderedCCList) {
-                JSONObject cc = obj.getJSONObject("cc");
-
-                String line = String.format(cc.getString("profileName") +
-                            ";" + cc.getString("phone") +
-                            ";" + cc.getString("ccNumber") +
-                            ";" + cc.getString("ccExpiry") +
-                            ";" + cc.getString("ccCvc")  + "%n");
-
-                info.write(line);
-                counter++;
-            }
-
-            info.close();
-
-            System.out.println("\n" + counter + " profiles written to output file successfully. File is located at C:/TSB Profile Generator/output");
-
-        } catch (IndexOutOfBoundsException | IOException e) {
-            if(e instanceof IndexOutOfBoundsException) {
-                System.out.println("\nOops! You didn't place a .json file in the input folder..." +
-                        "\nPlease place your TSB profiles export in that folder and rerun the generator");
-            } else {
-                e.printStackTrace();
-            }
         }
 
     }

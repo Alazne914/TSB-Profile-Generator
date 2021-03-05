@@ -48,6 +48,95 @@ public class ProfileJigger {
     }
 
     /**
+     * Creates and returns a JSONObject containing card details and jigged address
+     * @param ccDetails Card details
+     * @param shippingDetails Shipping details
+     * @param jigg Jigg number
+     * @return JSONObject containing profile details
+     */
+    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg, boolean randomPhone, boolean jiggCity, int phoneNumberLength, String phoneNumberStart, String jiggingPatternChoice)
+    {
+        JSONObject profile = new JSONObject();
+        JSONObject card = new JSONObject();
+        JSONObject shipping = new JSONObject();
+        JSONObject billing = new JSONObject();
+
+        if(jiggingPatternChoice.contains(",")) {
+            String[] choices = jiggingPatternChoice.split(",");
+            int[] intChoices = new int[choices.length];
+
+            for (int i = 0; i < choices.length; i++) {
+                intChoices[i] = Integer.parseInt(choices[i]);
+            }
+        }
+
+        //Putting card details
+        card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
+        if(randomPhone) {
+            double min = Math.pow(10, (phoneNumberLength - 1));
+            double max = Math.pow(10, phoneNumberLength) - 1;
+            card.put("phone", phoneNumberStart + randomInt((int) min,(int) max));
+        } else {
+            card.put("phone", ccDetails[1]);
+        }
+        card.put("ccNumber", ccDetails[2]);
+        card.put("ccExpiry", ccDetails[3]);
+        card.put("ccCvc", ccDetails[4]);
+
+        //TODO: ArrayList maken met jiggingpatterns
+
+        if(!jiggingPatternChoice.contains(",") && Integer.parseInt(jiggingPatternChoice) == jiggingPatterns.size()+1) {
+            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,jiggingPatterns.size()-1) )));
+        } else {
+            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( Integer.parseInt(jiggingPatternChoice)-1 )));
+        }
+
+        //Address fields jigging:
+        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
+        shipping.put("lastName", NameGenerator.getLastName());
+        if(shippingDetails[3].equals("")) {
+            shipping.put("address2", jiggAddress2());
+        } else {
+            shipping.put("address2", shippingDetails[3]);
+        }
+        shipping.put("country", shippingDetails[6]);
+        if(jiggCity) {
+            shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0, 2))).trim());
+        } else {
+            shipping.put("city", (shippingDetails[5]));
+        }
+        shipping.put("zip", shippingDetails[4]);
+        shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
+
+        //Put billing details
+        if(shippingDetails[8].equals("true")) {
+            billing.put("billingSameAsShipping", true);
+        } else {
+            billing.put("billingSameAsShipping", "");
+            billing.put("firstName", shippingDetails[8]);
+            billing.put("lastName", shippingDetails[9]);
+            billing.put("address", shippingDetails[10]);
+            billing.put("address2", shippingDetails[11]);
+            billing.put("country", shippingDetails[14]);
+            billing.put("city", shippingDetails[13]);
+            billing.put("zip", shippingDetails[12]);
+            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[15]));
+        }
+
+        //Put extra details
+        profile.put("cc", card);
+        profile.put("shipping", shipping);
+        profile.put("billing", billing);
+        profile.put("isJapaneseAddress", JSONObject.NULL);
+        profile.put("isRussianAddress", JSONObject.NULL);
+        profile.put("isMexicanAddress", JSONObject.NULL);
+        profile.put("isPhilippinesAddress", JSONObject.NULL);
+        profile.put("date", System.currentTimeMillis());
+
+        return profile;
+    }
+
+    /**
      * Method that jiggs the Address 1. See full guide for different patterns
      * @param address1 User input Address 1
      * @param pattern Jiggingpattern
@@ -94,86 +183,6 @@ public class ProfileJigger {
             return prefixes[ randomInt(0, prefixes.length) ] + " " + randomInt(1,5) + getRandomString(ADDRESS_2_SUFFIX_CHAR,randomInt(0,1));
         }
         return null;
-    }
-
-    /**
-     * Creates and returns a JSONObject containing card details and jigged address
-     * @param ccDetails Card details
-     * @param shippingDetails Shipping details
-     * @param jigg Jigg number
-     * @return JSONObject containing profile details
-     */
-    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg, boolean randomPhone, boolean jiggCity, int phoneNumberLength, String phoneNumberStart, int jiggingPatternChoice)
-    {
-        JSONObject profile = new JSONObject();
-        JSONObject card = new JSONObject();
-        JSONObject shipping = new JSONObject();
-        JSONObject billing = new JSONObject();
-
-        //Putting card details
-        card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
-        if(randomPhone) {
-            double min = Math.pow(10, (phoneNumberLength - 1));
-            double max = Math.pow(10, phoneNumberLength) - 1;
-            card.put("phone", phoneNumberStart + randomInt((int) min,(int) max));
-        } else {
-            card.put("phone", ccDetails[1]);
-        }
-        card.put("ccNumber", ccDetails[2]);
-        card.put("ccExpiry", ccDetails[3]);
-        card.put("ccCvc", ccDetails[4]);
-
-        //TODO: ArrayList maken met jiggingpatterns
-
-        if(jiggingPatternChoice == jiggingPatterns.size()+1) {
-            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,jiggingPatterns.size()-1) )));
-        } else {
-            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( jiggingPatternChoice-1 )));
-        }
-
-        //Address fields jigging:
-        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
-        shipping.put("lastName", NameGenerator.getLastName());
-        if(shippingDetails[3].equals("")) {
-            shipping.put("address2", jiggAddress2());
-        } else {
-            shipping.put("address2", shippingDetails[3]);
-        }
-        shipping.put("country", shippingDetails[6]);
-        if(jiggCity) {
-            shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0, 2))).trim());
-        } else {
-            shipping.put("city", (shippingDetails[5]));
-        }
-        shipping.put("zip", shippingDetails[4]);
-        shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
-
-        //Put billing details
-        if(shippingDetails[8].equals("true")) {
-            billing.put("billingSameAsShipping", true);
-        } else {
-            billing.put("billingSameAsShipping", "");
-            billing.put("firstName", shippingDetails[8]);
-            billing.put("lastName", shippingDetails[9]);
-            billing.put("address", shippingDetails[10]);
-            billing.put("address2", shippingDetails[11]);
-            billing.put("country", shippingDetails[14]);
-            billing.put("city", shippingDetails[13]);
-            billing.put("zip", shippingDetails[12]);
-            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[15]));
-        }
-
-        //Put extra details
-        profile.put("cc", card);
-        profile.put("shipping", shipping);
-        profile.put("billing", billing);
-        profile.put("isJapaneseAddress", JSONObject.NULL);
-        profile.put("isRussianAddress", JSONObject.NULL);
-        profile.put("isMexicanAddress", JSONObject.NULL);
-        profile.put("isPhilippinesAddress", JSONObject.NULL);
-        profile.put("date", System.currentTimeMillis());
-
-        return profile;
     }
 
     /**
