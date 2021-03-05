@@ -44,7 +44,7 @@ public class AddressJigger {
                     result += " " + getRandomString(ALPHABET, randomInt(2, 4));
                     break;
                 case JiggSection.RANDOM_NUMBER:
-                    result += " " + randomInt(100, 999);
+                    result += " " + randomInt(300, 999);
                     break;
             }
         }

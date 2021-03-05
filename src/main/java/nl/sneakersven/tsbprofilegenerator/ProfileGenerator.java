@@ -85,22 +85,30 @@ public class ProfileGenerator {
          */
 
         //Initializing jigging patterns
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2); //1
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //2
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //3
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER); //4
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //5
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS); //6
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2); //7
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //8
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //9
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //10
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //11
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //12
-        jiggingPatterns.add(JiggSection.ADDRESS1_1+ JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //13
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //14
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //15
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //16
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2); //1
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //2
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //3
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER); //4
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //5
+//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS); //6
+//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2); //7
+//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //8
+//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //9
+//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //10
+//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //11
+//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //12
+//        jiggingPatterns.add(JiggSection.ADDRESS1_1+ JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //13
+//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //14
+//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //15
+//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //16
+
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //1
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //2
+        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //3
+        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //4
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //5
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //6
+        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //7
 
         //Welcome user
         System.out.println("\nWELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
@@ -207,6 +215,8 @@ public class ProfileGenerator {
 
             final int LINE_LENGTH = 12;
 
+            //TODO: Dynamically print all Jigging patterns
+
             System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
                     "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
@@ -292,8 +302,6 @@ public class ProfileGenerator {
                 print("State: ", LINE_LENGTH);
                 shippingDetails[15] = input.nextLine();
             }
-
-
 
             //Create desired amount of profiles for each provided credit card
             JSONArray jsonArray = new JSONArray();
@@ -451,78 +459,11 @@ public class ProfileGenerator {
 
         //TODO: ArrayList maken met jiggingpatterns
 
-        if(jiggingPatternChoice == 17) {
-            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,16) )));
+        if(jiggingPatternChoice == jiggingPatterns.size()+1) {
+            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,jiggingPatterns.size()-1) )));
         } else {
             shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( jiggingPatternChoice-1 )));
         }
-
-//        //Address 1 jigging:
-//        switch (jiggingPatternChoice) {
-//            //Pattern 1: TSBPG Streetname 1
-//            case 1:
-//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
-//                break;
-//
-//            //Pattern 2: TSBPG Streetname 1 534
-//            case 3:
-//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
-//                break;
-//
-//            //Pattern 3: TSBPG Streetname 1 534 TSBPG
-//            case 5:
-//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                break;
-//
-//            //Pattern 4: TSBPG Streetname 1 TSBPG
-//            case 6:
-//                shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                break;
-//
-//            //Pattern 5: Streetname 1 534 TSBPG
-//            case 7:
-//                shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                break;
-//
-//            //Pattern 6: Streetname 1 TSBPG
-//            case 8:
-//                shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                break;
-//
-//            //Random mix
-//            case 11:
-//                switch (randomInt(1,6)) {
-//                    case 1:
-//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2]);
-//                        break;
-//
-//                    //Pattern 2: TSBPG Streetname 1 534
-//                    case 2:
-//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999));
-//                        break;
-//
-//                    //Pattern 3: TSBPG Streetname 1 534 TSBPG
-//                    case 3:
-//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                        break;
-//
-//                    //Pattern 4: TSBPG Streetname 1 TSBPG
-//                    case 4:
-//                        shipping.put("address", getRandomString(ALPHABET, randomInt(2,4)) + " " + shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                        break;
-//
-//                    //Pattern 5: Streetname 1 534 TSBPG
-//                    case 5:
-//                        shipping.put("address", shippingDetails[2] + " " + randomInt(100,999) + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                        break;
-//
-//                    //Pattern 6: Streetname 1 TSBPG
-//                    case 6:
-//                        shipping.put("address", shippingDetails[2] + " " + getRandomString(ALPHABET, randomInt(2,4)));
-//                        break;
-//                }
-//                break;
-//        }
 
         //Address fields jigging:
         shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
