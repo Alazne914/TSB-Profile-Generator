@@ -4,16 +4,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
+import nl.sneakersven.tsbprofilegenerator.tools.ProfileJigger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ProfileGenerator {
-
-    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String ALPHABET_WITH_NUMBERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321";
-    private static final String ADDRESS_2_SUFFIX_CHAR = "ABCDE";
-    private static final String FIRST_NAME_SUFFIX = "ABCDEFGHKL";
 
     private final String INPUT_FOLDER = "C:" + File.separator + "TSB Profile Generator" + File.separator + "input" + File.separator;
     private final String INPUT_TXT_NAME = "creditcard_details_input.txt";
@@ -22,20 +19,7 @@ public class ProfileGenerator {
     private final String OUTPUT_JSON_NAME = "profiles_output.json";
 
     private static Random random;
-    private AddressJigger jigger;
-
-    private int amtOfJiggs;
-    private int numOfProfiles = 0;
-    private boolean randomPhone;
-    private boolean jiggCity;
-    private boolean billingSameAsShipping;
-    private boolean alreadyJigged;
-    private String phoneNumberStart;
-    private int phoneNumberLength;
-    private int jiggingPatternChoice;
-
-    private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Suite", "Room", "Kamer" };
-    private ArrayList<String> jiggingPatterns = new ArrayList<>();
+    private ProfileJigger jigger;
 
     public static void main(String[] args)
     {
@@ -49,7 +33,7 @@ public class ProfileGenerator {
     {
         //Initializing global objects
         random = new Random();
-        jigger = new AddressJigger();
+        jigger = new ProfileJigger();
 
         /*
 
@@ -83,32 +67,6 @@ public class ProfileGenerator {
            8) Randomized mix of all of the patterns above
 
          */
-
-        //Initializing jigging patterns
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2); //1
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //2
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //3
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER); //4
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //5
-//        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS); //6
-//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2); //7
-//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //8
-//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //9
-//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //10
-//        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //11
-//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS); //12
-//        jiggingPatterns.add(JiggSection.ADDRESS1_1+ JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //13
-//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //14
-//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //15
-//        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //16
-
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //1
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //2
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //3
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //4
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //5
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //6
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //7
 
         //Welcome user
         System.out.println("\nWELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
@@ -171,7 +129,7 @@ public class ProfileGenerator {
     }
 
     /**
-     * Method that reads profile details from the .txt file, and puts them in a JSONArray
+     * Method that reads profile details from the .txt file, and creates TSB ready jigged profiles
      */
     public void generateProfiles()
     {
@@ -217,8 +175,7 @@ public class ProfileGenerator {
 
             //TODO: Dynamically print all Jigging patterns
 
-            System.out.println("\nJIGGING SETTINGS");
-            System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
+            /*
                     "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
                     "  1) TSBPG Streetname 1\n" +
                     "  2) TSBPG Streetname TSBPG 1\n" +
@@ -238,13 +195,31 @@ public class ProfileGenerator {
                     " 16) Streetname TSBPG 1 TSBPG\n" +
                     " 17) Randomized mix of all of the patterns above" +
                     "\nInput: ");
-            jiggingPatternChoice = Integer.parseInt(input.nextLine());
-            while (jiggingPatternChoice < 1 || jiggingPatternChoice > jiggingPatterns.size()+1) {
+             */
+
+            //Ask user for jigging settings
+            System.out.println("\nJIGGING SETTINGS");
+            System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
+                    "\nIf you want to choose more than one specific pattern, put a , in between each choice. Eg: 1,3,4 (no spaces)" +
+                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
+                    " 1) Streetname TSBPG 1 \n" +
+                    " 2) Streetname TSBPG 1 534\n" +
+                    " 3) Streetname TSBPG 1 TSBPG\n" +
+                    " 4) TSBPG Streetname TSBPG 1\n" +
+                    " 5) 534 Streetname TSBPG 1\n" +
+                    " 6) 534 Streetname TSBPG 1 534\n" +
+                    " 7) 534 Streetname TSBPG 1 TSBPG\n" +
+                    " 8) Randomized mix of all of the patterns above" +
+                    "\nInput: ");
+            int jiggingPatternChoice = Integer.parseInt(input.nextLine());
+            while (jiggingPatternChoice < 1 || jiggingPatternChoice > jigger.amountOfPatterns()+1) {
                 System.out.print("Input out of bounds, please try again: ");
                 jiggingPatternChoice = Integer.parseInt(input.nextLine());
             }
 
-            randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
+            String phoneNumberStart = "";
+            int phoneNumberLength = 0;
+            boolean randomPhone = userSaysYes(input, "Do you want to randomize the profile's phone number? (y/n): ");
             if(randomPhone) {
                 System.out.print("What should the beginning of each phone number be? (e.g. +316 for NL): ");
                 phoneNumberStart = input.nextLine();
@@ -253,12 +228,12 @@ public class ProfileGenerator {
             }
 
             boolean randomNames = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
-            jiggCity = userSaysYes(input, "Do you want to jigg random characters to the end of the City field? (y/n): ");
-            billingSameAsShipping = userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ");
+            boolean jiggCity = userSaysYes(input, "Do you want to jigg random characters to the end of the City field? (y/n): ");
+            boolean billingSameAsShipping = userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ");
             System.out.print("How many times would you like to jigg your adress for each credit card: ");
-            amtOfJiggs = Integer.parseInt(input.nextLine());
+            int amtOfJiggs = Integer.parseInt(input.nextLine());
 
-            //First we ask user for input about address
+            //Ask user for address details
             System.out.println("\nSHIPPING DETAILS" +
                     "\nIf you want a field to be empty, just type nothing and hit enter." +
                     "\n(If you enter something for address 2, it will not get jigged)");
@@ -303,6 +278,11 @@ public class ProfileGenerator {
                 shippingDetails[15] = input.nextLine();
             }
 
+            //Track start time
+            System.out.println("\nSTARTING JIGGING PROCESS");
+            long startTime = System.nanoTime();
+
+            int numOfProfiles = 0;
             //Create desired amount of profiles for each provided credit card
             JSONArray jsonArray = new JSONArray();
             for (int i=0; i<cards.size(); i++)
@@ -311,7 +291,7 @@ public class ProfileGenerator {
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
-                    JSONObject c = getProfileObject(ccDetails, shippingDetails, j);
+                    JSONObject c = jigger.getProfileObject(ccDetails, shippingDetails, j, randomPhone, jiggCity, phoneNumberLength, phoneNumberStart, jiggingPatternChoice);
                     jsonArray.put(c);
                     numOfProfiles++;
                 }
@@ -330,7 +310,11 @@ public class ProfileGenerator {
                 e.printStackTrace();
             }
 
-            System.out.println("\nNumber of profiles created: " + numOfProfiles +
+            //Track end time, calculate duration
+            long duration = System.nanoTime() - startTime;
+            duration = TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS);
+
+            System.out.println("JIGGING PROCESS DONE!\nCreated " + numOfProfiles + " profiles in " + duration + " milliseconds." +
                     "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
         } else {
             System.out.println("\nOops! Your creditcard_details_input.txt file is empty!" +
@@ -347,7 +331,6 @@ public class ProfileGenerator {
     public void retrieveCcDetails()
     {
         HashMap<String, JSONObject> creditCards = new HashMap<>();
-
 
         try {
             File f = getFiles(".json", new File(INPUT_FOLDER)).get(0);
@@ -431,90 +414,6 @@ public class ProfileGenerator {
     }
 
     /**
-     * Creates and returns a JSONObject containing card details and jigged address
-     * @param ccDetails Card details
-     * @param shippingDetails Shipping details
-     * @param jigg Jigg number
-     * @return JSONObject containing profile details
-     */
-    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg)
-    {
-        JSONObject profile = new JSONObject();
-        JSONObject card = new JSONObject();
-        JSONObject shipping = new JSONObject();
-        JSONObject billing = new JSONObject();
-
-        //Putting card details
-        card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
-        if(randomPhone) {
-            double min = Math.pow(10, (phoneNumberLength - 1));
-            double max = Math.pow(10, phoneNumberLength) - 1;
-            card.put("phone", phoneNumberStart + randomInt((int) min,(int) max));
-        } else {
-            card.put("phone", ccDetails[1]);
-        }
-        card.put("ccNumber", ccDetails[2]);
-        card.put("ccExpiry", ccDetails[3]);
-        card.put("ccCvc", ccDetails[4]);
-
-        //TODO: ArrayList maken met jiggingpatterns
-
-        if(jiggingPatternChoice == jiggingPatterns.size()+1) {
-            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,jiggingPatterns.size()-1) )));
-        } else {
-            shipping.put("address", jigger.jiggAddress1(shippingDetails[2], jiggingPatterns.get( jiggingPatternChoice-1 )));
-        }
-
-        //Address fields jigging:
-        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
-        shipping.put("lastName", NameGenerator.getLastName());
-        if(shippingDetails[3].equals("")) {
-            if (randomInt(0,100) < 75) {
-                shipping.put("address2", prefixes[randomInt(0, prefixes.length - 1)] + " " + randomInt(1, 5) + getRandomString(ADDRESS_2_SUFFIX_CHAR, 1));
-            } else {
-                shipping.put("address2", shippingDetails[3]);
-            }
-        } else {
-            shipping.put("address2", shippingDetails[3]);
-        }
-        shipping.put("country", shippingDetails[6]);
-        if(jiggCity) {
-            shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0, 2))).trim());
-        } else {
-            shipping.put("city", (shippingDetails[5]));
-        }
-        shipping.put("zip", shippingDetails[4]);
-        shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
-
-        //Put billing details
-        if(shippingDetails[8].equals("true")) {
-            billing.put("billingSameAsShipping", true);
-        } else {
-            billing.put("billingSameAsShipping", "");
-            billing.put("firstName", shippingDetails[8]);
-            billing.put("lastName", shippingDetails[9]);
-            billing.put("address", shippingDetails[10]);
-            billing.put("address2", shippingDetails[11]);
-            billing.put("country", shippingDetails[14]);
-            billing.put("city", shippingDetails[13]);
-            billing.put("zip", shippingDetails[12]);
-            billing.put("state", (shippingDetails[15].equals("") ? JSONObject.NULL : shippingDetails[15]));
-        }
-
-        //Put extra details
-        profile.put("cc", card);
-        profile.put("shipping", shipping);
-        profile.put("billing", billing);
-        profile.put("isJapaneseAddress", JSONObject.NULL);
-        profile.put("isRussianAddress", JSONObject.NULL);
-        profile.put("isMexicanAddress", JSONObject.NULL);
-        profile.put("isPhilippinesAddress", JSONObject.NULL);
-        profile.put("date", System.currentTimeMillis());
-
-        return profile;
-    }
-
-    /**
      * Method for asking user for a 'y' or 'n' input
      * @param input Scanner for input
      * @param message String to print
@@ -534,24 +433,6 @@ public class ProfileGenerator {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Generates a String with specified length containing random characters
-     * @param length Desired length of String
-     * @return String with random characters
-     */
-    private String getRandomString(String chars, int length)
-    {
-        char[] charArray = chars.toCharArray();
-        String result = "";
-
-        for (int i = 0; i < length; i++) {
-            int random = (int) (Math.random()*charArray.length);
-            result += charArray[random];
-        }
-
-        return result;
     }
 
     /**

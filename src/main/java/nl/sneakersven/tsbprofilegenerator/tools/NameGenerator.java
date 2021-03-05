@@ -1,4 +1,6 @@
-package nl.sneakersven.tsbprofilegenerator;
+package nl.sneakersven.tsbprofilegenerator.tools;
+
+import nl.sneakersven.tsbprofilegenerator.ProfileGenerator;
 
 public class NameGenerator {
 

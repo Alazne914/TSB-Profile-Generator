@@ -1,4 +1,4 @@
-package nl.sneakersven.tsbprofilegenerator;
+package nl.sneakersven.tsbprofilegenerator.tools;
 
 public class JiggSection {
 
