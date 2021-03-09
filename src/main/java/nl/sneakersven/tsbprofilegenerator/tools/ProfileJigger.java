@@ -7,7 +7,8 @@ import java.util.Random;
 
 public class ProfileJigger {
 
-    private final String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Suite", "Room", "Kamer" };
+    private String[] prefixes = { "Appt.", "Appartement", "Floor", "Verdieping", "Suite", "Room", "Kamer" };
+
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ADDRESS_2_SUFFIX_CHAR = "ABCDE";
     private static final String FIRST_NAME_SUFFIX = "ABCDEFGHKL";
@@ -81,19 +82,17 @@ public class ProfileJigger {
         shipping.put("firstName", (shippingDetails[0].equals("") ?
                 (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim() : shippingDetails[0]));
         //Lastname
-        shipping.put("lastname", shippingDetails[1].equals("") ? NameGenerator.getLastName() : shippingDetails[1]);
+        shipping.put("lastName", shippingDetails[1].equals("") ? NameGenerator.getLastName() : shippingDetails[1]);
         //Address 1
         if(choices.length == 1) {
             int choice = choices[0];
-            if(choice==patterns.size()) {
-                shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(randomInt(0,patterns.size()-1))));
-            } else {
-                shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(choices[0])));
-            }
+            shipping.put("address", (choice==patterns.size()+1 ?
+                    jiggAddress1(shippingDetails[2], patterns.get(randomInt( 0,patterns.size()-1 ))) : jiggAddress1(shippingDetails[2], patterns.get( choices[0]-1 ))));
         } else {
+            //Randomly choose pattern from list of specific patterns
             int randomChoice = choices[randomInt(0,choices.length-1)];
             if(randomChoice==patterns.size()) randomChoice = randomInt(0,patterns.size()-1);
-            shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(randomChoice)));
+            shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(randomChoice-1)));
         }
         //Address 2
         shipping.put("address2", (shippingDetails[3].equals("") ? jiggAddress2() : shippingDetails[3]));
@@ -175,12 +174,17 @@ public class ProfileJigger {
         return result.trim();
     }
 
+    /**
+     * Method to generate a random, jigged Address 2 field. 25% chance of happening
+     * @return Jigged address 2 field
+     */
     public String jiggAddress2() {
         int random = randomInt(1,100);
-        if(random < 51) {
-            return prefixes[ randomInt(0, prefixes.length) ] + " " + randomInt(1,5) + getRandomString(ADDRESS_2_SUFFIX_CHAR,randomInt(0,1));
+        if(random < 76) {
+            return prefixes[ randomInt(0, prefixes.length-1) ] + " " + randomInt(1,5) + getRandomString(ADDRESS_2_SUFFIX_CHAR,randomInt(0,1));
+        } else {
+            return "";
         }
-        return null;
     }
 
     /**

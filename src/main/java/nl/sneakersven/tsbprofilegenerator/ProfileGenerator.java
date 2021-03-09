@@ -287,12 +287,10 @@ public class ProfileGenerator {
                     "\nInput: ");
              */
 
-            //TODO: Accept multiple specific jigging patterns
-
             //Ask user for jigging settings
             System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
-                    "\nIf you want to choose more than one specific pattern, put a , in between each choice. Eg: 1,3,4 (no spaces)" +
+                    "\nIf you want to choose more than one specific pattern, put a ',' in between each choice. Eg: 1,3,4 (no spaces)" +
                     "\n(Note that the 'TSBPG' will be randomized characters, and the '534' will be a random number)\n" +
                     " 1) Streetname TSBPG 1 \n" +
                     " 2) Streetname TSBPG 1 534\n" +
@@ -309,7 +307,7 @@ public class ProfileGenerator {
             try {
                 //If only one number, parsing wont cause an exception
                 int choice = Integer.parseInt(jiggingPatternChoice);
-                while (choice < 0 || choice > jigger.amountOfPatterns()) {
+                while (choice < 0 || choice > jigger.amountOfPatterns()+1) {
                     System.out.print("Input out of bounds, please try again: ");
                     jiggingPatternChoice = input.nextLine();
                     choice = Integer.parseInt(jiggingPatternChoice);
@@ -417,8 +415,24 @@ public class ProfileGenerator {
                 shippingDetails[15] = input.nextLine();
             }
 
-            //Track start time
+            //Start jigging process...
             System.out.println("\nSTARTING JIGGING PROCESS");
+            if(validInput.length == 1) {
+                System.out.println("Generator will use jigging pattern: " + validInput[0]);
+            } else {
+                System.out.print("Generator will use jigging patterns: ");
+                for (int i = 0; i < validInput.length; i++) {
+                    if(i == 0) {
+                        System.out.print(validInput[i]);
+                    } else if(i == validInput.length-1) {
+                        System.out.println(" & " + validInput[i]);
+                    } else {
+                        System.out.print(", " + validInput[i]);
+                    }
+                }
+            }
+
+            //Track start time
             long startTime = System.nanoTime();
 
             int numOfProfiles = 0;
@@ -456,7 +470,7 @@ public class ProfileGenerator {
             long duration = System.nanoTime() - startTime;
             duration = TimeUnit.MILLISECONDS.convert(duration, TimeUnit.NANOSECONDS);
 
-            System.out.println("JIGGING PROCESS DONE!\nCreated " + numOfProfiles + " profiles in " + duration + " milliseconds." +
+            System.out.println("\nJIGGING PROCESS DONE!\nCreated " + numOfProfiles + " profiles in " + duration + " milliseconds." +
                     "\nThe file containing the profiles can be found at: C:/TSB Profile Generator/output");
         } else {
             System.out.println("\nOops! Your creditcard_details_input.txt file is empty!" +
