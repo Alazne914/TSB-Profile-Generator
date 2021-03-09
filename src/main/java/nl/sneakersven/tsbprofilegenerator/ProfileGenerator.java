@@ -286,7 +286,7 @@ public class ProfileGenerator {
                 for (int i = 0; i < choices.length; i++) {
                     try {
                         int current = Integer.parseInt(choices[i]);
-                        if(current < 0 || current > jigger.amountOfPatterns()) {
+                        if(current < 0 || current > jigger.amountOfPatterns()+1) {
                             System.out.println("Choice '" + current + "' is out of bounds. Generator will ignore that input.");
                         } else {
                             validChoicesDynamic.add(current);

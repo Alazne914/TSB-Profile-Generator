@@ -19,13 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-2-2021_23_13__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-2-2021_23_13__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="045e437e-6f62-479a-a09d-91373fb07079" name="Default Changelist" comment="Bugfix of cutting up address 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/documents/TSB Profile Generator guide.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/ProfileGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/tools/ProfileJigger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/tools/ProfileJigger.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615294586492</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Bugfix of cutting up address 1">
+      <created>1615307090888</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1615307090889</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +365,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="User input address WIP" />
     <MESSAGE value="Jigging updated" />
     <MESSAGE value="Jigging fix, UI updated, create input txt file for cc details" />
     <MESSAGE value="Littol tiny fixy. Goodnight babe" />
@@ -387,25 +389,30 @@
     <MESSAGE value="Optimized the code some more. ProfileJigger improved" />
     <MESSAGE value="Finalized adding jigging patterns. Some are better than the others, but they all will work. This shit is beginning to look sexy AF!" />
     <MESSAGE value="Updated comment that holds currently inactive jigging patterns" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated comment that holds currently inactive jigging patterns" />
+    <MESSAGE value="Bugfix of cutting up address 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bugfix of cutting up address 1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="401" key="GridCell.Tab.0.bottom" timestamp="1615306974010">
+    <state width="1877" height="698" key="GridCell.Tab.0.bottom" timestamp="1615308117672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615306974010" />
-    <state width="1877" height="401" key="GridCell.Tab.0.center" timestamp="1615306974010">
+    <state width="1877" height="698" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615308117672" />
+    <state width="1877" height="698" key="GridCell.Tab.0.center" timestamp="1615308117672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615306974010" />
-    <state width="1877" height="401" key="GridCell.Tab.0.left" timestamp="1615306974009">
+    <state width="1877" height="698" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615308117672" />
+    <state width="1877" height="698" key="GridCell.Tab.0.left" timestamp="1615308117672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615306974009" />
-    <state width="1877" height="401" key="GridCell.Tab.0.right" timestamp="1615306974010">
+    <state width="1877" height="698" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615308117672" />
+    <state width="1877" height="698" key="GridCell.Tab.0.right" timestamp="1615308117672">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615306974010" />
+    <state width="1877" height="698" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615308117672" />
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1615307092518">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1615307092518" />
   </component>
   <component name="masterDetails">
     <states>
