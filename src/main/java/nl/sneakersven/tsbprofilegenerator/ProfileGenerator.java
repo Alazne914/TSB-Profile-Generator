@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import nl.sneakersven.tsbprofilegenerator.tools.JiggSection;
 import nl.sneakersven.tsbprofilegenerator.tools.ProfileJigger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -263,46 +264,43 @@ public class ProfileGenerator {
             //Length of address details input text
             final int LINE_LENGTH = 12;
 
-            //TODO: Dynamically print all Jigging patterns
-
-            /*
-                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
-                    "  1) TSBPG Streetname 1\n" +
-                    "  2) TSBPG Streetname TSBPG 1\n" +
-                    "  3) TSBPG Streetname 1 534\n" +
-                    "  4) TSBPG Streetname 1 TSBPG 534\n" +
-                    "  5) TSBPG Streetname 1 534 TSBPG\n" +
-                    "  6) TSBPG Streetname 1 TSBPG\n" +
-                    "  7) 534 Streetname 1\n" +
-                    "  8) 534 Streetname 1 TSBPG\n" +
-                    "  9) 534 Streetname TSBPG 1\n" +
-                    " 10) 534 Streetname TSBPG 1 TSBPG\n" +
-                    " 11) 534 Streetname TSBPG 1 534\n" +
-                    " 12) Streetname 1 534 TSBPG\n" +
-                    " 13) Streetname 1 TSBPG\n" +
-                    " 14) Streetname TSBPG 1 \n" +
-                    " 15) Streetname TSBPG 1 534\n" +
-                    " 16) Streetname TSBPG 1 TSBPG\n" +
-                    " 17) Randomized mix of all of the patterns above" +
-                    "\nInput: ");
-             */
-
             //Ask user for jigging settings
             System.out.println("\nJIGGING SETTINGS");
-            System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
+            System.out.println("Which of the following jigging patterns for the Address 1 field do you want to use?" +
                     "\nIf you want to choose more than one specific pattern, put a ',' in between each choice. Eg: 1,3,4 (no spaces)" +
-                    "\n(Note that the 'TSBPG' will be randomized characters, and the '534' will be a random number)\n" +
-                    " 1) Streetname TSBPG 1 \n" +
-                    " 2) Streetname TSBPG 1 534\n" +
-                    " 3) Streetname TSBPG 1 TSBPG\n" +
-                    " 4) TSBPG Streetname TSBPG 1\n" +
-                    " 5) 534 Streetname TSBPG 1\n" +
-                    " 6) 534 Streetname TSBPG 1 534\n" +
-                    " 7) 534 Streetname TSBPG 1 TSBPG\n" +
-                    " 8) Randomized mix of all of the patterns above" +
-                    "\nInput: ");
+                    "\n(Note that the 'TSBPG' will be randomized characters, and the '534' will be a random number)");
+            //Dynamically printing all available jigging patterns
+            for (int i = 0; i < jigger.getPatterns().size(); i++) {
+                String result = " " + (i+1) + ") ";
+                String[] patterns = jigger.getPatterns().get(i).split(";");
+                for (int j = 0; j < patterns.length; j++) {
+                    String currentPattern = patterns[j];
+                    String section = "";
+                    switch (currentPattern + ";") {
+                        case JiggSection.ADDRESS1_1:
+                            section = "Streetname ";
+                            break;
+                        case JiggSection.ADDRESS1_2:
+                            section = "1 ";
+                            break;
+                        case JiggSection.RANDOM_CHARS:
+                            section = "TSBPG ";
+                            break;
+                        case JiggSection.RANDOM_NUMBER:
+                            section = "534 ";
+                            break;
+                    }
+                    if(j== patterns.length-1) {
+                        result += section.trim();
+                    } else {
+                        result += section;
+                    }
+                }
+                System.out.println(result);
+            }
+            System.out.print(" " + (jigger.getPatterns().size()+1) + ") Randomized mix of all of the patterns above\nInput: ");
             String jiggingPatternChoice = input.nextLine();
-            //Checking input
+            //Validating input
             int[] validInput;
             try {
                 //If only one number, parsing wont cause an exception

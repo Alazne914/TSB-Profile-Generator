@@ -186,7 +186,7 @@
       <workItem from="1614892012863" duration="9147000" />
       <workItem from="1614981768321" duration="1707000" />
       <workItem from="1615278304358" duration="6956000" />
-      <workItem from="1615289354766" duration="2902000" />
+      <workItem from="1615289354766" duration="4837000" />
     </task>
     <task id="LOCAL-00001" summary="Initial gradle commit">
       <created>1614261814382</created>
@@ -363,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615286536334</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Optimized the code some more. ProfileJigger improved">
+      <created>1615292463901</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1615292463901</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -437,7 +444,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial gradle commit" />
     <MESSAGE value="Fixed JDK version" />
     <MESSAGE value="Left adress out of 'retrieve cc details' method" />
     <MESSAGE value="User input address WIP" />
@@ -462,7 +468,8 @@
     <MESSAGE value="ProfileJigger updated. Moved other classes to tools package" />
     <MESSAGE value="ProfileJigger update for multiple specific jigging patterns. WIP" />
     <MESSAGE value="ProfileJigger updated. Multiple jigging patterns now possible :D &#10;Randomizes between choices" />
-    <option name="LAST_COMMIT_MESSAGE" value="ProfileJigger updated. Multiple jigging patterns now possible :D &#10;Randomizes between choices" />
+    <MESSAGE value="Optimized the code some more. ProfileJigger improved" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized the code some more. ProfileJigger improved" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/sneakersven/tsbprofilegenerator/JiggSection.java">
