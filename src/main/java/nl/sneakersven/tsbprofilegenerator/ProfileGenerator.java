@@ -36,39 +36,6 @@ public class ProfileGenerator {
         random = new Random();
         jigger = new ProfileJigger();
 
-        /*
-
-           1) TSBPG Streetname 1
-           2) TSBPG Streetname TSBPG 1
-           3) TSBPG Streetname 1 534
-           4) TSBPG Streetname 1 TSBPG 534
-           5) TSBPG Streetname 1 534 TSBPG
-           6) TSBPG Streetname 1 TSBPG
-           7) 534 Streetname 1
-           8) 534 Streetname 1 TSBPG
-           9) 534 Streetname TSBPG 1
-           10) 534 Streetname TSBPG 1 TSBPG
-           11) 534 Streetname TSBPG 1 534
-           12) Streetname 1 534 TSBPG
-           13) Streetname 1 TSBPG
-           14) Streetname TSBPG 1
-           15) Streetname TSBPG 1 534
-           16) Streetname TSBPG 1 TSBPG
-           17) Randomized mix of all of the patterns above
-
-           OR MAYBE:
-
-           1) Streetname TSBPG 1
-           2) Streetname TSBPG 1 534
-           3) Streetname TSBPG 1 TSBPG
-           4) TSBPG Streetname TSBPG 1
-           5) 534 Streetname TSBPG 1
-           6) 534 Streetname TSBPG 1 534
-           7) 534 Streetname TSBPG 1 TSBPG
-           8) Randomized mix of all of the patterns above
-
-         */
-
         //Welcome user
         System.out.println("\nWELCOME TO THE TSB PROFILE GENERATOR!\n\n" +
                            "Refer to the guide for further information.\n" +
