@@ -25,12 +25,16 @@ public class ProfileJigger {
 
         //Initializing jigging patterns
 //        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2);
-//        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER);
 //        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS);
+//        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER);
+//        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER);
+//        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS);
 //        patterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2);
 //        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2);
-//        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER);
 //        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS);
+//        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER);
+//        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS + JiggSection.RANDOM_NUMBER);
+//        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER + JiggSection.RANDOM_CHARS);
 
         patterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2);
         patterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS);
