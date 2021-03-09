@@ -152,12 +152,12 @@ public class ProfileJigger {
      * @return Jigged Address 1 String
      */
     public String jiggAddress1(String address1, String pattern) {
-        //Cutting up the address 1
+        //Cutting up the address 1 to allow some of the jigging patterns
         String[] addressParts = address1.split(" ");
         String streetname = addressParts[0];
         String housenum = "";
         for (int i = 1; i < addressParts.length; i++) {
-            housenum += " " + addressParts[1];
+            housenum += " " + addressParts[i];
         }
         housenum = housenum.trim();
 

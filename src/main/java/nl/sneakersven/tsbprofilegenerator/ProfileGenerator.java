@@ -122,7 +122,7 @@ public class ProfileGenerator {
             output.createNewFile();
 
             FileWriter fstream = new FileWriter(output);
-            BufferedWriter info = new BufferedWriter(fstream);
+            BufferedWriter writer = new BufferedWriter(fstream);
 
             ArrayList<JSONObject> unorderedCCList = new ArrayList<>(creditCards.values());
             ArrayList<JSONObject> orderedCCList;
@@ -166,11 +166,11 @@ public class ProfileGenerator {
                         ";" + cc.getString("ccExpiry") +
                         ";" + cc.getString("ccCvc")  + "%n");
 
-                info.write(line);
+                writer.write(line);
                 counter++;
             }
 
-            info.close();
+            writer.close();
 
             System.out.println("\n" + counter + " profiles written to output file successfully. File is located at C:/TSB Profile Generator/output");
 
