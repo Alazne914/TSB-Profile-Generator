@@ -293,7 +293,7 @@ public class ProfileGenerator {
             System.out.println("\nJIGGING SETTINGS");
             System.out.print("Which of the following jigging patterns for the Address 1 field do you want to use?" +
                     "\nIf you want to choose more than one specific pattern, put a , in between each choice. Eg: 1,3,4 (no spaces)" +
-                    "\n(Note that the 'TSBPG' will be randomized characters, and the the '534' will be a random number)\n" +
+                    "\n(Note that the 'TSBPG' will be randomized characters, and the '534' will be a random number)\n" +
                     " 1) Streetname TSBPG 1 \n" +
                     " 2) Streetname TSBPG 1 534\n" +
                     " 3) Streetname TSBPG 1 TSBPG\n" +
@@ -304,11 +304,44 @@ public class ProfileGenerator {
                     " 8) Randomized mix of all of the patterns above" +
                     "\nInput: ");
             String jiggingPatternChoice = input.nextLine();
-            if(!jiggingPatternChoice.contains(",")) {
-                int choiceInt = Integer.parseInt(jiggingPatternChoice);
-                while (choiceInt < 1 || choiceInt > jigger.amountOfPatterns() + 1) {
+            //Checking input
+            int[] validInput;
+            try {
+                //If only one number, parsing wont cause an exception
+                int choice = Integer.parseInt(jiggingPatternChoice);
+                while (choice < 0 || choice > jigger.amountOfPatterns()) {
                     System.out.print("Input out of bounds, please try again: ");
-                    choiceInt = Integer.parseInt(input.nextLine());
+                    jiggingPatternChoice = input.nextLine();
+                    choice = Integer.parseInt(jiggingPatternChoice);
+                }
+                validInput = new int[]{choice};
+            } catch (NumberFormatException nfe1) {
+                //Integer parsing error: choice does not only contain one number, let's check it...
+                String[] choices = jiggingPatternChoice.split(",");
+                //Need a dynamic list to add valid input while checking, will convert to int[] further down
+                ArrayList<Integer> validChoicesDynamic = new ArrayList<>();
+                for (int i = 0; i < choices.length; i++) {
+                    try {
+                        int current = Integer.parseInt(choices[i]);
+                        if(current < 0 || current > jigger.amountOfPatterns()) {
+                            System.out.println("Choice '" + current + "' is out of bounds. Generator will ignore that input.");
+                        } else {
+                            validChoicesDynamic.add(current);
+                        }
+                    } catch (NumberFormatException nfe2) {
+                        System.out.println("Choice '" + choices[i] + "' is not a number. Generator will ignore that input.");
+                    }
+                }
+
+                //Converting ArrayList to int[]
+                validInput = new int[validChoicesDynamic.size()];
+                for (int i = 0; i < validChoicesDynamic.size(); i++) {
+                    validInput[i] = validChoicesDynamic.get(i);
+                }
+
+                if(validInput.length<1) {
+                    System.out.println("Oops! No valid jigging pattern choices were found. Please restart the generator!");
+                    System.exit(0);
                 }
             }
 
@@ -322,7 +355,8 @@ public class ProfileGenerator {
                 phoneNumberLength = Integer.parseInt(input.nextLine());
             }
 
-            boolean randomNames = userSaysYes(input, "Do you want to randomize the profile's first and last name? (y/n): ");
+            boolean randomFName = userSaysYes(input, "Do you want to randomize the profile's first name? (y/n): ");
+            boolean randomLName = userSaysYes(input, "Do you want to randomize the profile's last name?  (y/n): ");
             boolean jiggCity = userSaysYes(input, "Do you want to jigg random characters to the end of the City field? (y/n): ");
             boolean billingSameAsShipping = userSaysYes(input, "Does the billing address have to be the same as the shipping address? (y/n): ");
             System.out.print("How many times would you like to jigg your adress for each credit card: ");
@@ -332,11 +366,17 @@ public class ProfileGenerator {
             System.out.println("\nSHIPPING DETAILS" +
                     "\nIf you want a field to be empty, just type nothing and hit enter." +
                     "\n(If you enter something for address 2, it will not get jigged)");
-            if(!randomNames) {
+            if(!randomFName) {
                 print("First name: ", LINE_LENGTH);
                 shippingDetails[0] = input.nextLine();
+            } else {
+                shippingDetails[0] = "";
+            }
+            if(!randomLName) {
                 print("Last name: ", LINE_LENGTH);
                 shippingDetails[1] = input.nextLine();
+            } else {
+                shippingDetails[1] = "";
             }
             print("Address 1: ", LINE_LENGTH);
             shippingDetails[2] = input.nextLine();
@@ -347,7 +387,9 @@ public class ProfileGenerator {
             print("City: ", LINE_LENGTH);
             shippingDetails[5] = input.nextLine();
             print("Country: ", LINE_LENGTH);
-            shippingDetails[6] = input.nextLine();
+            String country = input.nextLine();
+            //TODO: next line wont work for countries that have more than one word in its name (if TSB capitalizes each word, that is)
+            shippingDetails[6] = country.substring(0,1).toUpperCase() + country.substring(1).toLowerCase();
             print("State: ", LINE_LENGTH);
             shippingDetails[7] = input.nextLine();
 
@@ -368,7 +410,9 @@ public class ProfileGenerator {
                 print("City: ", LINE_LENGTH);
                 shippingDetails[13] = input.nextLine();
                 print("Country: ", LINE_LENGTH);
-                shippingDetails[14] = input.nextLine();
+                String billingCountry = input.nextLine();
+                //TODO: next line wont work for countries that have more than one word in its name (if TSB capitalizes each word, that is)
+                shippingDetails[14] = billingCountry.substring(0,1).toUpperCase() + billingCountry.substring(1).toLowerCase();
                 print("State: ", LINE_LENGTH);
                 shippingDetails[15] = input.nextLine();
             }
@@ -386,7 +430,7 @@ public class ProfileGenerator {
 
                 for(int j=0; j<amtOfJiggs; j++)
                 {
-                    JSONObject c = jigger.getProfileObject(ccDetails, shippingDetails, j, randomPhone, jiggCity, phoneNumberLength, phoneNumberStart, jiggingPatternChoice);
+                    JSONObject c = jigger.getProfileObject(ccDetails, shippingDetails, j, randomPhone, jiggCity, phoneNumberLength, phoneNumberStart, validInput);
                     jsonArray.put(c);
                     numOfProfiles++;
                 }

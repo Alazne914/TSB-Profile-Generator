@@ -11,10 +11,12 @@ public class ProfileJigger {
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ADDRESS_2_SUFFIX_CHAR = "ABCDE";
     private static final String FIRST_NAME_SUFFIX = "ABCDEFGHKL";
+    private static final int LOWER_BOUND_ADDRESS_1_RANDOM_NUMBER = 300;
+    private static final int UPPER_BOUND_ADDRESS_1_RANDOM_NUMBER = 999;
 
     private final Random random;
 
-    private ArrayList<String> jiggingPatterns = new ArrayList<>();
+    private ArrayList<String> patterns = new ArrayList<>();
 
     public ProfileJigger() {
         this.random = new Random();
@@ -37,13 +39,13 @@ public class ProfileJigger {
 //        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //15
 //        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //16
 
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //1
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //2
-        jiggingPatterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //3
-        jiggingPatterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //4
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //5
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //6
-        jiggingPatterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //7
+        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //1
+        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //2
+        patterns.add(JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //3
+        patterns.add(JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //4
+        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2); //5
+        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_NUMBER); //6
+        patterns.add(JiggSection.RANDOM_NUMBER + JiggSection.ADDRESS1_1 + JiggSection.RANDOM_CHARS + JiggSection.ADDRESS1_2 + JiggSection.RANDOM_CHARS); //7
 
     }
 
@@ -54,21 +56,12 @@ public class ProfileJigger {
      * @param jigg Jigg number
      * @return JSONObject containing profile details
      */
-    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg, boolean randomPhone, boolean jiggCity, int phoneNumberLength, String phoneNumberStart, String jiggingPatternChoice)
+    public JSONObject getProfileObject(String [] ccDetails, String[] shippingDetails, int jigg, boolean randomPhone, boolean jiggCity, int phoneNumberLength, String phoneNumberStart, int[] choices)
     {
         JSONObject profile = new JSONObject();
         JSONObject card = new JSONObject();
         JSONObject shipping = new JSONObject();
         JSONObject billing = new JSONObject();
-
-        if(jiggingPatternChoice.contains(",")) {
-            String[] choices = jiggingPatternChoice.split(",");
-            int[] intChoices = new int[choices.length];
-
-            for (int i = 0; i < choices.length; i++) {
-                intChoices[i] = Integer.parseInt(choices[i]);
-            }
-        }
 
         //Putting card details
         card.put("profileName", ccDetails[0] + " (J" + (jigg + 1) + ")");
@@ -83,29 +76,34 @@ public class ProfileJigger {
         card.put("ccExpiry", ccDetails[3]);
         card.put("ccCvc", ccDetails[4]);
 
-        //TODO: ArrayList maken met jiggingpatterns
-
-        if(!jiggingPatternChoice.contains(",") && Integer.parseInt(jiggingPatternChoice) == jiggingPatterns.size()+1) {
-            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( randomInt(0,jiggingPatterns.size()-1) )));
+        //Putting Address details in JSONObject
+        //First name
+        shipping.put("firstName", (shippingDetails[0].equals("") ?
+                (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim() : shippingDetails[0]));
+        //Lastname
+        shipping.put("lastname", shippingDetails[1].equals("") ? NameGenerator.getLastName() : shippingDetails[1]);
+        //Address 1
+        if(choices.length == 1) {
+            int choice = choices[0];
+            if(choice==patterns.size()) {
+                shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(randomInt(0,patterns.size()-1))));
+            } else {
+                shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(choices[0])));
+            }
         } else {
-            shipping.put("address", jiggAddress1(shippingDetails[2], jiggingPatterns.get( Integer.parseInt(jiggingPatternChoice)-1 )));
+            int randomChoice = choices[randomInt(0,choices.length-1)];
+            if(randomChoice==patterns.size()) randomChoice = randomInt(0,patterns.size()-1);
+            shipping.put("address", jiggAddress1(shippingDetails[2], patterns.get(randomChoice)));
         }
-
-        //Address fields jigging:
-        shipping.put("firstName", (NameGenerator.getFirstName() + " " + getRandomString(FIRST_NAME_SUFFIX,randomInt(0,2))).trim());
-        shipping.put("lastName", NameGenerator.getLastName());
-        if(shippingDetails[3].equals("")) {
-            shipping.put("address2", jiggAddress2());
-        } else {
-            shipping.put("address2", shippingDetails[3]);
-        }
+        //Address 2
+        shipping.put("address2", (shippingDetails[3].equals("") ? jiggAddress2() : shippingDetails[3]));
+        //Country
         shipping.put("country", shippingDetails[6]);
-        if(jiggCity) {
-            shipping.put("city", (shippingDetails[5] + " " + getRandomString(ALPHABET, randomInt(0, 2))).trim());
-        } else {
-            shipping.put("city", (shippingDetails[5]));
-        }
+        //City
+        shipping.put("city", (jiggCity ? (shippingDetails[5] + " " + getRandomString(ALPHABET,randomInt(0,2))).trim() : shippingDetails[5]));
+        //Zipcode
         shipping.put("zip", shippingDetails[4]);
+        //State
         shipping.put("state", (shippingDetails[7].equals("") ? JSONObject.NULL : shippingDetails[7]));
 
         //Put billing details
@@ -169,7 +167,7 @@ public class ProfileJigger {
                     result += " " + getRandomString(ALPHABET, randomInt(2, 4));
                     break;
                 case JiggSection.RANDOM_NUMBER:
-                    result += " " + randomInt(300, 999);
+                    result += " " + randomInt(LOWER_BOUND_ADDRESS_1_RANDOM_NUMBER, UPPER_BOUND_ADDRESS_1_RANDOM_NUMBER);
                     break;
             }
         }
@@ -216,7 +214,7 @@ public class ProfileJigger {
     }
 
     public int amountOfPatterns() {
-        return jiggingPatterns.size();
+        return patterns.size();
     }
 
 }
